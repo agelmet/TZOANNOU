@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Χαρά Τζοάνου - Ψυχολόγος</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for Exact Theme Colors */
+        :root {
+            --primary-green: #6d826d; /* Sage green from screenshots */
+            --dark-green: #4f614f;
+            --light-green: #899c89;
+            --bg-beige: #f9f8f4; /* Off-white background */
+            --text-dark: #333333;
+            --text-light: #666666;
+            --white: #ffffff;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Open Sans', sans-serif;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            background-color: var(--bg-beige);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            font-weight: 400;
+            color: var(--dark-green);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-green);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: var(--font-heading);
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-green);
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: var(--primary-green);
+            color: var(--white);
+            padding: 10px 0;
+            font-size: 0.85rem;
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-bar a {
+            color: var(--white);
+            margin-left: 15px;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--bg-beige);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--dark-green);
+        }
+        .logo span {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-left: 10px;
+            font-family: var(--font-body);
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        .nav-links li {
+            margin-left: 25px;
+        }
+        .nav-links a {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+        .nav-links a:hover {
+            color: var(--primary-green);
+        }
+
+        /* Section Spacing */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--dark-green);
+        }
+        .section-subtitle {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            padding: 60px 0 100px 0;
+            background-color: var(--bg-beige);
+        }
+        .hero-content {
+            flex: 1;
+            padding-right: 50px;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        .hero-image {
+            flex: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* About Section */
+        .about {
+            background-color: var(--white);
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .about-text h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+        .about-text p {
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        .about-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+        .about-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+        .about-list li::before {
+            content: "♡";
+            position: absolute;
+            left: 0;
+            color: var(--primary-green);
+        }
+
+        /* Services Section */
+        .services {
+            background-color: var(--bg-beige);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .service-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: transform 0.3s ease;
+            border-top: 4px solid var(--primary-green);
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        .service-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        .service-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        /* Space Section */
+        .space {
+            background-color: var(--primary-green);
+            color: var(--white);
+            padding: 80px 0;
+        }
+        .space .section-title {
+            color: var(--white);
+            text-align: left;
+        }
+        .space-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .space-text p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #e2e8e2;
+        }
+        .space-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Articles Section */
+        .articles {
+            background-color: var(--white);
+        }
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .article-card {
+            background: var(--bg-beige);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .article-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        .article-content {
+            padding: 25px;
+            flex-grow: 1;
+        }
+        .article-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--primary-green);
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .article-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--dark-green);
+        }
+        .article-link {
+            font-size: 0.9rem;
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+
+        /* FAQ Section */
+        .faq {
+            background-color: var(--bg-beige);
+        }
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        details {
+            background-color: var(--white);
+            margin-bottom: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        summary {
+            padding: 20px;
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--dark-green);
+            cursor: pointer;
+            list-style: none;
+            position: relative;
+        }
+        summary::-webkit-details-marker {
+            display: none;
+        }
+        summary::after {
+            content: '+';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--primary-green);
+        }
+        details[open] summary::after {
+            content: '-';
+        }
+        details p {
+            padding: 0 20px 20px 20px;
+            color: var(--text-light);
+        }
+
+        /* Contact Section */
+        .contact {
+            background-color: var(--white);
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 50px;
+        }
+        .contact-info {
+            background-color: var(--bg-beige);
+            padding: 40px;
+            border-radius: 8px;
+        }
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .info-item .icon {
+            color: var(--primary-green);
+            margin-right: 15px;
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: var(--font-body);
+            background-color: var(--bg-beige);
+        }
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-green);
+            color: var(--white);
+            padding: 40px 0 20px 0;
+            text-align: center;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        footer h3 {
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+        footer p, footer a {
+            color: #d1d9d1;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero, .about-grid, .space-grid, .contact-grid {
+                flex-direction: column;
+                grid-template-columns: 1fr;
+            }
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 40px;
+                text-align: center;
+            }
+            .services-grid, .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .nav-links {
+                display: none; /* In a real scenario, implement a hamburger menu */
+            }
+        }
+        @media (max-width: 768px) {
+            .services-grid, .articles-grid, .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            section {
+                padding: 50px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="container">
+            <div>210 440 4243 | Λεωφόρος Ηρακλείου 191, Νέα Ιωνία</div>
+            <div>Δια ζώσης και online συνεδρίες</div>
+        </div>
+    </div>
+
+    <nav>
+        <div class="container">
+            <div class="logo">
+                Ψ Χαρά Τζοάνου <br><span>Ψυχολόγος</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Αρχική</a></li>
+                <li><a href="#about">Σχετικά με μένα</a></li>
+                <li><a href="#services">Υπηρεσίες</a></li>
+                <li><a href="#space">Ο χώρος</a></li>
+                <li><a href="#articles">Άρθρα</a></li>
+                <li><a href="#faq">Συχνές ερωτήσεις</a></li>
+                <li><a href="#contact">Επικοινωνία</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero container">
+        <div class="hero-content">
+            <h1>Ψυχολογική υποστήριξη με σεβασμό στην προσωπική σας ιστορία</h1>
+            <p>Ένας σταθερός χώρος κατανόησης, ασφάλειας και προσωπικής αλλαγής. Υποστήριξη ενηλίκων, γονέων, παιδιών και εφήβων, με συστημική ματιά και σεβασμό στην μοναδικό τρόπο με τον οποίο κάθε άνθρωπος βιώνει τις δυσκολίες του.</p>
+            <a href="#contact" class="btn">Κλείστε ραντεβού</a>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Χαρά Τζοάνου Ψυχολόγος">
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container about-grid">
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Σχετικά με μένα" style="width: 100%; border-radius: 8px;">
+            </div>
+            <div class="about-text">
+                <h2>Σχετικά με μένα</h2>
+                <p>Είμαι η Χαρά Τζοάνου, Ψυχολόγος, Αρ. Άδειας 1130029.</p>
+                <p>Είμαι κάτοχος MSc στην Εφαρμοσμένη Αναπτυξιακή Ψυχολογία και MSc στην Συμβουλευτική Ψυχολογία και έχω εκπαίδευση στη Συστημική Οικογενειακή Θεραπεία.</p>
+                <p>Η επαγγελματική μου πορεία συνδέεται με την ψυχολογική υποστήριξη παιδιών, εφήβων, ενηλίκων και γονέων, με ιδιαίτερο ενδιαφέρον για τη συναισθηματική δυσκολία, τις σχέσεις, την αυτοεκτίμηση, το άγχος και τις μεταβάσεις ζωής.</p>
+                <p>Στη θεραπευτική διαδικασία με ενδιαφέρει να δημιουργείται ένας χώρος ασφάλειας, εμπιστοσύνης και ουσιαστικής ακρόασης.</p>
+                <ul class="about-list">
+                    <li>Ψυχολόγος, Αρ. Άδειας 1130029</li>
+                    <li>MSc στην Εφαρμοσμένη Αναπτυξιακή Ψυχολογία</li>
+                    <li>MSc στην Συμβουλευτική Ψυχολογία</li>
+                    <li>Εκπαίδευση στη Συστημική Οικογενειακή Θεραπεία</li>
+                    <li>Τακτικό Μέλος του Συλλόγου Ελλήνων Ψυχολόγων Α.Μ. 3656</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Υπηρεσίες</h2>
+            <p class="section-subtitle">Οι υπηρεσίες απευθύνονται σε ενήλικες, γονείς, παιδιά και εφήβους. Μέσα από μια συνεργατική και ανθρώπινη προσέγγιση, στόχος είναι η προσωπική ανάπτυξη, η ψυχική ευεξία και η βελτίωση των σχέσεων.</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Ατομική Ψυχοθεραπεία</h3>
+                    <p>Ένας ασφαλής και εμπιστευτικός χώρος για να μιλήσετε για όσα σας απασχολούν. Μαζί διερευνούμε σκέψεις, συναισθήματα και εμπειρίες, με στόχο μεγαλύτερη κατανόηση και αλλαγή.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Ομαδική Ψυχοθεραπεία</h3>
+                    <p>Η ομάδα προσφέρει στήριξη, μοίρασμα και αίσθηση σύνδεσης. Μέσα από τις σχέσεις που δημιουργούνται, αναδύονται νέες οπτικές και τρόποι σχετίζεσθαι.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Συμβουλευτική Γονέων</h3>
+                    <p>Στήριξη και καθοδήγηση σε θέματα γονεϊκού ρόλου και οικογενειακών δυσκολιών. Με στόχο την κατανόηση των αναγκών του παιδιού και την ενίσχυση της σχέσης γονέα-παιδιού.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Θεραπεία Ζεύγους</h3>
+                    <p>Ένας χώρος διαλόγου για να ακουστούν και οι δύο πλευρές. Δουλεύουμε την επικοινωνία, τις συγκρούσεις και τη συναισθηματική σύνδεση, με σεβασμό στη σχέση.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Ψυχοθεραπεία Παιδιών & Εφήβων</h3>
+                    <p>Ένα προστατευμένο πλαίσιο όπου τα παιδιά και οι έφηβοι μπορούν να εκφραστούν με ασφάλεια. Η θεραπεία προσαρμόζεται στην ηλικία και στις ανάγκες τους, σε συνεργασία με τους γονείς.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Online Συνεδρίες</h3>
+                    <p>Ψυχοθεραπεία εξ αποστάσεως, με την ίδια φροντίδα και ποιότητα. Κατάλληλη για άτομα που δυσκολεύονται να παρευρεθούν δια ζώσης ή βρίσκονται εκτός πόλης.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="space" class="space">
+        <div class="container space-grid">
+            <div class="space-text">
+                <h2 class="section-title">Ο χώρος</h2>
+                <p>Ο χώρος της θεραπευτικής συνάντησης είναι σημαντικός, γιατί συμβάλλει στο αίσθημα ασφάλειας, ηρεμίας και σύνδεσης.</p>
+                <p>Έχει διαμορφωθεί με φροντίδα, ώστε να υποστηρίζει μία εμπειρία σταθερότητας, ιδιωτικότητας και ουσιαστικής παρουσίας.</p>
+                <p>Προσφέρονται συνεδρίες δια ζώσης στο γραφείο, αλλά και online συνεδρίες, ανάλογα με τις ανάγκες και τις δυνατότητες κάθε ανθρώπου.</p>
+                <br>
+                <h3 style="color: white; margin-bottom: 10px;">Πού βρίσκεται το γραφείο</h3>
+                <p>Λεωφόρος Ηρακλείου 191, Νέα Ιωνία<br>
+                Πρόσβαση: ΗΣΑΠ στάση Νέα Ιωνία ή στάση Πευκάκια</p>
+            </div>
+            <div class="space-image">
+                <img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Ο χώρος θεραπείας">
+            </div>
+        </div>
+    </section>
+
+    <section id="articles" class="articles">
+        <div class="container">
+            <h2 class="section-title">Άρθρα ψυχολογίας</h2>
+            <p class="section-subtitle">Εδώ θα βρείτε σύντομα άρθρα με ψυχοεκπαιδευτικό περιεχόμενο για θέματα ψυχικής υγείας, σχέσεων, γονεϊκότητας, άγχους, αυτοεκτίμησης και προσωπικής ανάπτυξης. Στόχος είναι η ενημέρωση, η κατανόηση και η υποστήριξή σας στην καθημερινότητα.</p>
+            
+            <div class="articles-grid">
+                <div class="article-card">
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1499209974431-9dddcece7f88?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="article-content">
+                        <span class="article-category">ΨΥΧΟΘΕΡΑΠΕΙΑ</span>
+                        <h3 class="article-title">Πότε είναι χρήσιμο να ξεκινήσω ψυχοθεραπεία;</h3>
+                        <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="article-content">
+                        <span class="article-category">ΑΓΧΟΣ</span>
+                        <h3 class="article-title">Άγχος και σώμα</h3>
+                        <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1516627145497-ae6968895b74?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="article-content">
+                        <span class="article-category">ΓΟΝΕΙΚΟΤΗΤΑ</span>
+                        <h3 class="article-title">Γονεικότητα και όρια</h3>
+                        <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="article-content">
+                        <span class="article-category">ΕΦΗΒΕΙΑ</span>
+                        <h3 class="article-title">Εφηβεία και απόσυρση</h3>
+                        <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1502444330042-d1a1ddf9bb5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="article-content">
+                        <span class="article-category">ΣΧΕΣΕΙΣ</span>
+                        <h3 class="article-title">Αυτοεκτίμηση και σχέσεις</h3>
+                        <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="article-content">
+                        <span class="article-category">ΨΥΧΟΘΕΡΑΠΕΙΑ</span>
+                        <h3 class="article-title">Η πρώτη συνεδρία με ψυχολόγο</h3>
+                        <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq">
+        <div class="container faq-container">
+            <h2 class="section-title">Συχνές ερωτήσεις</h2>
+            <p class="section-subtitle">Απαντήσεις στις πιο συχνές απορίες σχετικά με τη ψυχολογική υποστήριξη και τις συνεδρίες.</p>
+            
+            <details>
+                <summary>Πόσο διαρκεί μία συνεδρία;</summary>
+                <p>Μια ατομική συνεδρία διαρκεί συνήθως 45 λεπτά.</p>
+            </details>
+            <details>
+                <summary>Πώς κλείνω το πρώτο ραντεβού;</summary>
+                <p>Μπορείτε να επικοινωνήσετε μαζί μου τηλεφωνικά ή να συμπληρώσετε τη φόρμα επικοινωνίας στη σελίδα Επικοινωνία και θα σας απαντήσω το συντομότερο δυνατό.</p>
+            </details>
+            <details>
+                <summary>Τι γίνεται στην πρώτη συνεδρία;</summary>
+                <p>Η πρώτη συνεδρία έχει διερευνητικό χαρακτήρα. Έχουμε την ευκαιρία να γνωριστούμε, να συζητήσουμε τον λόγο που σας έφερε εδώ και να θέσουμε μαζί τους στόχους της θεραπευτικής πορείας.</p>
+            </details>
+            <details>
+                <summary>Υπάρχει εχεμύθεια;</summary>
+                <p>Ναι, όλες οι συνεδρίες διέπονται από το επαγγελματικό απόρρητο και τους κανόνες δεοντολογίας των ψυχολόγων.</p>
+            </details>
+            <details>
+                <summary>Πραγματοποιούνται συνεδρίες με γονείς;</summary>
+                <p>Ναι, προσφέρεται συμβουλευτική γονέων για την κατανόηση και υποστήριξη του γονεϊκού ρόλου.</p>
+            </details>
+            <details>
+                <summary>Γίνονται συνεδρίες με εφήβους;</summary>
+                <p>Ναι, παρέχεται ψυχοθεραπεία σε εφήβους με την απαραίτητη συγκατάθεση και συνεργασία των γονέων.</p>
+            </details>
+            <details>
+                <summary>Γίνονται online συνεδρίες;</summary>
+                <p>Ναι, προσφέρονται και διαδικτυακές συνεδρίες για όσους δεν μπορούν να παρευρεθούν δια ζώσης.</p>
+            </details>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Επικοινωνία</h2>
+            <p class="section-subtitle">Είμαι εδώ για να σας ακούσω και να σας υποστηρίξω. Επικοινωνήστε μαζί μου για οποιαδήποτε πληροφορία ή για να κλείσουμε το πρώτο σας ραντεβού.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Χαρά Τζοάνου</h3>
+                    <p style="color: var(--text-light); margin-bottom: 30px;">Ψυχολόγος, Αρ. Άδειας 1130029</p>
+                    
+                    <div class="info-item">
+                        <div class="icon">✆</div>
+                        <div>
+                            <strong>Τηλέφωνο</strong><br>
+                            210 440 4243
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icon">📍</div>
+                        <div>
+                            <strong>Διεύθυνση</strong><br>
+                            Λεωφόρος Ηρακλείου 191, Νέα Ιωνία<br>
+                            <span style="font-size: 0.9em; color: var(--text-light);">Πρόσβαση: ΗΣΑΠ στάση Νέα Ιωνία ή στάση Πευκάκια</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icon">✉</div>
+                        <div>
+                            <strong>Email</strong><br>
+                            info@charatzoanou.gr
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icon">💻</div>
+                        <div>
+                            <strong>Συνεδρίες</strong><br>
+                            Δια ζώσης και online συνεδρίες
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-container">
+                    <form class="contact-form" action="#" method="POST">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Ονοματεπώνυμο" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" name="phone" placeholder="Τηλέφωνο">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Μήνυμα" required></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Αποστολή μηνύματος</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>Χαρά Τζοάνου</h3>
+                    <p>Ψυχολόγος, Αρ. Άδειας 1130029</p>
+                </div>
+                <div>
+                    <p>✆ 210 440 4243</p>
+                    <p>📍 Λεωφόρος Ηρακλείου 191, Νέα Ιωνία</p>
+                    <p>🚇 ΗΣΑΠ: Νέα Ιωνία ή Πευκάκια</p>
+                    <p>✉ info@charatzoanou.gr</p>
+                </div>
+                <div>
+                    <p>Δια ζώσης και online συνεδρίες</p>
+                    <p style="margin-top: 15px;">Ακολουθήστε με:</p>
+                    <p>
+                        <a href="#" style="margin-right: 10px;">Instagram</a> | 
+                        <a href="#" style="margin-left: 10px; margin-right: 10px;">Facebook</a> | 
+                        <a href="#" style="margin-left: 10px;">LinkedIn</a>
+                    </p>
+                </div>
+            </div>
+            <p style="border-top: 1px solid #5a6e5a; padding-top: 20px; font-size: 0.8rem;">
+                © 2026 Χαρά Τζοάνου. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
