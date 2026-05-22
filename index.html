@@ -156,8 +156,8 @@
             align-items: center;
         }
         .main-logo {
-            height: 90px;
-            width: 90px;
+            height: 130px; /* Made bigger */
+            width: 130px;  /* Made bigger */
             border-radius: 50%;
             object-fit: contain; /* Circled but not cropped */
             background-color: var(--white);
@@ -520,6 +520,10 @@
         /* Responsive */
         @media (max-width: 992px) {
             /* Mobile Structure Fixes */
+            nav .container {
+                justify-content: center; /* Center the logo horizontally on mobile */
+            }
+            
             .hero-container {
                 flex-direction: column;
                 text-align: center;
@@ -541,11 +545,16 @@
             .about-text {
                 display: contents; /* Allows interleaving text and image */
             }
+            
+            .about-text p {
+                margin-bottom: 8px; /* Tighter gap between sentences on mobile */
+            }
+            
             .about-text h2 { order: 1; margin-bottom: 20px; }
             .about-p1 { order: 2; }
             .about-p2 { order: 3; }
             .about-p3 { order: 4; }
-            .about-p4 { order: 5; margin-bottom: 25px; }
+            .about-p4 { order: 5; margin-bottom: 25px; } /* keeps gap before the image */
             .about-image { order: 6; margin-bottom: 25px; width: 100%; }
             .about-list { 
                 order: 7; 
@@ -966,6 +975,5 @@
             </p>
         </div>
     </footer>
-
 </body>
 </html>
