@@ -138,7 +138,7 @@
         /* Navigation */
         nav {
             background-color: var(--bg-beige);
-            padding: 10px 0; /* Reduced slightly to accommodate bigger logo */
+            padding: 10px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -156,8 +156,8 @@
             align-items: center;
         }
         .main-logo {
-            height: 130px; /* Made bigger */
-            width: 130px;  /* Made bigger */
+            height: 150px; /* Made bigger on desktop */
+            width: 150px;  /* Made bigger on desktop */
             border-radius: 50%;
             object-fit: contain; /* Circled but not cropped */
             background-color: var(--white);
@@ -519,9 +519,19 @@
 
         /* Responsive */
         @media (max-width: 992px) {
+            /* Remove Sticky Navbar on Mobile */
+            nav {
+                position: static;
+            }
+
             /* Mobile Structure Fixes */
             nav .container {
                 justify-content: center; /* Center the logo horizontally on mobile */
+            }
+            
+            .main-logo {
+                height: 180px; /* Made even bigger specifically for mobile */
+                width: 180px;
             }
             
             .hero-container {
@@ -541,20 +551,21 @@
                 flex-direction: column;
                 text-align: center;
                 align-items: center;
+                gap: 0; /* Fixes massive gaps by removing the grid gap */
             }
             .about-text {
                 display: contents; /* Allows interleaving text and image */
             }
             
             .about-text p {
-                margin-bottom: 8px; /* Tighter gap between sentences on mobile */
+                margin-bottom: 15px; /* Restores normal spacing between sentences */
             }
             
             .about-text h2 { order: 1; margin-bottom: 20px; }
             .about-p1 { order: 2; }
             .about-p2 { order: 3; }
             .about-p3 { order: 4; }
-            .about-p4 { order: 5; margin-bottom: 25px; } /* keeps gap before the image */
+            .about-p4 { order: 5; margin-bottom: 25px; } /* Keeps gap before the image */
             .about-image { order: 6; margin-bottom: 25px; width: 100%; }
             .about-list { 
                 order: 7; 
