@@ -533,6 +533,10 @@
                 height: 180px; /* Made even bigger specifically for mobile */
                 width: 180px;
             }
+
+            .hero {
+                padding-top: 10px; /* Reduces the gap between logo and heading */
+            }
             
             .hero-container {
                 flex-direction: column;
@@ -584,8 +588,9 @@
             .nav-links {
                 display: none; 
             }
-            .leaf-decor {
-                display: none; /* Hide complex background elements on mobile to prevent clutter */
+            .leaf-decor svg {
+                width: 100px; /* Small minimal leafs for mobile */
+                height: auto;
             }
         }
         @media (max-width: 768px) {
