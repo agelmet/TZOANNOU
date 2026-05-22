@@ -8,12 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables for Colors and Fonts */
+        /* CSS Variables for Exact Theme Colors */
         :root {
-            --primary-green: #6d826d;
+            --primary-green: #6d826d; /* Sage green from screenshots */
             --dark-green: #4f614f;
             --light-green: #899c89;
-            --bg-beige: #f9f8f4;
+            --bg-beige: #f9f8f4; /* Off-white background */
             --text-dark: #333333;
             --text-light: #666666;
             --white: #ffffff;
@@ -23,7 +23,7 @@
             --leaf-dark-opacity: 0.25;
         }
 
-        /* Global Reset & Base Styles */
+        /* Reset & Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -80,7 +80,7 @@
             background-color: var(--dark-green);
         }
 
-        /* Animations for Leaves */
+        /* Animations */
         @keyframes sway {
             0% { transform: rotate(-3deg); }
             100% { transform: rotate(3deg); }
@@ -116,7 +116,7 @@
             animation: floatReverse 12s ease-in-out infinite alternate;
         }
 
-        /* 1. TOP BAR */
+        /* Top Bar */
         .top-bar {
             background-color: var(--primary-green);
             color: var(--white);
@@ -135,10 +135,10 @@
             margin-left: 15px;
         }
 
-        /* 2. NAVIGATION */
+        /* Navigation */
         nav {
             background-color: var(--bg-beige);
-            padding: 20px 0;
+            padding: 10px 0; /* Reduced slightly to accommodate bigger logo */
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -149,19 +149,20 @@
             justify-content: space-between;
             align-items: center;
         }
+        
+        /* New Logo Style */
         .logo {
             display: flex;
             align-items: center;
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
-            color: var(--dark-green);
         }
-        .logo span {
-            font-size: 1rem;
-            color: var(--text-light);
-            margin-left: 10px;
-            font-family: var(--font-body);
+        .main-logo {
+            height: 90px;
+            width: 90px;
+            border-radius: 50%;
+            object-fit: contain; /* Circled but not cropped */
+            background-color: var(--white);
         }
+
         .nav-links {
             display: flex;
             list-style: none;
@@ -177,24 +178,48 @@
             color: var(--primary-green);
         }
 
-        /* 3. HERO SECTION - FLEX FOR ORDERING */
-        .hero {
-            background-color: var(--bg-beige);
+        /* Section Spacing */
+        section {
+            padding: 80px 0;
             position: relative;
             overflow: hidden;
         }
-        .hero .container {
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--dark-green);
+            position: relative;
+            z-index: 2;
+        }
+        .section-subtitle {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Hero Section */
+        .hero {
             display: flex;
             align-items: center;
             padding: 60px 0 100px 0;
+            background-color: var(--bg-beige);
+        }
+        .hero-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
         }
         .hero-content {
             flex: 1;
             padding-right: 50px;
             position: relative;
             z-index: 2;
-            display: flex;
-            flex-direction: column;
         }
         .hero h1 {
             font-size: 3rem;
@@ -205,9 +230,6 @@
             font-size: 1.1rem;
             color: var(--text-light);
             margin-bottom: 30px;
-        }
-        .hero .hero-btn-wrapper {
-            margin-top: auto;
         }
         .hero-image {
             flex: 1;
@@ -223,30 +245,11 @@
             display: block;
         }
 
-        /* 4. ABOUT SECTION - FLEX FOR ORDERING */
+        /* About Section */
         .about {
             background-color: var(--white);
-            padding: 80px 0;
-            position: relative;
-            overflow: hidden;
         }
-        .about .container {
-            display: flex;
-            flex-direction: column;
-        }
-        .about-paragraphs {
-            margin-bottom: 40px;
-        }
-        .about-paragraphs h2 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-        }
-        .about-paragraphs p {
-            margin-bottom: 15px;
-            color: var(--text-light);
-        }
-        /* Grid for Desktop Image & List */
-        .about-details-grid {
+        .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 50px;
@@ -259,10 +262,13 @@
             object-fit: cover;
             aspect-ratio: 4/5;
         }
-        .about-list-wrapper h3 {
-            font-size: 1.5rem;
+        .about-text h2 {
+            font-size: 2.2rem;
             margin-bottom: 20px;
-            color: var(--dark-green);
+        }
+        .about-text p {
+            margin-bottom: 15px;
+            color: var(--text-light);
         }
         .about-list {
             list-style: none;
@@ -281,30 +287,16 @@
             color: var(--primary-green);
         }
 
-        /* 5. SERVICES SECTION */
+        /* Services Section */
         .services {
             background-color: var(--bg-beige);
-            padding: 80px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--dark-green);
-        }
-        .section-subtitle {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 50px auto;
-            color: var(--text-light);
-            font-size: 1.1rem;
         }
         .services-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
+            position: relative;
+            z-index: 2;
         }
         .service-card {
             background: var(--white);
@@ -327,13 +319,11 @@
             color: var(--text-light);
         }
 
-        /* 6. SPACE SECTION */
+        /* Space Section */
         .space {
             background-color: var(--primary-green);
             color: var(--white);
             padding: 80px 0;
-            position: relative;
-            overflow: hidden;
         }
         .space .section-title {
             color: var(--white);
@@ -344,9 +334,6 @@
             grid-template-columns: 1fr 1.5fr;
             gap: 50px;
             align-items: center;
-        }
-        .space-text h2 {
-            text-align: left;
         }
         .space-text p {
             font-size: 1.1rem;
@@ -359,17 +346,16 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        /* 7. ARTICLES SECTION */
+        /* Articles Section */
         .articles {
             background-color: var(--white);
-            padding: 80px 0;
-            position: relative;
-            overflow: hidden;
         }
         .articles-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
+            position: relative;
+            z-index: 2;
         }
         .article-card {
             background: var(--bg-beige);
@@ -407,16 +393,15 @@
             font-weight: 600;
         }
 
-        /* 8. FAQ SECTION */
+        /* FAQ Section */
         .faq {
             background-color: var(--bg-beige);
-            padding: 80px 0;
-            position: relative;
-            overflow: hidden;
         }
         .faq-container {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
         details {
             background-color: var(--white);
@@ -453,17 +438,16 @@
             color: var(--text-light);
         }
 
-        /* 9. CONTACT SECTION */
+        /* Contact Section */
         .contact {
             background-color: var(--white);
-            padding: 80px 0;
-            position: relative;
-            overflow: hidden;
         }
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1.5fr;
             gap: 50px;
+            position: relative;
+            z-index: 2;
         }
         .contact-info {
             background-color: var(--bg-beige);
@@ -505,7 +489,7 @@
             resize: vertical;
         }
 
-        /* 10. FOOTER */
+        /* Footer */
         footer {
             background-color: var(--dark-green);
             color: var(--white);
@@ -520,6 +504,8 @@
             gap: 30px;
             margin-bottom: 30px;
             text-align: left;
+            position: relative;
+            z-index: 2;
         }
         footer h3 {
             color: var(--white);
@@ -531,85 +517,65 @@
             margin-bottom: 10px;
         }
 
-        /* Responsive Mobile Styling (Max 992px) */
+        /* Responsive */
         @media (max-width: 992px) {
-            /* GLOBAL CENTERING ON MOBILE */
-            .container, section, .hero-content, .about, .space-text, .contact-info {
-                text-align: center !important;
-            }
-            .hero-h1, .hero-p, .about-paragraphs h2, .about-paragraphs p, .space-text h2, .space-text p {
-                text-align: center !important;
-            }
-            .nav-links, .leaf-decor {
-                display: none; 
-            }
-
-            /* HERO MOBILE ORDERING FIXED */
-            .hero .container {
+            /* Mobile Structure Fixes */
+            .hero-container {
                 flex-direction: column;
-                padding: 40px 20px;
-            }
-            .hero h1 {
-                font-size: 2.2rem;
-                order: 1; /* First */
                 text-align: center;
             }
-            .hero-image {
-                flex: none;
-                width: 100%;
-                margin: 20px 0 30px 0;
-                order: 2; /* Second */
-            }
             .hero-content {
-                padding-right: 0;
-                margin-bottom: 0;
-                order: 3; /* Content Block Thrid */
+                display: contents; /* Allows reordering with sibling */
             }
-            .hero p {
-                order: 1; /* Within block, p first */
+            .hero-title { order: 1; margin-bottom: 20px; text-align: center; }
+            .hero-image { order: 2; margin-bottom: 20px; width: 100%; padding: 0; }
+            .hero-desc { order: 3; margin-bottom: 30px; text-align: center; padding: 0 10px; }
+            .hero-btn { order: 4; align-self: center; margin: 0 auto; display: inline-block; }
+
+            .about-grid {
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
             }
-            .hero-btn-wrapper {
-                order: 2; /* Button last */
+            .about-text {
+                display: contents; /* Allows interleaving text and image */
+            }
+            .about-text h2 { order: 1; margin-bottom: 20px; }
+            .about-p1 { order: 2; }
+            .about-p2 { order: 3; }
+            .about-p3 { order: 4; }
+            .about-p4 { order: 5; margin-bottom: 25px; }
+            .about-image { order: 6; margin-bottom: 25px; width: 100%; }
+            .about-list { 
+                order: 7; 
+                text-align: left; 
+                display: inline-block; 
+                margin: 0 auto;
             }
 
-            /* ABOUT MOBILE ORDERING FIXED */
-            .about-paragraphs {
-                order: 1; /* First */
-                margin-bottom: 30px;
-            }
-            .about-details-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                order: 2; /* Content Block Second */
-            }
-            .about-image {
-                order: 1; /* Within block, Img first */
-            }
-            .about-list-wrapper {
-                order: 2; /* List last */
-            }
-            .about-list li {
-                text-align: left; /* Keep list left aligned for readability */
-            }
-
-            /* OTHER SECTIONS COLUMN STACKING */
             .space-grid, .contact-grid {
+                flex-direction: column;
                 grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            .space-text h2 {
-                text-align: center !important;
             }
             .services-grid, .articles-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .nav-links {
+                display: none; 
+            }
+            .leaf-decor {
+                display: none; /* Hide complex background elements on mobile to prevent clutter */
+            }
         }
-
         @media (max-width: 768px) {
             .services-grid, .articles-grid, .footer-grid {
                 grid-template-columns: 1fr;
             }
-            section, .about, .services, .space, .articles, .faq, .contact {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            section {
                 padding: 50px 0;
             }
         }
@@ -627,7 +593,7 @@
     <nav>
         <div class="container">
             <div class="logo">
-                Ψ Χαρά Τζοάνου <br><span>Ψυχολόγος</span>
+                <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/617054614_122159695238833739_2605594499661601703_n.jpg" alt="Χαρά Τζοάνου Logo" class="main-logo">
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Αρχική</a></li>
@@ -653,18 +619,15 @@
                 </g>
             </svg>
         </div>
-        <div class="container">
-            <h1 class="hero-h1">Ψυχολογική υποστήριξη με σεβασμό στην προσωπική σας ιστορία</h1>
-            
-            <div class="hero-image">
-                <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/3232.jpg" alt="Χαρά Τζοάνου - Ψυχολόγος Portrait">
-            </div>
 
+        <div class="container hero-container">
             <div class="hero-content">
-                <p class="hero-p">Ένας σταθερός χώρος κατανόησης, ασφάλειας και προσωπικής αλλαγής. Υποστήριξη ενηλίκων, γονέων, παιδιών και εφήβων, με συστημική ματιά και σεβασμό στην μοναδικό τρόπο με τον οποίο κάθε άνθρωπος βιώνει τις δυσκολίες του.</p>
-                <div class="hero-btn-wrapper">
-                    <a href="#contact" class="btn">Κλείστε ραντεβού</a>
-                </div>
+                <h1 class="hero-title">Ψυχολογική υποστήριξη με σεβασμό στην προσωπική σας ιστορία</h1>
+                <p class="hero-desc">Ένας σταθερός χώρος κατανόησης, ασφάλειας και προσωπικής αλλαγής. Υποστήριξη ενηλίκων, γονέων, παιδιών και εφήβων, με συστημική ματιά και σεβασμό στην μοναδικό τρόπο με τον οποίο κάθε άνθρωπος βιώνει τις δυσκολίες του.</p>
+                <a href="#contact" class="btn hero-btn">Κλείστε ραντεβού</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/3232.jpg" alt="Συνεδρία Ψυχολογίας">
             </div>
         </div>
     </section>
@@ -681,37 +644,43 @@
                 </g>
             </svg>
         </div>
-        <div class="container">
-            <div class="about-paragraphs">
-                <h2>Σχετικά με μένα</h2>
-                <p>Είμαι η Χαρά Τζοάνου, Ψυχολόγος, Αρ. Άδειας 1130029.</p>
-                <p>Είμαι κάτοχος MSc στην Εφαρμοσμένη Αναπτυξιακή Ψυχολογία και MSc στην Συμβουλευτική Ψυχολογία και έχω εκπαίδευση στη Συστημική Οικογενειακή Θεραπεία.</p>
-                <p>Η επαγγελματική μου πορεία συνδέεται με την ψυχολογική υποστήριξη παιδιών, εφήβων, ενηλίκων και γονέων, με ιδιαίτερο ενδιαφέρον για τη συναισθηματική δυσκολία, τις σχέσεις, την αυτοεκτίμηση, το άγχος και τις μεταβάσεις ζωής.</p>
-                <p>Στη θεραπευτική διαδικασία με ενδιαφέρει να δημιουργείται ένας χώρος ασφάλειας, εμπιστοσύνης και ουσιαστικής ακρόασης.</p>
-            </div>
 
-            <div class="about-details-grid">
-                <div class="about-image">
-                    <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/3232.jpg" alt="Χαρά Τζοάνου - Ψυχολόγος Portrait">
-                </div>
-                <div class="about-list-wrapper">
-                    <h3>Επαγγελματική Ιδιότητα & Εκπαίδευση</h3>
-                    <ul class="about-list">
-                        <li>Ψυχολόγος, Αρ. Άδειας 1130029</li>
-                        <li>MSc στην Εφαρμοσμένη Αναπτυξιακή Ψυχολογία</li>
-                        <li>MSc στην Συμβουλευτική Ψυχολογία</li>
-                        <li>Εκπαίδευση στη Συστημική Οικογενειακή Θεραπεία</li>
-                        <li>Τακτικό Μέλος του Συλλόγου Ελλήνων Ψυχολόγων Α.Μ. 3656</li>
-                    </ul>
-                </div>
+        <div class="container about-grid">
+            <div class="about-image">
+                <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/3232.jpg" alt="Χαρά Τζοάνου - Ψυχολόγος">
+            </div>
+            <div class="about-text">
+                <h2>Σχετικά με μένα</h2>
+                <p class="about-p1">Είμαι η Χαρά Τζοάνου, Ψυχολόγος, Αρ. Άδειας 1130029.</p>
+                <p class="about-p2">Είμαι κάτοχος MSc στην Εφαρμοσμένη Αναπτυξιακή Ψυχολογία και MSc στην Συμβουλευτική Ψυχολογία και έχω εκπαίδευση στη Συστημική Οικογενειακή Θεραπεία.</p>
+                <p class="about-p3">Η επαγγελματική μου πορεία συνδέεται με την ψυχολογική υποστήριξη παιδιών, εφήβων, ενηλίκων και γονέων, με ιδιαίτερο ενδιαφέρον για τη συναισθηματική δυσκολία, τις σχέσεις, την αυτοεκτίμηση, το άγχος και τις μεταβάσεις ζωής.</p>
+                <p class="about-p4">Στη θεραπευτική διαδικασία με ενδιαφέρει να δημιουργείται ένας χώρος ασφάλειας, εμπιστοσύνης και ουσιαστικής ακρόασης.</p>
+                <ul class="about-list">
+                    <li>Ψυχολόγος, Αρ. Άδειας 1130029</li>
+                    <li>MSc στην Εφαρμοσμένη Αναπτυξιακή Ψυχολογία</li>
+                    <li>MSc στην Συμβουλευτική Ψυχολογία</li>
+                    <li>Εκπαίδευση στη Συστημική Οικογενειακή Θεραπεία</li>
+                    <li>Τακτικό Μέλος του Συλλόγου Ελλήνων Ψυχολόγων Α.Μ. 3656</li>
+                </ul>
             </div>
         </div>
     </section>
 
     <section id="services" class="services">
+        <div class="leaf-decor leaf-float" style="top: 20%; left: -80px; opacity: var(--leaf-light-opacity); transform: rotate(45deg);">
+             <svg width="250" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg" class="leaf-sway">
+                <g fill="var(--primary-green)">
+                    <path d="M100,300 C90,200 120,100 160,0" fill="none" stroke="var(--primary-green)" stroke-width="2"/>
+                    <path d="M105,250 C70,240 50,190 40,160 C70,180 100,210 105,250" />
+                    <path d="M115,180 C150,160 170,120 180,90 C150,110 120,140 115,180" />
+                </g>
+            </svg>
+        </div>
+
         <div class="container">
             <h2 class="section-title">Υπηρεσίες</h2>
             <p class="section-subtitle">Οι υπηρεσίες απευθύνονται σε ενήλικες, γονείς, παιδιά και εφήβους. Μέσα από μια συνεργατική και ανθρώπινη προσέγγιση, στόχος είναι η προσωπική ανάπτυξη, η ψυχική ευεξία και η βελτίωση των σχέσεων.</p>
+            
             <div class="services-grid">
                 <div class="service-card">
                     <h3>Ατομική Ψυχοθεραπεία</h3>
@@ -742,6 +711,18 @@
     </section>
 
     <section id="space" class="space">
+        <div class="leaf-decor leaf-float-rev" style="top: -50px; right: 5%; opacity: var(--leaf-dark-opacity);">
+            <svg width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg" class="leaf-sway">
+                <g fill="var(--bg-beige)">
+                    <path d="M100,300 C110,200 80,100 40,0" fill="none" stroke="var(--bg-beige)" stroke-width="2"/>
+                    <path d="M95,250 C130,240 150,190 160,160 C130,180 100,210 95,250" />
+                    <path d="M85,180 C50,160 30,120 20,90 C50,110 80,140 85,180" />
+                    <path d="M70,110 C110,100 130,60 140,30 C110,50 80,80 70,110" />
+                    <path d="M50,40 C30,20 10,0 0,-20 C20,-10 40,10 50,40" />
+                </g>
+            </svg>
+        </div>
+
         <div class="container space-grid">
             <div class="space-text">
                 <h2 class="section-title">Ο χώρος</h2>
@@ -749,7 +730,7 @@
                 <p>Έχει διαμορφωθεί με φροντίδα, ώστε να υποστηρίζει μία εμπειρία σταθερότητας, ιδιωτικότητας και ουσιαστικής παρουσίας.</p>
                 <p>Προσφέρονται συνεδρίες δια ζώσης στο γραφείο, αλλά και online συνεδρίες, ανάλογα με τις ανάγκες και τις δυνατότητες κάθε ανθρώπου.</p>
                 <br>
-                <h3 style="color: white; margin-bottom: 10px;">Πού βρίσκεται το γραφείο</h3>
+                <h3 style="color: white; margin-bottom: 10px; position: relative; z-index: 2;">Πού βρίσκεται το γραφείο</h3>
                 <p>Λεωφόρος Ηρακλείου 191, Νέα Ιωνία<br>
                 Πρόσβαση: ΗΣΑΠ στάση Νέα Ιωνία ή στάση Πευκάκια</p>
             </div>
@@ -760,12 +741,23 @@
     </section>
 
     <section id="articles" class="articles">
+        <div class="leaf-decor leaf-float" style="bottom: 0px; left: 40%; opacity: var(--leaf-light-opacity);">
+            <svg width="280" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="leaf-sway" style="transform: rotate(90deg);">
+                <g fill="var(--primary-green)">
+                    <path d="M150,200 C150,150 150,100 150,0" fill="none" stroke="var(--primary-green)" stroke-width="2"/>
+                    <path d="M148,160 C110,150 90,110 80,90 C110,100 140,130 148,160" />
+                    <path d="M152,110 C190,100 210,60 220,40 C190,50 160,80 152,110" />
+                </g>
+            </svg>
+        </div>
+
         <div class="container">
             <h2 class="section-title">Άρθρα ψυχολογίας</h2>
-            <p class="section-subtitle">Εδώ θα βρείτε σύντομα άρθρα με ψυχοεκπαιδευτικό περιεχόμενο για θέματα ψυχικής υγείας, σχέσεων, γονεϊκότητας, άγχους, αυτοεκτίμησης και προσωπικής ανάπτυξης.</p>
+            <p class="section-subtitle">Εδώ θα βρείτε σύντομα άρθρα με ψυχοεκπαιδευτικό περιεχόμενο για θέματα ψυχικής υγείας, σχέσεων, γονεϊκότητας, άγχους, αυτοεκτίμησης και προσωπικής ανάπτυξης. Στόχος είναι η ενημέρωση, η κατανόηση και η υποστήριξή σας στην καθημερινότητα.</p>
+            
             <div class="articles-grid">
                 <div class="article-card">
-                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1499209974431-9dddcece7f88?ixlib=rb-4.0.3&fit=crop&w=600&q=80');"></div>
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1499209974431-9dddcece7f88?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
                     <div class="article-content">
                         <span class="article-category">ΨΥΧΟΘΕΡΑΠΕΙΑ</span>
                         <h3 class="article-title">Πότε είναι χρήσιμο να ξεκινήσω ψυχοθεραπεία;</h3>
@@ -773,7 +765,7 @@
                     </div>
                 </div>
                 <div class="article-card">
-                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&fit=crop&w=600&q=80');"></div>
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
                     <div class="article-content">
                         <span class="article-category">ΑΓΧΟΣ</span>
                         <h3 class="article-title">Άγχος και σώμα</h3>
@@ -781,10 +773,34 @@
                     </div>
                 </div>
                 <div class="article-card">
-                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1516627145497-ae6968895b74?ixlib=rb-4.0.3&fit=crop&w=600&q=80');"></div>
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1516627145497-ae6968895b74?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
                     <div class="article-content">
                         <span class="article-category">ΓΟΝΕΙΚΟΤΗΤΑ</span>
                         <h3 class="article-title">Γονεικότητα και όρια</h3>
+                        <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="article-content">
+                        <span class="article-category">ΕΦΗΒΕΙΑ</span>
+                        <h3 class="article-title">Εφηβεία και απόσυρση</h3>
+                        <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1502444330042-d1a1ddf9bb5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="article-content">
+                        <span class="article-category">ΣΧΕΣΕΙΣ</span>
+                        <h3 class="article-title">Αυτοεκτίμηση και σχέσεις</h3>
+                        <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="article-content">
+                        <span class="article-category">ΨΥΧΟΘΕΡΑΠΕΙΑ</span>
+                        <h3 class="article-title">Η πρώτη συνεδρία με ψυχολόγο</h3>
                         <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
                     </div>
                 </div>
@@ -793,50 +809,118 @@
     </section>
 
     <section id="faq" class="faq">
+        <div class="leaf-decor leaf-float-rev" style="top: 20%; right: -50px; opacity: var(--leaf-light-opacity);">
+            <svg width="200" height="250" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg" class="leaf-sway" style="transform: scaleX(-1);">
+                <g fill="var(--primary-green)">
+                    <path d="M100,300 C90,200 120,100 160,0" fill="none" stroke="var(--primary-green)" stroke-width="2"/>
+                    <path d="M105,250 C70,240 50,190 40,160 C70,180 100,210 105,250" />
+                    <path d="M115,180 C150,160 170,120 180,90 C150,110 120,140 115,180" />
+                </g>
+            </svg>
+        </div>
+
         <div class="container faq-container">
             <h2 class="section-title">Συχνές ερωτήσεις</h2>
             <p class="section-subtitle">Απαντήσεις στις πιο συχνές απορίες σχετικά με τη ψυχολογική υποστήριξη και τις συνεδρίες.</p>
+            
             <details>
                 <summary>Πόσο διαρκεί μία συνεδρία;</summary>
                 <p>Μια ατομική συνεδρία διαρκεί συνήθως 45 λεπτά.</p>
             </details>
             <details>
                 <summary>Πώς κλείνω το πρώτο ραντεβού;</summary>
-                <p>Μπορείτε να επικοινωνήσετε μαζί μου τηλεφωνικά ή να συμπληρώσετε τη φόρμα επικοινωνίας και θα σας απαντήσω το συντομότερο δυνατό.</p>
+                <p>Μπορείτε να επικοινωνήσετε μαζί μου τηλεφωνικά ή να συμπληρώσετε τη φόρμα επικοινωνίας στη σελίδα Επικοινωνία και θα σας απαντήσω το συντομότερο δυνατό.</p>
+            </details>
+            <details>
+                <summary>Τι γίνεται στην πρώτη συνεδρία;</summary>
+                <p>Η πρώτη συνεδρία έχει διερευνητικό χαρακτήρα. Έχουμε την ευκαιρία να γνωριστούμε, να συζητήσουμε τον λόγο που σας έφερε εδώ και να θέσουμε μαζί τους στόχους της θεραπευτικής πορείας.</p>
             </details>
             <details>
                 <summary>Υπάρχει εχεμύθεια;</summary>
                 <p>Ναι, όλες οι συνεδρίες διέπονται από το επαγγελματικό απόρρητο και τους κανόνες δεοντολογίας των ψυχολόγων.</p>
             </details>
+            <details>
+                <summary>Πραγματοποιούνται συνεδρίες με γονείς;</summary>
+                <p>Ναι, προσφέρεται συμβουλευτική γονέων για την κατανόηση και υποστήριξη του γονεϊκού ρόλου.</p>
+            </details>
+            <details>
+                <summary>Γίνονται συνεδρίες με εφήβους;</summary>
+                <p>Ναι, παρέχεται ψυχοθεραπεία σε εφήβους με την απαραίτητη συγκατάθεση και συνεργασία των γονέων.</p>
+            </details>
+            <details>
+                <summary>Γίνονται online συνεδρίες;</summary>
+                <p>Ναι, προσφέρονται και διαδικτυακές συνεδρίες για όσους δεν μπορούν να παρευρεθούν δια ζώσης.</p>
+            </details>
         </div>
     </section>
 
     <section id="contact" class="contact">
+        <div class="leaf-decor leaf-float" style="top: 0px; left: -100px; opacity: var(--leaf-light-opacity);">
+            <svg width="300" height="400" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg" class="leaf-sway">
+                <g fill="var(--primary-green)">
+                    <path d="M100,300 C90,200 120,100 160,0" fill="none" stroke="var(--primary-green)" stroke-width="2"/>
+                    <path d="M105,250 C70,240 50,190 40,160 C70,180 100,210 105,250" />
+                    <path d="M115,180 C150,160 170,120 180,90 C150,110 120,140 115,180" />
+                    <path d="M130,110 C90,100 70,60 60,30 C90,50 120,80 130,110" />
+                </g>
+            </svg>
+        </div>
+
         <div class="container">
             <h2 class="section-title">Επικοινωνία</h2>
+            <p class="section-subtitle">Είμαι εδώ για να σας ακούσω και να σας υποστηρίξω. Επικοινωνήστε μαζί μου για οποιαδήποτε πληροφορία ή για να κλείσουμε το πρώτο σας ραντεβού.</p>
+            
             <div class="contact-grid">
                 <div class="contact-info">
                     <h3>Χαρά Τζοάνου</h3>
-                    <p style="margin-bottom: 20px;">Ψυχολόγος, Αρ. Άδειας 1130029</p>
+                    <p style="color: var(--text-light); margin-bottom: 30px;">Ψυχολόγος, Αρ. Άδειας 1130029</p>
+                    
                     <div class="info-item">
                         <div class="icon">✆</div>
-                        <div><strong>Τηλέφωνο</strong><br>210 440 4243</div>
+                        <div>
+                            <strong>Τηλέφωνο</strong><br>
+                            210 440 4243
+                        </div>
                     </div>
                     <div class="info-item">
                         <div class="icon">📍</div>
-                        <div><strong>Διεύθυνση</strong><br>Λεωφόρος Ηρακλείου 191, Νέα Ιωνία</div>
+                        <div>
+                            <strong>Διεύθυνση</strong><br>
+                            Λεωφόρος Ηρακλείου 191, Νέα Ιωνία<br>
+                            <span style="font-size: 0.9em; color: var(--text-light);">Πρόσβαση: ΗΣΑΠ στάση Νέα Ιωνία ή στάση Πευκάκια</span>
+                        </div>
                     </div>
                     <div class="info-item">
                         <div class="icon">✉</div>
-                        <div><strong>Email</strong><br>info@charatzoanou.gr</div>
+                        <div>
+                            <strong>Email</strong><br>
+                            info@charatzoanou.gr
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icon">💻</div>
+                        <div>
+                            <strong>Συνεδρίες</strong><br>
+                            Δια ζώσης και online συνεδρίες
+                        </div>
                     </div>
                 </div>
+
                 <div class="contact-form-container">
                     <form class="contact-form" action="#" method="POST">
-                        <div class="form-group"><input type="text" placeholder="Ονοματεπώνυμο" required></div>
-                        <div class="form-group"><input type="email" placeholder="Email" required></div>
-                        <div class="form-group"><textarea placeholder="Μήνυμα" required></textarea></div>
-                        <button type="submit" class="btn">Αποστολή μηνύματος</button>
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Ονοματεπώνυμο" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" name="phone" placeholder="Τηλέφωνο">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Μήνυμα" required></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Αποστολή μηνύματος</button>
                     </form>
                 </div>
             </div>
@@ -844,12 +928,42 @@
     </section>
 
     <footer>
+        <div class="leaf-decor leaf-float" style="bottom: -50px; left: 5%; opacity: 0.15; z-index: 1;">
+            <svg width="250" height="350" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg" class="leaf-sway">
+                <g fill="var(--bg-beige)">
+                    <path d="M100,300 C110,200 80,100 40,0" fill="none" stroke="var(--bg-beige)" stroke-width="2"/>
+                    <path d="M95,250 C130,240 150,190 160,160 C130,180 100,210 95,250" />
+                    <path d="M85,180 C50,160 30,120 20,90 C50,110 80,140 85,180" />
+                    <path d="M70,110 C110,100 130,60 140,30 C110,50 80,80 70,110" />
+                </g>
+            </svg>
+        </div>
+
         <div class="container">
             <div class="footer-grid">
-                <div><h3>Χαρά Τζοάνου</h3><p>Ψυχολόγος, Αρ. Άδειας 1130029</p></div>
-                <div><p>210 440 4243</p><p>info@charatzoanou.gr</p></div>
-                <div><p>Λεωφόρος Ηρακλείου 191, Νέα Ιωνία</p><p>© 2026 Χαρά Τζοάνου.</p></div>
+                <div>
+                    <h3>Χαρά Τζοάνου</h3>
+                    <p>Ψυχολόγος, Αρ. Άδειας 1130029</p>
+                </div>
+                <div>
+                    <p>✆ 210 440 4243</p>
+                    <p>📍 Λεωφόρος Ηρακλείου 191, Νέα Ιωνία</p>
+                    <p>🚇 ΗΣΑΠ: Νέα Ιωνία ή Πευκάκια</p>
+                    <p>✉ info@charatzoanou.gr</p>
+                </div>
+                <div>
+                    <p>Δια ζώσης και online συνεδρίες</p>
+                    <p style="margin-top: 15px;">Ακολουθήστε με:</p>
+                    <p>
+                        <a href="#" style="margin-right: 10px;">Instagram</a> | 
+                        <a href="#" style="margin-left: 10px; margin-right: 10px;">Facebook</a> | 
+                        <a href="#" style="margin-left: 10px;">LinkedIn</a>
+                    </p>
+                </div>
             </div>
+            <p style="border-top: 1px solid #5a6e5a; padding-top: 20px; font-size: 0.8rem; position: relative; z-index: 2;">
+                © 2026 Χαρά Τζοάνου. All rights reserved.
+            </p>
         </div>
     </footer>
 
