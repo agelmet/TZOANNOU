@@ -1003,7 +1003,7 @@
         @supports (animation-timeline: view()){
             .arch-frame img,.gal-featured img{animation:framePan linear both;animation-timeline:view()}
         }
-        @keyframes framePan{from{transform:scale(1.14) translateY(3.5%)}to{transform:scale(1.14) translateY(-3.5%)}}
+        @keyframes framePan{from{transform:scale(1.07) translateY(2.2%)}to{transform:scale(1.07) translateY(-2.2%)}}
 
         /* conic border-beam on card hover */
         @property --beam{syntax:'<angle>';inherits:false;initial-value:0deg}
@@ -1035,6 +1035,42 @@
         @keyframes bbIn{to{transform:translateY(0)}}
         .bb-btn.solid{animation:ctaPulse 3.4s ease-in-out 3.2s infinite}
         @keyframes ctaPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.28)}55%{box-shadow:0 0 0 10px rgba(255,255,255,0)}}
+
+        /* ============ v6 — calmer scale + services redesign ============ */
+        /* desktop type scale back to editorial proportions (fixes "zoomed" feel) */
+        .section-title{font-size:clamp(2rem, 1.45rem + 1.7vw, 2.7rem)}
+        .hero .hero-welcome{font-size:clamp(1.9rem, 1.2rem + 2.2vw, 2.8rem)}
+        .green-banner h2{font-size:clamp(1.9rem, 1.5rem + 1.5vw, 2.55rem)}
+        .site-quote{font-size:clamp(1.45rem, 1.05rem + 1.6vw, 2.15rem)}
+        .hero-welcome + .hero-p{font-size:1rem}
+
+        /* services: one refined ledger — numbered accordion rows */
+        .services-grid{display:flex;flex-direction:column;gap:0 !important;counter-reset:svc;max-width:960px;margin:0 auto;background:var(--card-bg);border:1px solid var(--hairline);border-radius:26px;box-shadow:var(--sh-md);overflow:hidden}
+        .service-card{border-radius:0;border:0;border-top:1px solid var(--hairline);box-shadow:none;background:transparent;padding:32px 44px 32px 36px;position:relative}
+        .service-card:first-child{border-top:0}
+        .service-card::before{content:none} /* no border-beam on ledger rows */
+        .service-card:hover{transform:none;box-shadow:none;background:rgba(109,130,109,.055)}
+        .service-card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--primary-green),var(--light-green));transform:scaleY(0);transform-origin:top;transition:transform .5s var(--ease-out)}
+        .service-card.open::after{transform:scaleY(1)}
+        .service-card.open{background:linear-gradient(100deg,rgba(109,130,109,.07),rgba(109,130,109,.015) 55%,transparent)}
+        .svc-btn{display:grid;grid-template-columns:64px 1fr 40px;align-items:center;gap:16px}
+        .svc-btn::before{counter-increment:svc;content:"0" counter(svc);font-family:var(--font-heading);font-style:italic;font-size:1.5rem;color:rgba(109,130,109,.42);line-height:1;transition:color .35s ease,transform .35s var(--ease-out)}
+        .service-card:hover .svc-btn::before,.service-card.open .svc-btn::before{color:var(--primary-green);transform:translateX(4px)}
+        .svc-btn h3{font-size:clamp(1.2rem, 1.05rem + .5vw, 1.5rem);padding:0}
+        .svc-btn h3::after{bottom:-8px}
+        .svc-chev{margin-top:0;justify-self:end}
+        .svc-sum{margin:10px 0 0 80px;max-width:62ch}
+        .svc-full{margin-left:80px}
+        .svc-full p{max-width:62ch}
+        .svc-more{margin:14px 0 0 80px}
+        .svc-wide{grid-column:auto}
+        @media (max-width:700px){
+            .service-card{padding:24px 20px 24px 18px}
+            .svc-btn{grid-template-columns:44px 1fr 34px;gap:12px}
+            .svc-btn::before{font-size:1.2rem}
+            .svc-sum,.svc-full,.svc-more{margin-left:0}
+            .svc-sum{margin-top:12px}
+        }
 
         /* reduced motion: kill transforms, blurs, transitions, animations */
         @media (prefers-reduced-motion: reduce){
