@@ -21,12 +21,10 @@
             --font-body: 'Open Sans', sans-serif;
         }
 
-        /* Ultimate fix for horizontal scrolling / zoomed-in issues */
-        /* overflow-x: clip hides overflow natively WITHOUT breaking position: sticky! */
+        /* Fix for desktop zoomed-in / right hand margin issue */
+        /* Removed overflow-x: hidden from html/body as it breaks position: sticky */
         html, body {
             width: 100%;
-            max-width: 100%;
-            overflow-x: clip; 
             margin: 0;
             padding: 0;
         }
@@ -43,12 +41,12 @@
             color: var(--text-dark);
             background-color: var(--bg-beige);
             line-height: 1.6;
-            padding-bottom: 90px; /* Space for Sticky CTA */
+            padding-bottom: 60px; /* Space for Sticky CTA */
         }
 
-        /* Dedicated wrapper to hide horizontal overflow visually */
+        /* Dedicated wrapper to hide horizontal overflow without breaking sticky nav */
         .site-wrapper {
-            overflow-x: clip;
+            overflow-x: hidden;
             width: 100%;
             position: relative;
         }
@@ -252,7 +250,6 @@
             flex: 0.8;
             position: relative;
             z-index: 2;
-            transform: translateY(-60px); /* Moves the image higher up as requested */
         }
         .image-placeholder {
             background-color: #e2e8e2;
@@ -541,13 +538,7 @@
                 display: contents; 
             }
             .hero-title { order: 1; text-align: center; }
-            .hero-image { 
-                order: 2; 
-                width: 100%; 
-                max-width: 400px; 
-                margin: 0 auto 20px auto; 
-                transform: translateY(0); /* Reset mobile transform */
-            }
+            .hero-image { order: 2; width: 100%; max-width: 400px; margin: 0 auto 20px auto; }
             .hero-desc { order: 3; text-align: left; }
             .signature-img { order: 4; margin: 0 auto; }
             .hero-btn { display: none; } /* Managed by sticky CTA */
@@ -718,22 +709,19 @@
         .book-bar{position:fixed;left:0;right:0;bottom:0;z-index:1500;background:rgba(79,97,79,.97);backdrop-filter:blur(6px);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px clamp(16px,4vw,48px);box-shadow:0 -4px 18px rgba(0,0,0,.15)}
         .bb-text{font-size:.92rem;line-height:1.5;max-width:520px}
         .bb-actions{display:flex;gap:12px;flex-wrap:wrap}
-        .bb-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;border:1px solid rgba(255,255,255,.7);border-radius:10px;padding:.7em 1.2em;color:#fff;font-size:.88rem;font-weight:600;text-decoration:none;transition:background .3s,transform .3s;text-align:center;white-space:normal;}
+        .bb-btn{display:inline-flex;align-items:center;gap:.5em;border:1px solid rgba(255,255,255,.7);border-radius:10px;padding:.7em 1.2em;color:#fff;font-size:.88rem;font-weight:600;text-decoration:none;transition:background .3s,transform .3s}
         .bb-btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.12)}
         .bb-btn.solid{background:#fff;color:var(--dark-green)}
         .bb-btn.solid .gic{stroke:var(--dark-green)}
         .bb-btn.solid:hover{background:#f1f4ef}
 
-        /* Mobile specific fixes so the book-bar does not break horizontal sizing */
         @media (max-width: 900px){
             .hero-container,.about-grid,.about-cards,.contact-cards{grid-template-columns:1fr;gap:40px}
             .reviews-grid{grid-template-columns:1fr}
             .acard-ic{margin-top:-64px}
-            .book-bar{flex-direction:column;align-items:stretch;gap:12px;padding:16px 20px;}
-            .bb-text{font-size:.88rem;text-align:center;max-width:100%;}
-            .bb-actions{flex-direction:column;width:100%;gap:10px;}
-            .bb-btn{width:100%;}
-            body{padding-bottom:180px} /* Clear space for the tall stacked book-bar */
+            .book-bar{flex-direction:column;align-items:flex-start;gap:10px}
+            .bb-text{font-size:.85rem}
+            body{padding-bottom:0}
             section{padding:80px 0}
         }
 
@@ -788,8 +776,7 @@
         nav{transition:padding .35s ease,box-shadow .35s ease,background-color .35s ease}
         .main-logo{transition:height .35s ease}
         nav.is-scrolled{padding:7px 0;background-color:rgba(109,130,109,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--sh-sm)}
-        nav.is-scrolled .main-logo{height:52px}
-
+        
         @media (max-width:768px){
             .footer-grid{grid-template-columns:1fr;text-align:center}
             .footer-contact p{justify-content:center}
