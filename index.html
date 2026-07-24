@@ -13,7 +13,7 @@
             --primary-green: #6d826d; 
             --dark-green: #4f614f;
             --light-green: #899c89;
-            --bg-beige: #f9f8f4; /* Main background color */
+            --bg-beige: #f9f8f4;
             --text-dark: #333333;
             --text-light: #666666;
             --white: #ffffff;
@@ -23,11 +23,18 @@
 
         /* Fix for desktop zoomed-in / right hand margin issue */
         html, body {
-            overflow-x: hidden;
-            max-width: 100vw;
             width: 100%;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
+        }
+        
+        /* The Site Wrapper ensures absolute elements don't push horizontal scroll */
+        .site-wrapper {
+            width: 100%;
+            position: relative;
+            overflow-x: hidden;
+            background-color: var(--bg-beige);
         }
 
         /* Reset & Base Styles */
@@ -42,7 +49,7 @@
             color: var(--text-dark);
             background-color: var(--bg-beige);
             line-height: 1.6;
-            padding-bottom: 60px; /* Space for Sticky CTA */
+            padding-bottom: 90px; /* Space for Sticky CTA */
         }
 
         h1, h2, h3, h4 {
@@ -101,12 +108,12 @@
             100% { transform: translateY(15px) translateX(-10px); }
         }
 
-        /* Leaf Decorative Elements (Replaced with PNG) */
+        /* Leaf Decorative Elements */
         .leaf-decor {
             position: absolute;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.6; /* Adjust blend */
+            opacity: 0.6; 
             width: 180px;
             height: auto;
         }
@@ -477,33 +484,6 @@
             border: 2px solid var(--primary-green);
         }
 
-        /* Sticky Footer CTA */
-        .sticky-cta-wrapper {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: var(--primary-green);
-            z-index: 9999;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
-            text-align: center;
-        }
-        .sticky-cta-btn {
-            display: block;
-            color: var(--white);
-            font-family: var(--font-heading);
-            font-size: 1.3rem;
-            padding: 18px;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-        }
-        .sticky-cta-btn:hover {
-            background-color: var(--dark-green);
-        }
-
         /* Footer */
         footer {
             background-color: var(--dark-green);
@@ -550,7 +530,7 @@
             .hero-image { order: 2; width: 100%; max-width: 400px; margin: 0 auto 20px auto; }
             .hero-desc { order: 3; text-align: left; }
             .signature-img { order: 4; margin: 0 auto; }
-            .hero-btn { display: none; } /* Managed by sticky CTA */
+            .hero-btn { display: none; } 
 
             .about-grid { text-align: center; gap: 0;}
             .about-text { display: contents; }
@@ -565,14 +545,16 @@
             .nav-links { display: none; }
             
             .leaf-decor {
-                width: 80px; /* Small minimal leafs on mobile */
+                width: 80px; 
             }
             
             .map-container { min-height: 250px; }
         }
     
         /* ============ CLIENT REDESIGN v2 ============ */
-        body{background-color:var(--bg-beige);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .40 0 0 0 0 .34 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+        .site-wrapper {
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .40 0 0 0 0 .34 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")
+        }
         p{line-height:1.8}
         p,li{text-wrap:pretty;hyphens:none;word-spacing:normal}
         section{padding:110px 0}
@@ -716,7 +698,29 @@
         .footer-bottom{border-top:1px solid #5a6e5a;padding-top:20px;font-size:.8rem;position:relative;z-index:2}
 
         /* booking bar */
-        .book-bar{position:fixed;left:0;right:0;bottom:0;z-index:1500;background:rgba(79,97,79,.97);backdrop-filter:blur(6px);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px clamp(16px,4vw,48px);box-shadow:0 -4px 18px rgba(0,0,0,.15)}
+        .book-bar{
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: -150px; /* starts hidden below the viewport to fix crop issues */
+            z-index: 1500;
+            background: rgba(79,97,79,.97);
+            backdrop-filter: blur(6px);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 16px clamp(16px,4vw,48px);
+            padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+            box-shadow: 0 -4px 18px rgba(0,0,0,.15);
+            /* simpler slide up animation using bottom instead of transform to prevent clipping */
+            animation: bbSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards;
+        }
+        @keyframes bbSlideUp {
+            to { bottom: 0; }
+        }
+        
         .bb-text{font-size:.92rem;line-height:1.5;max-width:520px}
         .bb-actions{display:flex;gap:12px;flex-wrap:wrap}
         .bb-btn{display:inline-flex;align-items:center;gap:.5em;border:1px solid rgba(255,255,255,.7);border-radius:10px;padding:.7em 1.2em;color:#fff;font-size:.88rem;font-weight:600;text-decoration:none;transition:background .3s,transform .3s}
@@ -901,10 +905,10 @@
         .btn-tz{letter-spacing:.02em;box-shadow:var(--sh-sm)}
         .btn-tz.ghost{box-shadow:none;border-color:rgba(79,97,79,.45)}
 
-        /* footer & book bar */
+        /* footer */
         footer{background:linear-gradient(180deg,#485848 0%,#3e4c3e 100%)}
         .footer-logo{height:86px;border-radius:14px;padding:8px 14px}
-        .book-bar{background:rgba(62,76,62,.96);border-top:1px solid rgba(255,255,255,.1)}
+        .book-bar{border-top:1px solid rgba(255,255,255,.1)}
         .footer-credit{font-size:.78rem;color:#b9c4b9;margin-top:10px;position:relative;z-index:2}
         .footer-credit a{color:#d7dfd7;border-bottom:1px solid rgba(255,255,255,.3)}
         .footer-credit a:hover{color:#fff;border-color:#fff}
@@ -999,11 +1003,9 @@
         body.has-cursor #cursorGlow{opacity:1}
         @media (pointer:coarse){#cursorGlow{display:none}}
 
-        /* preloader exit + booking bar entrance & pulse */
+        /* preloader exit + pulse */
         .pre-inner{transition:transform .8s var(--ease-out),opacity .7s ease}
         #preloader.done .pre-inner{transform:scale(1.05);opacity:0}
-        .book-bar{transform:translateY(102%);animation:bbIn .9s var(--ease-out) 2.1s forwards}
-        @keyframes bbIn{to{transform:translateY(0)}}
         .bb-btn.solid{animation:ctaPulse 3.4s ease-in-out 3.2s infinite}
         @keyframes ctaPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.28)}55%{box-shadow:0 0 0 10px rgba(255,255,255,0)}}
 
@@ -1103,7 +1105,7 @@
             .service-card:hover,.acard:hover,.contact-card:hover,.review-card:hover,.article-card:hover,.faq-cat-body details:hover,.btn:hover,.btn-tz:hover,.bb-btn:hover,.footer-social a:hover,.btn:active,.btn-tz:active,.bb-btn:active,.gal-sym-grid .image-placeholder:hover,.gal-sym-grid img:hover{transform:none !important}
             .arch-frame:hover img{transform:none !important}
             .bb-btn::before{display:none}
-            .book-bar{transform:none !important}
+            .book-bar{animation:none !important; bottom: 0 !important;}
             .scroll-progress,#cursorGlow{display:none !important}
             .w{transform:none !important}
             .site-quote .qw{opacity:1 !important}
@@ -1125,483 +1127,490 @@
         </div>
     </div>
 
+    <!-- SITE WRAPPER: PREVENTS ALL HORIZONTAL SCROLL & ZOOM ISSUES -->
+    <div class="site-wrapper">
 
-    <nav>
-        <div class="container">
-            <div class="logo">
-                <img src="https://github.com/agelmet/TZOANNOU/blob/main/Gemini_Generated_Image_ifh7ddifh7ddifh7.png?raw=true" alt="Ψ Χαρά Τζοάνου, Ψυχολόγος" class="main-logo" width="3200" height="1340">
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home">Αρχική</a></li>
-                <li><a href="#about">Σχετικά με εμένα</a></li>
-                <li><a href="#services">Υπηρεσίες</a></li>
-                <li><a href="#space">Ο χώρος</a></li>
-                <li><a href="#articles">Αρθρογραφία</a></li>
-                <li><a href="#reviews">Αξιολογήσεις</a></li>
-                <li><a href="#faq">Συχνές ερωτήσεις</a></li>
-                <li><a href="#contact">Επικοινωνία</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <section id="home" class="hero">
-        <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: 10px; left: -20px;" alt="">
-        <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-float-rev" style="bottom: 10px; right: -20px; transform: scaleX(-1);" alt="">
-
-        <div class="container hero-container">
-            <div class="hero-content rv">
-                <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
-                <p class="hero-welcome">Καλώς ήρθατε στη σελίδα μου!</p>
-                <p class="hero-p">Ονομάζομαι Χαρά Τζοάνου και είμαι Ψυχολόγος με Αριθμό Άδειας Άσκησης Επαγγέλματος 1130029 και Τακτικό Μέλος του Συλλόγου Ελλήνων Ψυχολόγων (Α.Μ. 3656). Διατηρώ ιδιωτικό γραφείο στη Νέα Ιωνία και παρέχω υπηρεσίες ψυχοθεραπείας και ψυχολογικής υποστήριξης σε ενήλικες, ζευγάρια, εφήβους και παιδιά.</p>
-                <p class="hero-p">Η θεραπευτική μου προσέγγιση βασίζεται στον σεβασμό προς τη μοναδική ιστορία κάθε ανθρώπου. Πιστεύω ότι οι εμπειρίες, οι σχέσεις και τα βιώματα διαμορφώνουν τον τρόπο με τον οποίο αντιλαμβανόμαστε τον εαυτό μας, τους άλλους και τον κόσμο γύρω μας. Μέσα από αυτή τη ματιά, επιδιώκω να δημιουργώ έναν χώρο όπου κάθε άνθρωπος μπορεί να αισθανθεί ασφάλεια, αποδοχή και ελευθερία να εκφράσει όσα τον απασχολούν.</p>
-                <p class="hero-p">Η θεραπευτική μου πρακτική υποστηρίζεται από συνεχή κλινική εποπτεία, προσωπική θεραπεία και διαρκή επιστημονική επιμόρφωση, στοιχεία που θεωρώ αναπόσπαστα για την υπεύθυνη άσκηση του επαγγέλματος και την παροχή ποιοτικών υπηρεσιών ψυχικής υγείας.</p>
-                <p class="hero-p">Στόχος μου είναι να συνοδεύσω κάθε άνθρωπο σε μια διαδικασία αυτογνωσίας και προσωπικής ανάπτυξης, βοηθώντας τον να κατανοήσει βαθύτερα τον εαυτό του, να αναγνωρίσει τα μοτίβα που επηρεάζουν τη ζωή και τις σχέσεις του και να αναπτύξει νέους τρόπους αντιμετώπισης των δυσκολιών και των προκλήσεων που συναντά στην καθημερινότητα του.</p>
-                <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/homeaftertext.png" class="signature-img" alt="Υπογραφή">
-            </div>
-            <div class="hero-image rv d1">
-                <div class="arch-frame">
-                    <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/hero-photo.jpg" alt="Χαρά Τζοάνου" onerror="this.style.display='none';this.parentElement.classList.add('is-empty')">
-                    <span class="ph-label">[Φωτογραφία Ψυχολόγου]</span>
+        <nav>
+            <div class="container">
+                <div class="logo">
+                    <!-- Logo now leads to the home section -->
+                    <a href="#home" aria-label="Επιστροφή στην Αρχική Σελίδα" style="display: flex; align-items: center; text-decoration: none;">
+                        <img src="https://github.com/agelmet/TZOANNOU/blob/main/Gemini_Generated_Image_ifh7ddifh7ddifh7.png?raw=true" alt="Ψ Χαρά Τζοάνου, Ψυχολόγος" class="main-logo" width="3200" height="1340">
+                    </a>
                 </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Αρχική</a></li>
+                    <li><a href="#about">Σχετικά με εμένα</a></li>
+                    <li><a href="#services">Υπηρεσίες</a></li>
+                    <li><a href="#space">Ο χώρος</a></li>
+                    <li><a href="#articles">Αρθρογραφία</a></li>
+                    <li><a href="#reviews">Αξιολογήσεις</a></li>
+                    <li><a href="#faq">Συχνές ερωτήσεις</a></li>
+                    <li><a href="#contact">Επικοινωνία</a></li>
+                </ul>
             </div>
-        </div>
-    </section>
+        </nav>
 
-    <section id="about" class="about">
-        <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: 40%; right: -30px; transform: scaleX(-1);" alt="">
+        <section id="home" class="hero">
+            <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: 10px; left: -20px;" alt="">
+            <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-float-rev" style="bottom: 10px; right: -20px; transform: scaleX(-1);" alt="">
 
-        <div class="container">
-            <h2 class="section-title rv">Σχετικά με εμένα</h2>
-            <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
-            <div class="about-grid" style="margin-top:50px">
-                <div class="about-image rv">
-                    <div class="arch-frame tall">
-                        <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/about-photo.jpg" alt="Χαρά Τζοάνου" onerror="this.style.display='none';this.parentElement.classList.add('is-empty')">
-                        <span class="ph-label">[Πορτρέτο Ψυχολόγου]</span>
-                    </div>
-                </div>
-                <div class="about-text rv d1">
-                    <p class="about-p">Οι σπουδές μου περιλαμβάνουν προπτυχιακή και μεταπτυχιακή εκπαίδευση στην Ψυχολογία, με ιδιαίτερη εστίαση στην Αναπτυξιακή και Συμβουλευτική Ψυχολογία, καθώς και τετραετή εκπαίδευση στη Συστημική και Οικογενειακή Ψυχοθεραπεία.</p>
-                    <p class="about-p">Η εκπαίδευση μου συνεχίζεται διαρκώς μέσα από τη συμμετοχή σε επιστημονικά συνέδρια, εκπαιδευτικά προγράμματα, σεμινάρια και δράσεις επαγγελματικής επιμόρφωσης, καθώς θεωρώ ότι η γνώση αποτελεί μια ζωντανή διαδικασία που εξελίσσεται μαζί με τον επαγγελματία.</p>
-                    <p class="about-p">Η επιστημονική μου κατάρτιση συνδέεται άμεσα με τη συνεχή κλινική εποπτεία, την προσωπική θεραπευτική διεργασία και τον αναστοχασμό πάνω στην επαγγελματική πρακτική. Τα στοιχεία αυτά αποτελούν βασικούς άξονες της θεραπευτικής μου ταυτότητας και συμβάλλουν στην παροχή υπηρεσιών που χαρακτηρίζονται από υπευθυνότητα, σεβασμό και επαγγελματική δεοντολογία.</p>
-                </div>
-            </div>
-
-            <div class="about-cards">
-                <div class="acard acard-edu rv">
-                    <div class="acard-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l10 5-10 5L2 8l10-5z"/><path d="M6 10.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-5.5"/></svg></div>
-                    <h3 class="acard-title">Σπουδές &amp; Επαγγελματική Εκπαίδευση</h3>
-                    <div class="studies-box">
-                        <h4>Προπτυχιακές Σπουδές</h4>
-                        <ul>
-                            <li>Πτυχίο Φιλοσοφίας, Παιδαγωγικής &amp; Ψυχολογίας, κατεύθυνση Ψυχολογία — <i>Πανεπιστήμιο Ιωαννίνων</i></li>
-                            <li>Πτυχίο Ψυχολογίας — <i>Κρατικό Πανεπιστήμιο του Στρασβούργου</i></li>
-                            <li>Πτυχίο Ψυχολογίας — <i>Ευρωπαϊκό Πανεπιστήμιο Κύπρου</i></li>
-                        </ul>
-                        <h4>Μεταπτυχιακές Σπουδές</h4>
-                        <ul>
-                            <li>MSc Εφαρμοσμένη Αναπτυξιακή Ψυχολογία — <i>Ελληνικό Ανοικτό Πανεπιστήμιο</i></li>
-                            <li>MSc Συμβουλευτική Ψυχολογία — <i>Marconi University</i></li>
-                        </ul>
-                        <h4>Ψυχοθεραπευτική Εκπαίδευση</h4>
-                        <ul>
-                            <li>Τετραετής εκπαίδευση στη Συστημική Οικογενειακή Θεραπεία — <i>Κέντρο Διερεύνησης και Θεραπείας Ανθρωπίνων Συστημάτων</i></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="acard rv d1">
-                    <div class="acard-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c-4-3.5-8-6.6-8-10.5C4 7 6 5 8.5 5c1.6 0 3 .8 3.5 2 .5-1.2 1.9-2 3.5-2C18 5 20 7 20 10.5c0 3.9-4 7-8 10.5z"/></svg></div>
-                    <h3 class="acard-title">Η θεραπευτική μου προσέγγιση</h3>
+            <div class="container hero-container">
+                <div class="hero-content rv">
                     <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
-                    <p class="about-p">Η θεραπευτική μου προσέγγιση βασίζεται στη συστημική οπτική, η οποία αντιλαμβάνεται τον άνθρωπο ως μέρος ενός ευρύτερου πλαισίου σχέσεων, εμπειριών και κοινωνικών συστημάτων.</p>
-                    <p class="about-p">Μέσα από αυτό το πρίσμα, η θεραπευτική διαδικασία εστιάζει στην κατανόηση των τρόπων με τους οποίους οι σημαντικές σχέσεις, οι εμπειρίες ζωής και τα επαναλαμβανόμενα μοτίβα αλληλεπίδρασης επηρεάζουν τον τρόπο που σκεφτόμαστε, αισθανόμαστε και σχετιζόμαστε με τους άλλους.</p>
-                    <p class="about-p">Μέσα από αυτή τη διερεύνηση δημιουργείται χώρος για βαθύτερη αυτογνωσία, μεγαλύτερη κατανόηση του εαυτού και την ανάπτυξη πιο ουσιαστικών και λειτουργικών τρόπων σύνδεσης με τους άλλους.</p>
+                    <p class="hero-welcome">Καλώς ήρθατε στη σελίδα μου!</p>
+                    <p class="hero-p">Ονομάζομαι Χαρά Τζοάνου και είμαι Ψυχολόγος με Αριθμό Άδειας Άσκησης Επαγγέλματος 1130029 και Τακτικό Μέλος του Συλλόγου Ελλήνων Ψυχολόγων (Α.Μ. 3656). Διατηρώ ιδιωτικό γραφείο στη Νέα Ιωνία και παρέχω υπηρεσίες ψυχοθεραπείας και ψυχολογικής υποστήριξης σε ενήλικες, ζευγάρια, εφήβους και παιδιά.</p>
+                    <p class="hero-p">Η θεραπευτική μου προσέγγιση βασίζεται στον σεβασμό προς τη μοναδική ιστορία κάθε ανθρώπου. Πιστεύω ότι οι εμπειρίες, οι σχέσεις και τα βιώματα διαμορφώνουν τον τρόπο με τον οποίο αντιλαμβανόμαστε τον εαυτό μας, τους άλλους και τον κόσμο γύρω μας. Μέσα από αυτή τη ματιά, επιδιώκω να δημιουργώ έναν χώρο όπου κάθε άνθρωπος μπορεί να αισθανθεί ασφάλεια, αποδοχή και ελευθερία να εκφράσει όσα τον απασχολούν.</p>
+                    <p class="hero-p">Η θεραπευτική μου πρακτική υποστηρίζεται από συνεχή κλινική εποπτεία, προσωπική θεραπεία και διαρκή επιστημονική επιμόρφωση, στοιχεία που θεωρώ αναπόσπαστα για την υπεύθυνη άσκηση του επαγγέλματος και την παροχή ποιοτικών υπηρεσιών ψυχικής υγείας.</p>
+                    <p class="hero-p">Στόχος μου είναι να συνοδεύσω κάθε άνθρωπο σε μια διαδικασία αυτογνωσίας και προσωπικής ανάπτυξης, βοηθώντας τον να κατανοήσει βαθύτερα τον εαυτό του, να αναγνωρίσει τα μοτίβα που επηρεάζουν τη ζωή και τις σχέσεις του και να αναπτύξει νέους τρόπους αντιμετώπισης των δυσκολιών και των προκλήσεων που συναντά στην καθημερινότητα του.</p>
+                    <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/homeaftertext.png" class="signature-img" alt="Υπογραφή">
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" style="padding-top: 0;">
-        <div class="green-banner">
-            <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: 10px; left: 10%;" alt="">
-            <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-float" style="top: 10px; right: 10%; transform: scaleX(-1);" alt="">
-            <h2>Υπηρεσίες</h2>
-            <p class="banner-sub">Οι υπηρεσίες προσαρμόζονται στις ανάγκες κάθε ανθρώπου, με στόχο τη δημιουργία ενός ασφαλούς θεραπευτικού χώρου και μιας ουσιαστικής θεραπευτικής συνεργασίας.</p>
-        </div>
-
-        <div class="container">
-            <div class="services-grid">
-                <div class="service-card svc-toggle rv">
-                    <button class="svc-btn" type="button" aria-expanded="false">
-                        <h3>Ατομική ψυχοθεραπεία ενηλίκων</h3>
-                        <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
-                    </button>
-                    <p class="svc-sum">Ένας ασφαλής χώρος για να εξερευνήσετε σκέψεις, συναισθήματα και εμπειρίες, να κατανοήσετε τον εαυτό σας βαθύτερα και να βελτιώσετε την ποιότητα της ζωής σας.</p>
-                    <div class="svc-full">
-                        <p>Η ατομική ψυχοθεραπεία ενηλίκων προσφέρει έναν ασφαλή και σταθερό χώρο διερεύνησης των σκέψεων, των συναισθημάτων, των σχέσεων και των εμπειριών που επηρεάζουν την καθημερινή ζωή.</p>
-                        <p>Μέσα από τη θεραπευτική διαδικασία το άτομο έχει τη δυνατότητα να κατανοήσει βαθύτερα τον εαυτό του, να αναγνωρίσει επαναλαμβανόμενα μοτίβα που δυσκολεύουν τη ζωή του και να αναπτύξει νέους τρόπους αντιμετώπισης των προκλήσεων που συναντά.</p>
-                        <p>Η ψυχοθεραπεία μπορεί να συμβάλει στη διαχείριση του άγχους και του στρες, στην ενίσχυση της αυτοεκτίμησης, στη βελτίωση των διαπροσωπικών σχέσεων, στην αντιμετώπιση συναισθηματικών δυσκολιών και στην προσαρμογή σε σημαντικές μεταβάσεις ζωής.</p>
-                    </div>
-                    <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
-                </div>
-                <div class="service-card svc-toggle rv">
-                    <button class="svc-btn" type="button" aria-expanded="false">
-                        <h3>Ψυχοθεραπεία ζεύγους</h3>
-                        <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
-                    </button>
-                    <p class="svc-sum">Βελτιώστε την επικοινωνία, κατανοήστε τη δυναμική της σχέσης σας και χτίστε μια πιο ουσιαστική και υγιή σύνδεση.</p>
-                    <div class="svc-full">
-                        <p>Η ψυχοθεραπεία ζεύγους απευθύνεται σε ζευγάρια που επιθυμούν να κατανοήσουν βαθύτερα τη σχέση τους, τον τρόπο επικοινωνίας τους και τα μοτίβα αλληλεπίδρασης που οδηγούν σε ένταση, απόσταση ή επαναλαμβανόμενες συγκρούσεις.</p>
-                        <p>Στόχος είναι να δημιουργηθεί ένας ασφαλής χώρος όπου και οι δύο σύντροφοι μπορούν να εκφράσουν τις ανάγκες, τα συναισθήματα και τις δυσκολίες τους με τρόπο που να διευκολύνει την κατανόηση και τον διάλογο.</p>
-                        <p>Η θεραπευτική διαδικασία βοηθά το ζευγάρι να αναγνωρίσει τους κύκλους επικοινωνίας που διατηρούν τις δυσκολίες, να κατανοήσει βαθύτερα τη θέση και την εμπειρία του άλλου και να αναπτύξει νέους τρόπους σύνδεσης που ενισχύουν την αμοιβαία κατανόηση, την εμπιστοσύνη και τη συναισθηματική εγγύτητα.</p>
-                    </div>
-                    <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
-                </div>
-                <div class="service-card svc-toggle rv">
-                    <button class="svc-btn" type="button" aria-expanded="false">
-                        <h3>Συμβουλευτική γονέων</h3>
-                        <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
-                    </button>
-                    <p class="svc-sum">Υποστήριξη και καθοδήγηση για γονείς, ώστε να ανταποκρίνονται με περισσότερη σιγουριά και αποτελεσματικότητα στις προκλήσεις της γονεϊκότητας.</p>
-                    <div class="svc-full">
-                        <p>Η συμβουλευτική γονέων προσφέρει υποστήριξη σε γονείς που επιθυμούν να κατανοήσουν βαθύτερα τις ανάγκες, τη συμπεριφορά και τις συναισθηματικές δυσκολίες του παιδιού τους.</p>
-                        <p>Μέσα από τις συναντήσεις διερευνώνται ζητήματα που αφορούν την επικοινωνία μέσα στην οικογένεια, τη θέσπιση ορίων, τη διαχείριση συγκρούσεων, τις σχολικές δυσκολίες, το άγχος, τις αναπτυξιακές μεταβάσεις και τις αλλαγές που επηρεάζουν τη λειτουργία του οικογενειακού συστήματος.</p>
-                        <p>Η συμβουλευτική γονέων δεν επικεντρώνεται μόνο στη διαχείριση των δυσκολιών, αλλά και στην κατανόηση των σχέσεων και των αλληλεπιδράσεων που διαμορφώνονται μέσα στην οικογένεια. Στόχος είναι η ενίσχυση του γονεϊκού ρόλου με τρόπο πιο συνειδητό, σταθερό και συναισθηματικά διαθέσιμο, ώστε να δημιουργούνται οι προϋποθέσεις για μια πιο ουσιαστική σύνδεση μεταξύ γονέων και παιδιών.</p>
-                    </div>
-                    <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
-                </div>
-                <div class="service-card svc-toggle rv">
-                    <button class="svc-btn" type="button" aria-expanded="false">
-                        <h3>Ψυχοθεραπεία Παιδιού & Εφήβου</h3>
-                        <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
-                    </button>
-                    <p class="svc-sum">Ένα ασφαλές πλαίσιο έκφρασης και επεξεργασίας συναισθημάτων που ενισχύει την αυτοεκτίμηση και τις δεξιότητες του παιδιού ή του εφήβου.</p>
-                    <div class="svc-full">
-                        <p>Η ψυχοθεραπεία παιδιού και εφήβου προσαρμόζεται στις ανάγκες, την ηλικία και τον μοναδικό τρόπο έκφρασης κάθε παιδιού και εφήβου. Στα παιδιά αξιοποιούνται δημιουργικά μέσα, όπως το παιχνίδι και η ζωγραφική, ενώ στους εφήβους δίνεται χώρος για διάλογο, επεξεργασία συναισθημάτων και ενίσχυση της προσωπικής τους φωνής.</p>
-                        <p>Η θεραπευτική διαδικασία μπορεί να συμβάλει στην αντιμετώπιση δυσκολιών που σχετίζονται με το άγχος, την αυτοεκτίμηση, τις κοινωνικές σχέσεις, τη σχολική προσαρμογή, τις οικογενειακές αλλαγές, τη συναισθηματική έκφραση και τη συμπεριφορά.</p>
-                        <p>Στόχος είναι η ενίσχυση της συναισθηματικής έκφρασης, της αυτοπεποίθησης, της ψυχικής ανθεκτικότητας και της δυνατότητας του παιδιού ή του εφήβου να διαχειρίζεται αποτελεσματικότερα τις προκλήσεις της καθημερινότητας και των σχέσεων του.</p>
-                    </div>
-                    <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
-                </div>
-                <div class="service-card svc-toggle rv">
-                    <button class="svc-btn" type="button" aria-expanded="false">
-                        <h3>Ομαδική ψυχοθεραπεία</h3>
-                        <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
-                    </button>
-                    <p class="svc-sum">Η δύναμη της ομάδας βοηθά στην κατανόηση του εαυτού, τη σύνδεση με άλλους και την προσωπική ανάπτυξη.</p>
-                    <div class="svc-full">
-                        <p>Η ομαδική ψυχοθεραπεία προσφέρει ένα θεραπευτικό πλαίσιο μέσα στο οποίο τα μέλη έχουν τη δυνατότητα να μοιραστούν εμπειρίες, σκέψεις και συναισθήματα, αναγνωρίζοντας ότι πολλά από όσα βιώνουν αποκτούν νόημα μέσα από τη σχέση με τους άλλους.</p>
-                        <p>Η ομάδα λειτουργεί ως ένας χώρος σύνδεσης, ανατροφοδότησης και προσωπικής διερεύνησης, όπου κάθε μέλος μπορεί να παρατηρήσει τον τρόπο με τον οποίο σχετίζεται, επικοινωνεί και ανταποκρίνεται στις διαπροσωπικές αλληλεπιδράσεις.</p>
-                        <p>Μέσα από την ομαδική θεραπεία ενισχύονται η αυτογνωσία, η κατανόηση των σχέσεων, η συναισθηματική έκφραση και η δυνατότητα ανάπτυξης νέων τρόπων σύνδεσης με τον εαυτό και τους άλλους.</p>
-                    </div>
-                    <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
-                </div>
-                <div class="service-card svc-toggle rv">
-                    <button class="svc-btn" type="button" aria-expanded="false">
-                        <h3>Online ψυχοθεραπεία & συμβουλευτική</h3>
-                        <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
-                    </button>
-                    <p class="svc-sum">Ψυχολογική υποστήριξη εξ αποστάσεως, σε ένα ασφαλές, εμπιστευτικό και ευέλικτο θεραπευτικό πλαίσιο.</p>
-                    <div class="svc-full">
-                        <p>Η online ψυχοθεραπεία και συμβουλευτική προσφέρει τη δυνατότητα ψυχολογικής υποστήριξης εξ αποστάσεως μέσα από ένα ασφαλές, σταθερό και εμπιστευτικό θεραπευτικό πλαίσιο.</p>
-                        <p>Απευθύνεται σε ανθρώπους που διαμένουν σε διαφορετική περιοχή, βρίσκονται στο εξωτερικό, έχουν περιορισμένο χρόνο μετακίνησης ή επιθυμούν μεγαλύτερη ευελιξία στον τρόπο πραγματοποίησης των συνεδριών.</p>
-                        <p>Η διαδικτυακή θεραπεία διατηρεί τα βασικά χαρακτηριστικά της θεραπευτικής διαδικασίας, όπως τη συνέπεια, τη σταθερότητα και τη θεραπευτική σχέση, προσφέροντας έναν ουσιαστικό χώρο επεξεργασίας προσωπικών δυσκολιών, συναισθημάτων και σχέσεων.</p>
-                    </div>
-                    <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
-                </div>
-                <div class="service-card svc-toggle svc-wide rv">
-                    <button class="svc-btn" type="button" aria-expanded="false">
-                        <h3>Σεμινάρια και Workshops</h3>
-                        <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
-                    </button>
-                    <p class="svc-sum">Ψυχοεκπαιδευτικά και βιωματικά σεμινάρια για άτομα, γονείς, ζευγάρια, ομάδες και επαγγελματίες που επιθυμούν να εμβαθύνουν σε θέματα ψυχικής υγείας και προσωπικής ανάπτυξης.</p>
-                    <div class="svc-full">
-                        <p>Τα σεμινάρια και τα workshops έχουν ψυχοεκπαιδευτικό και βιωματικό χαρακτήρα και απευθύνονται σε άτομα, γονείς, ζευγάρια, ομάδες και επαγγελματίες που επιθυμούν να εμβαθύνουν σε ζητήματα ψυχικής υγείας, σχέσεων και προσωπικής ανάπτυξης.</p>
-                        <p>Οι θεματικές μπορεί να αφορούν τη γονεϊκότητα, την επικοινωνία στις σχέσεις, τη διαχείριση του άγχους, την αυτογνωσία, τη συναισθηματική ανάπτυξη και άλλες σύγχρονες ψυχολογικές προκλήσεις της καθημερινότητας.</p>
-                        <p>Μέσα από θεωρητική ενημέρωση, βιωματικές ασκήσεις και συζήτηση, οι συμμετέχοντες έχουν τη δυνατότητα να αποκτήσουν νέες γνώσεις, να εμβαθύνουν στην προσωπική τους εμπειρία και να αναπτύξουν πρακτικά εργαλεία που μπορούν να αξιοποιήσουν στην καθημερινή ζωή και στις σχέσεις τους.</p>
-                    </div>
-                    <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
-                </div>
-            </div>
-            <div class="svc-cta rv">
-                <p>Δεν είστε σίγουροι ποια υπηρεσία ανταποκρίνεται καλύτερα στις ανάγκες σας;</p>
-                <a href="#contact" class="btn-tz">Επικοινωνήστε μαζί μου</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="space">
-        <div class="container">
-            <h2 class="section-title rv">Ο Χώρος</h2>
-            <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
-            <p class="section-subtitle rv">Ο θεραπευτικός χώρος έχει διαμορφωθεί με στόχο να προσφέρει ασφάλεια και διακριτικότητα. Προσφέρονται δια ζώσης, αλλά και online συνεδρίες ανάλογα με τις ανάγκες και τις δυνατότητες κάθε ανθρώπου.</p>
-
-            <div class="gal-sym-grid rv">
-                <div class="image-placeholder">[Φωτογραφία Χώρου 1]</div>
-                <div class="image-placeholder">[Φωτογραφία Χώρου 2]</div>
-                <div class="image-placeholder">[Φωτογραφία Χώρου 3]</div>
-                <div class="image-placeholder">[Φωτογραφία Χώρου 4]</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="quote" class="quote-section">
-        <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
-        <blockquote class="site-quote">«Το παράδοξο είναι ότι όταν αποδέχομαι τον εαυτό μου όπως είναι, τότε μπορώ να αλλάξω»</blockquote>
-        <cite class="quote-cite">— Carl Rogers</cite>
-        <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
-    </section>
-
-    <section id="articles" style="padding-top: 0;">
-        <div class="green-banner">
-            <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: -20px; left: 5%;" alt="">
-            <h2>Αρθρογραφία</h2>
-        </div>
-
-        <div class="container">
-            <div class="articles-grid">
-                <div class="article-card">
-                    <div class="article-img">[Εικόνα Άρθρου]</div>
-                    <div class="article-content">
-                        <span class="article-category">ΑΓΧΟΣ</span>
-                        <h3 class="article-title">Τίτλος άρθρου (Προσεχώς)</h3>
-                        <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
-                    </div>
-                </div>
-                <div class="article-card">
-                    <div class="article-img">[Εικόνα Άρθρου]</div>
-                    <div class="article-content">
-                        <span class="article-category">ΓΟΝΕΪΚΟΤΗΤΑ</span>
-                        <h3 class="article-title">Τίτλος άρθρου (Προσεχώς)</h3>
-                        <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
-                    </div>
-                </div>
-                <div class="article-card">
-                    <div class="article-img">[Εικόνα Άρθρου]</div>
-                    <div class="article-content">
-                        <span class="article-category">ΣΧΕΣΕΙΣ</span>
-                        <h3 class="article-title">Τίτλος άρθρου (Προσεχώς)</h3>
-                        <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
+                <div class="hero-image rv d1">
+                    <div class="arch-frame">
+                        <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/hero-photo.jpg" alt="Χαρά Τζοάνου" onerror="this.style.display='none';this.parentElement.classList.add('is-empty')">
+                        <span class="ph-label">[Φωτογραφία Ψυχολόγου]</span>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="reviews">
-        <div class="container">
-            <h2 class="section-title rv">Αξιολογήσεις</h2>
-            <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
-            <p class="section-subtitle rv">Η εμπειρία των ανθρώπων που εμπιστεύτηκαν τη θεραπευτική διαδικασία.</p>
-            <!-- ΣΗΜΕΙΩΣΗ: αντικαταστήστε τα παρακάτω placeholders με πραγματικές αξιολογήσεις της κ. Τζοάνου -->
-            <div class="reviews-grid">
-                <div class="review-card rv"><div class="rev-stars">★★★★★</div><p>«[Αξιολόγηση 1 — επικολλήστε εδώ πραγματική κριτική]»</p><span class="rev-name">[Όνομα]</span></div>
-                <div class="review-card rv d1"><div class="rev-stars">★★★★★</div><p>«[Αξιολόγηση 2 — επικολλήστε εδώ πραγματική κριτική]»</p><span class="rev-name">[Όνομα]</span></div>
-                <div class="review-card rv d2"><div class="rev-stars">★★★★★</div><p>«[Αξιολόγηση 3 — επικολλήστε εδώ πραγματική κριτική]»</p><span class="rev-name">[Όνομα]</span></div>
-            </div>
-        </div>
-    </section>
+        <section id="about" class="about">
+            <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: 40%; right: -30px; transform: scaleX(-1);" alt="">
 
-    <section id="faq">
-        <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: 10%; right: -20px; transform: scaleX(-1);" alt="">
-
-        <div class="container faq-container">
-            <h2 class="section-title rv">Συχνές Ερωτήσεις</h2>
-            <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
-            <p class="section-subtitle rv">Εδώ θα βρείτε απαντήσεις σε συχνές ερωτήσεις σχετικά με τη ψυχοθεραπεία και τη διαδικασία. Αν έχετε κάποια άλλη απορία, μπορείτε να επικοινωνήσετε μαζί μου.</p>
-            <details class="faq-cat" open>
-                <summary class="faq-cat-sum">Έναρξη θεραπείας<span class="cat-chev" aria-hidden="true">+</span></summary>
-                <div class="faq-cat-body">
-            <details>
-                <summary>Πότε μπορεί κάποιος να απευθυνθεί σε ψυχολόγο;</summary>
-                <p>Μπορείτε να απευθυνθείτε σε ψυχολόγο όταν νιώθετε ότι χρειάζεστε έναν ασφαλή χώρο για να κατανοήσετε καλύτερα όσα σας δυσκολεύουν, όπως άγχος, έντονη πίεση, αλλαγές στη διάθεση, δυσκολίες στις σχέσεις, οικογενειακά ζητήματα, απώλεια, χαμηλή αυτοεκτίμηση ή περιόδους σημαντικών αλλαγών στη ζωή σας.</p>
-            </details>
-            <details>
-                <summary>Χρειάζεται να έχω συγκεκριμένο πρόβλημα για να ξεκινήσω ψυχοθεραπεία;</summary>
-                <p>Η ψυχοθεραπεία μπορεί να ξεκινήσει ακόμη και όταν το αίτημα βρίσκεται ακόμη σε διερεύνηση. Πολλές φορές ένας άνθρωπος έρχεται με ένα αίσθημα πίεσης, σύγχυσης, επανάληψης ή δυσφορίας, χωρίς να μπορεί ακόμη να το ονομάσει με ακρίβεια. Η θεραπευτική διαδικασία βοηθά σταδιακά στην κατανόηση αυτού που συμβαίνει.</p>
-            </details>
-            <details>
-                <summary>Μπορώ να έρθω στη θεραπεία αν δεν ξέρω ακριβώς τι νιώθω;</summary>
-                <p>Ναι. Πολλοί άνθρωποι ξεκινούν θεραπεία με μια γενική αίσθηση δυσφορίας, πίεσης ή εσωτερικής σύγχυσης. Η θεραπεία μπορεί να βοηθήσει στο να δοθεί λόγος σε αυτά που μέχρι τώρα βιώνονται αόριστα ή σιωπηλά.</p>
-            </details>
-            <details>
-                <summary>Η ψυχοθεραπεία απευθύνεται μόνο σε ανθρώπους που βρίσκονται σε κρίση;</summary>
-                <p>Η ψυχοθεραπεία μπορεί να είναι χρήσιμη τόσο σε περιόδους κρίσης όσο και σε περιόδους προσωπικής αναζήτησης, αλλαγής ή ανάγκης για καλύτερη κατανόηση του εαυτού. Ένας άνθρωπος μπορεί να ζητήσει υποστήριξη όταν επιθυμεί να κατανοήσει βαθύτερα τον εαυτό του, τις σχέσεις του και τον τρόπο με τον οποίο βιώνει τη ζωή του.</p>
-            </details>
-
-            </div>
-            </details>
-            <details class="faq-cat">
-                <summary class="faq-cat-sum">Η πρώτη συνεδρία<span class="cat-chev" aria-hidden="true">+</span></summary>
-                <div class="faq-cat-body">
-            <details>
-                <summary>Τι γίνεται στην πρώτη συνεδρία;</summary>
-                <p>Η πρώτη συνεδρία έχει κυρίως διερευνητικό χαρακτήρα. Στόχος είναι να γνωριστούμε, να μιλήσετε για αυτό που σας απασχολεί και να διαμορφώσουμε μαζί μια αρχική εικόνα των αναγκών, των προσδοκιών και του θεραπευτικού πλαισίου.</p>
-            </details>
-            <details>
-                <summary>Πώς μπορώ να προετοιμαστώ για την πρώτη συνεδρία;</summary>
-                <p>Αρκεί να έρθετε με όσα νιώθετε ότι θέλετε να μοιραστείτε. Η πρώτη συνάντηση είναι ένας χώρος γνωριμίας, κατανόησης και αρχικής διερεύνησης, με σεβασμό στον ρυθμό και στις ανάγκες σας.</p>
-            </details>
-            <details>
-                <summary>Είναι φυσιολογικό να νιώθω αμηχανία στην πρώτη συνεδρία;</summary>
-                <p>Η αμηχανία στην πρώτη συνάντηση είναι απόλυτα αναμενόμενη. Η γνωριμία με έναν νέο άνθρωπο και η έκθεση προσωπικών σκέψεων ή συναισθημάτων μπορεί να χρειάζονται χρόνο. Η θεραπευτική σχέση χτίζεται σταδιακά, μέσα σε κλίμα αποδοχής, σεβασμού και ασφάλειας.</p>
-            </details>
-            <details>
-                <summary>Τι γίνεται αν δυσκολεύομαι να μιλήσω για όσα με απασχολούν;</summary>
-                <p>Ο ρυθμός κάθε ανθρώπου γίνεται σεβαστός. Η θεραπευτική διαδικασία επιτρέπει σταδιακά την ανάπτυξη εμπιστοσύνης, ώστε το άτομο να μπορέσει να μοιραστεί όσα είναι έτοιμο να επεξεργαστεί.</p>
-            </details>
-
-            </div>
-            </details>
-            <details class="faq-cat">
-                <summary class="faq-cat-sum">Πρακτικές πληροφορίες<span class="cat-chev" aria-hidden="true">+</span></summary>
-                <div class="faq-cat-body">
-            <details>
-                <summary>Πώς κλείνω ραντεβού;</summary>
-                <p>Το ραντεβού μπορεί να προγραμματιστεί τηλεφωνικά ή μέσω της φόρμας επικοινωνίας. Κατά την πρώτη επικοινωνία συζητάμε σύντομα το αίτημά σας και βρίσκουμε την ημέρα και ώρα που εξυπηρετεί καλύτερα.</p>
-            </details>
-            <details>
-                <summary>Πόσο διαρκεί κάθε συνεδρία;</summary>
-                <p>Η ατομική συνεδρία διαρκεί συνήθως 50 λεπτά. Η διάρκεια μπορεί να διαφοροποιείται ανάλογα με το είδος της συνάντησης, όπως συμβουλευτική γονέων, συνεδρία ζεύγους ή οικογενειακή συνάντηση.</p>
-            </details>
-            <details>
-                <summary>Κάθε πότε γίνονται οι συνεδρίες;</summary>
-                <p>Συνήθως οι συνεδρίες πραγματοποιούνται μία φορά την εβδομάδα, ώστε να υπάρχει συνέχεια και σταθερότητα στη θεραπευτική διαδικασία. Η συχνότητα προσαρμόζεται ανάλογα με το αίτημα και τις ανάγκες κάθε ανθρώπου.</p>
-            </details>
-            <details>
-                <summary>Παρέχονται online συνεδρίες;</summary>
-                <p>Ναι, παρέχονται και online συνεδρίες, όταν αυτό εξυπηρετεί τις ανάγκες του προσώπου ή όταν η φυσική παρουσία στον χώρο είναι δύσκολη. Οι online συνεδρίες πραγματοποιούνται σε σταθερό και προστατευμένο πλαίσιο, με σεβασμό στην εμπιστευτικότητα.</p>
-            </details>
-            <details>
-                <summary>Πόσο διαρκεί συνολικά η ψυχοθεραπεία;</summary>
-                <p>Η διάρκεια της θεραπευτικής διαδικασίας εξαρτάται από το αίτημα, τους στόχους, τον ρυθμό και τις ανάγκες κάθε ανθρώπου. Σε κάποιες περιπτώσεις η υποστήριξη μπορεί να είναι βραχυπρόθεσμη, ενώ σε άλλες χρειάζεται περισσότερος χρόνος για βαθύτερη επεξεργασία.</p>
-            </details>
-
-            </div>
-            </details>
-            <details class="faq-cat">
-                <summary class="faq-cat-sum">Θεραπευτικό πλαίσιο<span class="cat-chev" aria-hidden="true">+</span></summary>
-                <div class="faq-cat-body">
-            <details>
-                <summary>Υπάρχει απόρρητο;</summary>
-                <p>Η θεραπευτική διαδικασία διέπεται από αυστηρή εμπιστευτικότητα και σεβασμό στο προσωπικό απόρρητο. Όσα συζητούνται κατά τη διάρκεια των συνεδριών προστατεύονται σύμφωνα με τον Κώδικα Δεοντολογίας των Ψυχολόγων και τη σχετική νομοθεσία περί προστασίας προσωπικών δεδομένων.</p>
-            </details>
-            <details>
-                <summary>Τι μπορώ να περιμένω από τη θεραπευτική διαδικασία;</summary>
-                <p>Η θεραπευτική διαδικασία προσφέρει έναν σταθερό χώρο διερεύνησης, κατανόησης και επεξεργασίας. Μέσα από τη σχέση με τον θεραπευτή, το άτομο μπορεί να αναγνωρίσει μοτίβα, συναισθήματα, δυσκολίες και τρόπους σύνδεσης με τον εαυτό και τους άλλους.</p>
-            </details>
-            <details>
-                <summary>Θα μου δοθούν συμβουλές για το τι πρέπει να κάνω;</summary>
-                <p>Η ψυχοθεραπεία εστιάζει στην κατανόηση, στη διερεύνηση και στην ενίσχυση της προσωπικής επίγνωσης. Στόχος είναι να δημιουργηθεί ένας χώρος όπου το άτομο μπορεί να κατανοήσει βαθύτερα τον εαυτό του, τις ανάγκες του και τις επιλογές του, ώστε να κινηθεί με μεγαλύτερη καθαρότητα και προσωπική ευθύνη.</p>
-            </details>
-            <details>
-                <summary>Πώς καταλαβαίνω αν η θεραπεία με βοηθά;</summary>
-                <p>Η θεραπευτική αλλαγή συχνά εμφανίζεται ως σταδιακή μετατόπιση στον τρόπο που το άτομο κατανοεί τον εαυτό του, σχετίζεται με τους άλλους, αναγνωρίζει τις ανάγκες του και διαχειρίζεται τις δυσκολίες του.</p>
-            </details>
-            <details>
-                <summary>Μπορώ να σταματήσω τη θεραπεία όποτε θέλω;</summary>
-                <p>Η θεραπευτική διαδικασία βασίζεται στη συνεργασία και στον σεβασμό της προσωπικής επιλογής. Όταν ένας άνθρωπος σκέφτεται να ολοκληρώσει ή να διακόψει τη θεραπεία, είναι σημαντικό αυτό να συζητηθεί μέσα στη συνεδρία, ώστε να υπάρξει ένας ουσιαστικός και φροντιστικός αποχαιρετισμός.</p>
-            </details>
-
-            </div>
-            </details>
-            <details class="faq-cat">
-                <summary class="faq-cat-sum">Παιδιά, έφηβοι και γονείς<span class="cat-chev" aria-hidden="true">+</span></summary>
-                <div class="faq-cat-body">
-            <details>
-                <summary>Μπορώ να απευθυνθώ για το παιδί ή τον έφηβό μου;</summary>
-                <p>Ναι, οι γονείς μπορούν να απευθυνθούν για ζητήματα που αφορούν το παιδί ή τον έφηβο, όπως άγχος, δυσκολίες στη συμπεριφορά, συναισθηματική επιβάρυνση, σχολικές δυσκολίες, οικογενειακές αλλαγές ή δυσκολίες στις σχέσεις. Η συνεργασία με τους γονείς αποτελεί σημαντικό μέρος της διαδικασίας.</p>
-            </details>
-            <details>
-                <summary>Υπάρχει δυνατότητα συμβουλευτικής γονέων;</summary>
-                <p>Ναι, η συμβουλευτική γονέων μπορεί να βοηθήσει στην κατανόηση των δυσκολιών του παιδιού ή του εφήβου, αλλά και στη διαμόρφωση πιο λειτουργικών τρόπων επικοινωνίας, οριοθέτησης και συναισθηματικής στήριξης μέσα στην οικογένεια.</p>
-            </details>
-            <details>
-                <summary>Μπορεί ένας έφηβος να κάνει συνεδρίες χωρίς να γνωρίζουν οι γονείς όσα λέει;</summary>
-                <p>Στην εργασία με εφήβους, η εμπιστευτικότητα είναι ιδιαίτερα σημαντική. Οι γονείς ενημερώνονται για τη γενική πορεία και για ζητήματα που αφορούν την ασφάλεια ή τη φροντίδα του παιδιού, ενώ ο προσωπικός χώρος του εφήβου προστατεύεται με σεβασμό και επαγγελματική ευθύνη.</p>
-            </details>
-        </div>
-            </details>
-        </div>
-    </section>
-
-    <section id="contact">
-        <div class="container">
-            <h2 class="section-title rv">Επικοινωνία</h2>
-            <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/></g></svg></div>
-            <p class="section-subtitle rv">Αν έχετε κάποια απορία ή επιθυμείτε να προγραμματίσετε ένα πρώτο ραντεβού, μπορείτε να επικοινωνήσετε μαζί μου τηλεφωνικά, μέσω email ή συμπληρώνοντας τη φόρμα επικοινωνίας.</p>
-
-            <div class="contact-cards">
-                <div class="contact-card rv">
-                    <h3 class="cc-title"><svg class="gic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg> Στοιχεία Επικοινωνίας</h3>
-                    <div class="cline"><svg class="gic" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg><div><strong>Τηλέφωνο</strong><br>210 440 4243</div></div>
-                    <div class="cline"><svg class="gic" viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div><strong>Διεύθυνση</strong><br>Λεωφόρος Ηρακλείου 191, Νέα Ιωνία<br><span class="cnote">Πρόσβαση: ΗΣΑΠ στάση Νέα Ιωνία ή στάση Πευκάκια</span></div></div>
-                    <div class="cline"><svg class="gic" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg><div><strong>Email</strong><br><a href="mailto:c.tzoanou@outlook.com">c.tzoanou@outlook.com</a></div></div>
-                    <div class="cline"><svg class="gic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><div><strong>Ώρες λειτουργίας</strong><br>Κατόπιν ραντεβού<br><span class="cnote">Online συνεδρίες διαθέσιμες</span></div></div>
-                    <div class="cc-actions">
-                        <a class="btn-tz sm" href="tel:+302104404243"><svg class="gic w" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg> Κλήση</a>
-                        <a class="btn-tz sm ghost" href="mailto:c.tzoanou@outlook.com"><svg class="gic" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> Email</a>
-                    </div>
-                </div>
-
-                <div class="contact-card map-card rv d1">
-                    <h3 class="cc-title"><svg class="gic" viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Βρείτε μας</h3>
-                    <div class="map-container">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3142.9298379361665!2d23.755100000000003!3d38.037100000000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a198de7e667aa7%3A0xc3f8e5621434c44!2zzpsuIM6Xz4HOsc66zrvOtc6vzr_PhSAxOTEsIM6dzq3OsSDOmc-Jzr3Or86xIDE0MiAzMQ!5e0!3m2!1sel!2sgr!4v1700000000000!5m2!1sel!2sgr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-                </div>
-
-                <div class="contact-card rv">
-                    <h3 class="cc-title"><svg class="gic" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> Φόρμα Επικοινωνίας</h3>
-                    <form id="contactForm" novalidate>
-                        <div class="frow2">
-                            <input type="text" id="cf-name" placeholder="Ονοματεπώνυμο *" required>
-                            <input type="email" id="cf-email" placeholder="Email *" required>
+            <div class="container">
+                <h2 class="section-title rv">Σχετικά με εμένα</h2>
+                <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
+                <div class="about-grid" style="margin-top:50px">
+                    <div class="about-image rv">
+                        <div class="arch-frame tall">
+                            <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/about-photo.jpg" alt="Χαρά Τζοάνου" onerror="this.style.display='none';this.parentElement.classList.add('is-empty')">
+                            <span class="ph-label">[Πορτρέτο Ψυχολόγου]</span>
                         </div>
-                        <input type="tel" id="cf-phone" placeholder="Τηλέφωνο (προαιρετικό)">
-                        <textarea id="cf-msg" placeholder="Το μήνυμά σας *" required></textarea>
-                        <button type="submit" class="btn-tz wide">Αποστολή μηνύματος</button>
-                        <p class="form-note"><svg class="gic" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Τα προσωπικά σας δεδομένα παραμένουν ασφαλή και δεν κοινοποιούνται.</p>
-                    </form>
+                    </div>
+                    <div class="about-text rv d1">
+                        <p class="about-p">Οι σπουδές μου περιλαμβάνουν προπτυχιακή και μεταπτυχιακή εκπαίδευση στην Ψυχολογία, με ιδιαίτερη εστίαση στην Αναπτυξιακή και Συμβουλευτική Ψυχολογία, καθώς και τετραετή εκπαίδευση στη Συστημική και Οικογενειακή Ψυχοθεραπεία.</p>
+                        <p class="about-p">Η εκπαίδευση μου συνεχίζεται διαρκώς μέσα από τη συμμετοχή σε επιστημονικά συνέδρια, εκπαιδευτικά προγράμματα, σεμινάρια και δράσεις επαγγελματικής επιμόρφωσης, καθώς θεωρώ ότι η γνώση αποτελεί μια ζωντανή διαδικασία που εξελίσσεται μαζί με τον επαγγελματία.</p>
+                        <p class="about-p">Η επιστημονική μου κατάρτιση συνδέεται άμεσα με τη συνεχή κλινική εποπτεία, την προσωπική θεραπευτική διεργασία και τον αναστοχασμό πάνω στην επαγγελματική πρακτική. Τα στοιχεία αυτά αποτελούν βασικούς άξονες της θεραπευτικής μου ταυτότητας και συμβάλλουν στην παροχή υπηρεσιών που χαρακτηρίζονται από υπευθυνότητα, σεβασμό και επαγγελματική δεοντολογία.</p>
+                    </div>
                 </div>
 
-                <div class="contact-card rv d1">
-                    <h3 class="cc-title"><svg class="gic" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="3"/><circle cx="8" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/><path d="M3 12h18"/></svg> Πρόσβαση</h3>
-                    <div class="cline"><svg class="gic" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg><div><strong>ΗΣΑΠ Νέα Ιωνία</strong><br><span class="cnote">10 λεπτά με τα πόδια</span></div></div>
-                    <div class="cline"><svg class="gic" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg><div><strong>ΗΣΑΠ Πευκάκια</strong><br><span class="cnote">12 λεπτά με τα πόδια</span></div></div>
-                    <div class="cline"><svg class="gic" viewBox="0 0 24 24"><path d="M5 17h14l-1.5-5a3 3 0 0 0-2.9-2.2H9.4A3 3 0 0 0 6.5 12L5 17z"/><circle cx="8" cy="17" r="1.8"/><circle cx="16" cy="17" r="1.8"/></svg><div><strong>Με αυτοκίνητο</strong><br><span class="cnote">Εύκολη πρόσβαση και δυνατότητα στάθμευσης στην περιοχή</span></div></div>
+                <div class="about-cards">
+                    <div class="acard acard-edu rv">
+                        <div class="acard-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l10 5-10 5L2 8l10-5z"/><path d="M6 10.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-5.5"/></svg></div>
+                        <h3 class="acard-title">Σπουδές &amp; Επαγγελματική Εκπαίδευση</h3>
+                        <div class="studies-box">
+                            <h4>Προπτυχιακές Σπουδές</h4>
+                            <ul>
+                                <li>Πτυχίο Φιλοσοφίας, Παιδαγωγικής &amp; Ψυχολογίας, κατεύθυνση Ψυχολογία — <i>Πανεπιστήμιο Ιωαννίνων</i></li>
+                                <li>Πτυχίο Ψυχολογίας — <i>Κρατικό Πανεπιστήμιο του Στρασβούργου</i></li>
+                                <li>Πτυχίο Ψυχολογίας — <i>Ευρωπαϊκό Πανεπιστήμιο Κύπρου</i></li>
+                            </ul>
+                            <h4>Μεταπτυχιακές Σπουδές</h4>
+                            <ul>
+                                <li>MSc Εφαρμοσμένη Αναπτυξιακή Ψυχολογία — <i>Ελληνικό Ανοικτό Πανεπιστήμιο</i></li>
+                                <li>MSc Συμβουλευτική Ψυχολογία — <i>Marconi University</i></li>
+                            </ul>
+                            <h4>Ψυχοθεραπευτική Εκπαίδευση</h4>
+                            <ul>
+                                <li>Τετραετής εκπαίδευση στη Συστημική Οικογενειακή Θεραπεία — <i>Κέντρο Διερεύνησης και Θεραπείας Ανθρωπίνων Συστημάτων</i></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="acard rv d1">
+                        <div class="acard-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c-4-3.5-8-6.6-8-10.5C4 7 6 5 8.5 5c1.6 0 3 .8 3.5 2 .5-1.2 1.9-2 3.5-2C18 5 20 7 20 10.5c0 3.9-4 7-8 10.5z"/></svg></div>
+                        <h3 class="acard-title">Η θεραπευτική μου προσέγγιση</h3>
+                        <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
+                        <p class="about-p">Η θεραπευτική μου προσέγγιση βασίζεται στη συστημική οπτική, η οποία αντιλαμβάνεται τον άνθρωπο ως μέρος ενός ευρύτερου πλαισίου σχέσεων, εμπειριών και κοινωνικών συστημάτων.</p>
+                        <p class="about-p">Μέσα από αυτό το πρίσμα, η θεραπευτική διαδικασία εστιάζει στην κατανόηση των τρόπων με τους οποίους οι σημαντικές σχέσεις, οι εμπειρίες ζωής και τα επαναλαμβανόμενα μοτίβα αλληλεπίδρασης επηρεάζουν τον τρόπο που σκεφτόμαστε, αισθανόμαστε και σχετιζόμαστε με τους άλλους.</p>
+                        <p class="about-p">Μέσα από αυτή τη διερεύνηση δημιουργείται χώρος για βαθύτερη αυτογνωσία, μεγαλύτερη κατανόηση του εαυτού και την ανάπτυξη πιο ουσιαστικών και λειτουργικών τρόπων σύνδεσης με τους άλλους.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer-top">
-                <img src="https://github.com/agelmet/TZOANNOU/blob/main/Gemini_Generated_Image_ifh7ddifh7ddifh7.png?raw=true" alt="Χαρά Τζοάνου" class="footer-logo" width="3200" height="1340">
-                <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/homeaftertext.png" alt="Υπογραφή" class="footer-signature">
+        <section id="services" style="padding-top: 0;">
+            <div class="green-banner">
+                <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: 10px; left: 10%;" alt="">
+                <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-float" style="top: 10px; right: 10%; transform: scaleX(-1);" alt="">
+                <h2>Υπηρεσίες</h2>
+                <p class="banner-sub">Οι υπηρεσίες προσαρμόζονται στις ανάγκες κάθε ανθρώπου, με στόχο τη δημιουργία ενός ασφαλούς θεραπευτικού χώρου και μιας ουσιαστικής θεραπευτικής συνεργασίας.</p>
             </div>
-            <div class="footer-grid">
-                <div>
-                    <h3>Χαρά Τζοάνου</h3>
-                    <p>Ψυχολόγος</p>
+
+            <div class="container">
+                <div class="services-grid">
+                    <div class="service-card svc-toggle rv">
+                        <button class="svc-btn" type="button" aria-expanded="false">
+                            <h3>Ατομική ψυχοθεραπεία ενηλίκων</h3>
+                            <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <p class="svc-sum">Ένας ασφαλής χώρος για να εξερευνήσετε σκέψεις, συναισθήματα και εμπειρίες, να κατανοήσετε τον εαυτό σας βαθύτερα και να βελτιώσετε την ποιότητα της ζωής σας.</p>
+                        <div class="svc-full">
+                            <p>Η ατομική ψυχοθεραπεία ενηλίκων προσφέρει έναν ασφαλή και σταθερό χώρο διερεύνησης των σκέψεων, των συναισθημάτων, των σχέσεων και των εμπειριών που επηρεάζουν την καθημερινή ζωή.</p>
+                            <p>Μέσα από τη θεραπευτική διαδικασία το άτομο έχει τη δυνατότητα να κατανοήσει βαθύτερα τον εαυτό του, να αναγνωρίσει επαναλαμβανόμενα μοτίβα που δυσκολεύουν τη ζωή του και να αναπτύξει νέους τρόπους αντιμετώπισης των προκλήσεων που συναντά.</p>
+                            <p>Η ψυχοθεραπεία μπορεί να συμβάλει στη διαχείριση του άγχους και του στρες, στην ενίσχυση της αυτοεκτίμησης, στη βελτίωση των διαπροσωπικών σχέσεων, στην αντιμετώπιση συναισθηματικών δυσκολιών και στην προσαρμογή σε σημαντικές μεταβάσεις ζωής.</p>
+                        </div>
+                        <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
+                    </div>
+                    <div class="service-card svc-toggle rv">
+                        <button class="svc-btn" type="button" aria-expanded="false">
+                            <h3>Ψυχοθεραπεία ζεύγους</h3>
+                            <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <p class="svc-sum">Βελτιώστε την επικοινωνία, κατανοήστε τη δυναμική της σχέσης σας και χτίστε μια πιο ουσιαστική και υγιή σύνδεση.</p>
+                        <div class="svc-full">
+                            <p>Η ψυχοθεραπεία ζεύγους απευθύνεται σε ζευγάρια που επιθυμούν να κατανοήσουν βαθύτερα τη σχέση τους, τον τρόπο επικοινωνίας τους και τα μοτίβα αλληλεπίδρασης που οδηγούν σε ένταση, απόσταση ή επαναλαμβανόμενες συγκρούσεις.</p>
+                            <p>Στόχος είναι να δημιουργηθεί ένας ασφαλής χώρος όπου και οι δύο σύντροφοι μπορούν να εκφράσουν τις ανάγκες, τα συναισθήματα και τις δυσκολίες τους με τρόπο που να διευκολύνει την κατανόηση και τον διάλογο.</p>
+                            <p>Η θεραπευτική διαδικασία βοηθά το ζευγάρι να αναγνωρίσει τους κύκλους επικοινωνίας που διατηρούν τις δυσκολίες, να κατανοήσει βαθύτερα τη θέση και την εμπειρία του άλλου και να αναπτύξει νέους τρόπους σύνδεσης που ενισχύουν την αμοιβαία κατανόηση, την εμπιστοσύνη και τη συναισθηματική εγγύτητα.</p>
+                        </div>
+                        <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
+                    </div>
+                    <div class="service-card svc-toggle rv">
+                        <button class="svc-btn" type="button" aria-expanded="false">
+                            <h3>Συμβουλευτική γονέων</h3>
+                            <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <p class="svc-sum">Υποστήριξη και καθοδήγηση για γονείς, ώστε να ανταποκρίνονται με περισσότερη σιγουριά και αποτελεσματικότητα στις προκλήσεις της γονεϊκότητας.</p>
+                        <div class="svc-full">
+                            <p>Η συμβουλευτική γονέων προσφέρει υποστήριξη σε γονείς που επιθυμούν να κατανοήσουν βαθύτερα τις ανάγκες, τη συμπεριφορά και τις συναισθηματικές δυσκολίες του παιδιού τους.</p>
+                            <p>Μέσα από τις συναντήσεις διερευνώνται ζητήματα που αφορούν την επικοινωνία μέσα στην οικογένεια, τη θέσπιση ορίων, τη διαχείριση συγκρούσεων, τις σχολικές δυσκολίες, το άγχος, τις αναπτυξιακές μεταβάσεις και τις αλλαγές που επηρεάζουν τη λειτουργία του οικογενειακού συστήματος.</p>
+                            <p>Η συμβουλευτική γονέων δεν επικεντρώνεται μόνο στη διαχείριση των δυσκολιών, αλλά και στην κατανόηση των σχέσεων και των αλληλεπιδράσεων που διαμορφώνονται μέσα στην οικογένεια. Στόχος είναι η ενίσχυση του γονεϊκού ρόλου με τρόπο πιο συνειδητό, σταθερό και συναισθηματικά διαθέσιμο, ώστε να δημιουργούνται οι προϋποθέσεις για μια πιο ουσιαστική σύνδεση μεταξύ γονέων και παιδιών.</p>
+                        </div>
+                        <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
+                    </div>
+                    <div class="service-card svc-toggle rv">
+                        <button class="svc-btn" type="button" aria-expanded="false">
+                            <h3>Ψυχοθεραπεία Παιδιού & Εφήβου</h3>
+                            <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <p class="svc-sum">Ένα ασφαλές πλαίσιο έκφρασης και επεξεργασίας συναισθημάτων που ενισχύει την αυτοεκτίμηση και τις δεξιότητες του παιδιού ή του εφήβου.</p>
+                        <div class="svc-full">
+                            <p>Η ψυχοθεραπεία παιδιού και εφήβου προσαρμόζεται στις ανάγκες, την ηλικία και τον μοναδικό τρόπο έκφρασης κάθε παιδιού και εφήβου. Στα παιδιά αξιοποιούνται δημιουργικά μέσα, όπως το παιχνίδι και η ζωγραφική, ενώ στους εφήβους δίνεται χώρος για διάλογο, επεξεργασία συναισθημάτων και ενίσχυση της προσωπικής τους φωνής.</p>
+                            <p>Η θεραπευτική διαδικασία μπορεί να συμβάλει στην αντιμετώπιση δυσκολιών που σχετίζονται με το άγχος, την αυτοεκτίμηση, τις κοινωνικές σχέσεις, τη σχολική προσαρμογή, τις οικογενειακές αλλαγές, τη συναισθηματική έκφραση και τη συμπεριφορά.</p>
+                            <p>Στόχος είναι η ενίσχυση της συναισθηματικής έκφρασης, της αυτοπεποίθησης, της ψυχικής ανθεκτικότητας και της δυνατότητας του παιδιού ή του εφήβου να διαχειρίζεται αποτελεσματικότερα τις προκλήσεις της καθημερινότητας και των σχέσεων του.</p>
+                        </div>
+                        <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
+                    </div>
+                    <div class="service-card svc-toggle rv">
+                        <button class="svc-btn" type="button" aria-expanded="false">
+                            <h3>Ομαδική ψυχοθεραπεία</h3>
+                            <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <p class="svc-sum">Η δύναμη της ομάδας βοηθά στην κατανόηση του εαυτού, τη σύνδεση με άλλους και την προσωπική ανάπτυξη.</p>
+                        <div class="svc-full">
+                            <p>Η ομαδική ψυχοθεραπεία προσφέρει ένα θεραπευτικό πλαίσιο μέσα στο οποίο τα μέλη έχουν τη δυνατότητα να μοιραστούν εμπειρίες, σκέψεις και συναισθήματα, αναγνωρίζοντας ότι πολλά από όσα βιώνουν αποκτούν νόημα μέσα από τη σχέση με τους άλλους.</p>
+                            <p>Η ομάδα λειτουργεί ως ένας χώρος σύνδεσης, ανατροφοδότησης και προσωπικής διερεύνησης, όπου κάθε μέλος μπορεί να παρατηρήσει τον τρόπο με τον οποίο σχετίζεται, επικοινωνεί και ανταποκρίνεται στις διαπροσωπικές αλληλεπιδράσεις.</p>
+                            <p>Μέσα από την ομαδική θεραπεία ενισχύονται η αυτογνωσία, η κατανόηση των σχέσεων, η συναισθηματική έκφραση και η δυνατότητα ανάπτυξης νέων τρόπων σύνδεσης με τον εαυτό και τους άλλους.</p>
+                        </div>
+                        <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
+                    </div>
+                    <div class="service-card svc-toggle rv">
+                        <button class="svc-btn" type="button" aria-expanded="false">
+                            <h3>Online ψυχοθεραπεία & συμβουλευτική</h3>
+                            <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <p class="svc-sum">Ψυχολογική υποστήριξη εξ αποστάσεως, σε ένα ασφαλές, εμπιστευτικό και ευέλικτο θεραπευτικό πλαίσιο.</p>
+                        <div class="svc-full">
+                            <p>Η online ψυχοθεραπεία και συμβουλευτική προσφέρει τη δυνατότητα ψυχολογικής υποστήριξης εξ αποστάσεως μέσα από ένα ασφαλές, σταθερό και εμπιστευτικό θεραπευτικό πλαίσιο.</p>
+                            <p>Απευθύνεται σε ανθρώπους που διαμένουν σε διαφορετική περιοχή, βρίσκονται στο εξωτερικό, έχουν περιορισμένο χρόνο μετακίνησης ή επιθυμούν μεγαλύτερη ευελιξία στον τρόπο πραγματοποίησης των συνεδριών.</p>
+                            <p>Η διαδικτυακή θεραπεία διατηρεί τα βασικά χαρακτηριστικά της θεραπευτικής διαδικασίας, όπως τη συνέπεια, τη σταθερότητα και τη θεραπευτική σχέση, προσφέροντας έναν ουσιαστικό χώρο επεξεργασίας προσωπικών δυσκολιών, συναισθημάτων και σχέσεων.</p>
+                        </div>
+                        <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
+                    </div>
+                    <div class="service-card svc-toggle svc-wide rv">
+                        <button class="svc-btn" type="button" aria-expanded="false">
+                            <h3>Σεμινάρια και Workshops</h3>
+                            <span class="svc-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </button>
+                        <p class="svc-sum">Ψυχοεκπαιδευτικά και βιωματικά σεμινάρια για άτομα, γονείς, ζευγάρια, ομάδες και επαγγελματίες που επιθυμούν να εμβαθύνουν σε θέματα ψυχικής υγείας και προσωπικής ανάπτυξης.</p>
+                        <div class="svc-full">
+                            <p>Τα σεμινάρια και τα workshops έχουν ψυχοεκπαιδευτικό και βιωματικό χαρακτήρα και απευθύνονται σε άτομα, γονείς, ζευγάρια, ομάδες και επαγγελματίες που επιθυμούν να εμβαθύνουν σε ζητήματα ψυχικής υγείας, σχέσεων και προσωπικής ανάπτυξης.</p>
+                            <p>Οι θεματικές μπορεί να αφορούν τη γονεϊκότητα, την επικοινωνία στις σχέσεις, τη διαχείριση του άγχους, την αυτογνωσία, τη συναισθηματική ανάπτυξη και άλλες σύγχρονες ψυχολογικές προκλήσεις της καθημερινότητας.</p>
+                            <p>Μέσα από θεωρητική ενημέρωση, βιωματικές ασκήσεις και συζήτηση, οι συμμετέχοντες έχουν τη δυνατότητα να αποκτήσουν νέες γνώσεις, να εμβαθύνουν στην προσωπική τους εμπειρία και να αναπτύξουν πρακτικά εργαλεία που μπορούν να αξιοποιήσουν στην καθημερινή ζωή και στις σχέσεις τους.</p>
+                        </div>
+                        <span class="svc-more">Μάθετε περισσότερα <span aria-hidden="true">→</span></span>
+                    </div>
                 </div>
-                <div class="footer-contact">
-                    <p><svg class="gic" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg> 210 440 4243</p>
-                    <p><svg class="gic" viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Λεωφόρος Ηρακλείου 191, Νέα Ιωνία</p>
-                    <p><svg class="gic" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l1.5-4M15 21l-1.5-4"/></svg> ΗΣΑΠ: Νέα Ιωνία ή Πευκάκια</p>
-                    <p><svg class="gic" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> c.tzoanou@outlook.com</p>
-                </div>
-                <div class="footer-social">
-                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg></a>
-                    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8.5A.5.5 0 0 1 14 8z"/></svg></a>
-                    <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.1M12 17v-4a2 2 0 0 1 4 0v4"/></svg></a>
+                <div class="svc-cta rv">
+                    <p>Δεν είστε σίγουροι ποια υπηρεσία ανταποκρίνεται καλύτερα στις ανάγκες σας;</p>
+                    <a href="#contact" class="btn-tz">Επικοινωνήστε μαζί μου</a>
                 </div>
             </div>
-            <p class="footer-bottom">© 2026 Χαρά Τζοάνου. Με την επιφύλαξη παντός δικαιώματος.</p>
-            <p class="footer-credit">Designed by <a href="https://advonmedia.com" target="_blank" rel="noopener">Advon Media</a></p>
-        </div>
-    </footer>
+        </section>
+
+        <section id="space">
+            <div class="container">
+                <h2 class="section-title rv">Ο Χώρος</h2>
+                <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
+                <p class="section-subtitle rv">Ο θεραπευτικός χώρος έχει διαμορφωθεί με στόχο να προσφέρει ασφάλεια και διακριτικότητα. Προσφέρονται δια ζώσης, αλλά και online συνεδρίες ανάλογα με τις ανάγκες και τις δυνατότητες κάθε ανθρώπου.</p>
+
+                <div class="gal-sym-grid rv">
+                    <div class="image-placeholder">[Φωτογραφία Χώρου 1]</div>
+                    <div class="image-placeholder">[Φωτογραφία Χώρου 2]</div>
+                    <div class="image-placeholder">[Φωτογραφία Χώρου 3]</div>
+                    <div class="image-placeholder">[Φωτογραφία Χώρου 4]</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quote" class="quote-section">
+            <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
+            <blockquote class="site-quote">«Το παράδοξο είναι ότι όταν αποδέχομαι τον εαυτό μου όπως είναι, τότε μπορώ να αλλάξω»</blockquote>
+            <cite class="quote-cite">— Carl Rogers</cite>
+            <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
+        </section>
+
+        <section id="articles" style="padding-top: 0;">
+            <div class="green-banner">
+                <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: -20px; left: 5%;" alt="">
+                <h2>Αρθρογραφία</h2>
+            </div>
+
+            <div class="container">
+                <div class="articles-grid">
+                    <div class="article-card">
+                        <div class="article-img">[Εικόνα Άρθρου]</div>
+                        <div class="article-content">
+                            <span class="article-category">ΑΓΧΟΣ</span>
+                            <h3 class="article-title">Τίτλος άρθρου (Προσεχώς)</h3>
+                            <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="article-card">
+                        <div class="article-img">[Εικόνα Άρθρου]</div>
+                        <div class="article-content">
+                            <span class="article-category">ΓΟΝΕΪΚΟΤΗΤΑ</span>
+                            <h3 class="article-title">Τίτλος άρθρου (Προσεχώς)</h3>
+                            <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="article-card">
+                        <div class="article-img">[Εικόνα Άρθρου]</div>
+                        <div class="article-content">
+                            <span class="article-category">ΣΧΕΣΕΙΣ</span>
+                            <h3 class="article-title">Τίτλος άρθρου (Προσεχώς)</h3>
+                            <a href="#" class="article-link">Διαβάστε περισσότερα &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reviews">
+            <div class="container">
+                <h2 class="section-title rv">Αξιολογήσεις</h2>
+                <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
+                <p class="section-subtitle rv">Η εμπειρία των ανθρώπων που εμπιστεύτηκαν τη θεραπευτική διαδικασία.</p>
+                <!-- ΣΗΜΕΙΩΣΗ: αντικαταστήστε τα παρακάτω placeholders με πραγματικές αξιολογήσεις της κ. Τζοάνου -->
+                <div class="reviews-grid">
+                    <div class="review-card rv"><div class="rev-stars">★★★★★</div><p>«[Αξιολόγηση 1 — επικολλήστε εδώ πραγματική κριτική]»</p><span class="rev-name">[Όνομα]</span></div>
+                    <div class="review-card rv d1"><div class="rev-stars">★★★★★</div><p>«[Αξιολόγηση 2 — επικολλήστε εδώ πραγματική κριτική]»</p><span class="rev-name">[Όνομα]</span></div>
+                    <div class="review-card rv d2"><div class="rev-stars">★★★★★</div><p>«[Αξιολόγηση 3 — επικολλήστε εδώ πραγματική κριτική]»</p><span class="rev-name">[Όνομα]</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq">
+            <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: 10%; right: -20px; transform: scaleX(-1);" alt="">
+
+            <div class="container faq-container">
+                <h2 class="section-title rv">Συχνές Ερωτήσεις</h2>
+                <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
+                <p class="section-subtitle rv">Εδώ θα βρείτε απαντήσεις σε συχνές ερωτήσεις σχετικά με τη ψυχοθεραπεία και τη διαδικασία. Αν έχετε κάποια άλλη απορία, μπορείτε να επικοινωνήσετε μαζί μου.</p>
+                <details class="faq-cat" open>
+                    <summary class="faq-cat-sum">Έναρξη θεραπείας<span class="cat-chev" aria-hidden="true">+</span></summary>
+                    <div class="faq-cat-body">
+                <details>
+                    <summary>Πότε μπορεί κάποιος να απευθυνθεί σε ψυχολόγο;</summary>
+                    <p>Μπορείτε να απευθυνθείτε σε ψυχολόγο όταν νιώθετε ότι χρειάζεστε έναν ασφαλή χώρο για να κατανοήσετε καλύτερα όσα σας δυσκολεύουν, όπως άγχος, έντονη πίεση, αλλαγές στη διάθεση, δυσκολίες στις σχέσεις, οικογενειακά ζητήματα, απώλεια, χαμηλή αυτοεκτίμηση ή περιόδους σημαντικών αλλαγών στη ζωή σας.</p>
+                </details>
+                <details>
+                    <summary>Χρειάζεται να έχω συγκεκριμένο πρόβλημα για να ξεκινήσω ψυχοθεραπεία;</summary>
+                    <p>Η ψυχοθεραπεία μπορεί να ξεκινήσει ακόμη και όταν το αίτημα βρίσκεται ακόμη σε διερεύνηση. Πολλές φορές ένας άνθρωπος έρχεται με ένα αίσθημα πίεσης, σύγχυσης, επανάληψης ή δυσφορίας, χωρίς να μπορεί ακόμη να το ονομάσει με ακρίβεια. Η θεραπευτική διαδικασία βοηθά σταδιακά στην κατανόηση αυτού που συμβαίνει.</p>
+                </details>
+                <details>
+                    <summary>Μπορώ να έρθω στη θεραπεία αν δεν ξέρω ακριβώς τι νιώθω;</summary>
+                    <p>Ναι. Πολλοί άνθρωποι ξεκινούν θεραπεία με μια γενική αίσθηση δυσφορίας, πίεσης ή εσωτερικής σύγχυσης. Η θεραπεία μπορεί να βοηθήσει στο να δοθεί λόγος σε αυτά που μέχρι τώρα βιώνονται αόριστα ή σιωπηλά.</p>
+                </details>
+                <details>
+                    <summary>Η ψυχοθεραπεία απευθύνεται μόνο σε ανθρώπους που βρίσκονται σε κρίση;</summary>
+                    <p>Η ψυχοθεραπεία μπορεί να είναι χρήσιμη τόσο σε περιόδους κρίσης όσο και σε περιόδους προσωπικής αναζήτησης, αλλαγής ή ανάγκης για καλύτερη κατανόηση του εαυτού. Ένας άνθρωπος μπορεί να ζητήσει υποστήριξη όταν επιθυμεί να κατανοήσει βαθύτερα τον εαυτό του, τις σχέσεις του και τον τρόπο με τον οποίο βιώνει τη ζωή του.</p>
+                </details>
+
+                </div>
+                </details>
+                <details class="faq-cat">
+                    <summary class="faq-cat-sum">Η πρώτη συνεδρία<span class="cat-chev" aria-hidden="true">+</span></summary>
+                    <div class="faq-cat-body">
+                <details>
+                    <summary>Τι γίνεται στην πρώτη συνεδρία;</summary>
+                    <p>Η πρώτη συνεδρία έχει κυρίως διερευνητικό χαρακτήρα. Στόχος είναι να γνωριστούμε, να μιλήσετε για αυτό που σας απασχολεί και να διαμορφώσουμε μαζί μια αρχική εικόνα των αναγκών, των προσδοκιών και του θεραπευτικού πλαισίου.</p>
+                </details>
+                <details>
+                    <summary>Πώς μπορώ να προετοιμαστώ για την πρώτη συνεδρία;</summary>
+                    <p>Αρκεί να έρθετε με όσα νιώθετε ότι θέλετε να μοιραστείτε. Η πρώτη συνάντηση είναι ένας χώρος γνωριμίας, κατανόησης και αρχικής διερεύνησης, με σεβασμό στον ρυθμό και στις ανάγκες σας.</p>
+                </details>
+                <details>
+                    <summary>Είναι φυσιολογικό να νιώθω αμηχανία στην πρώτη συνεδρία;</summary>
+                    <p>Η αμηχανία στην πρώτη συνάντηση είναι απόλυτα αναμενόμενη. Η γνωριμία με έναν νέο άνθρωπο και η έκθεση προσωπικών σκέψεων ή συναισθημάτων μπορεί να χρειάζονται χρόνο. Η θεραπευτική σχέση χτίζεται σταδιακά, μέσα σε κλίμα αποδοχής, σεβασμού και ασφάλειας.</p>
+                </details>
+                <details>
+                    <summary>Τι γίνεται αν δυσκολεύομαι να μιλήσω για όσα με απασχολούν;</summary>
+                    <p>Ο ρυθμός κάθε ανθρώπου γίνεται σεβαστός. Η θεραπευτική διαδικασία επιτρέπει σταδιακά την ανάπτυξη εμπιστοσύνης, ώστε το άτομο να μπορέσει να μοιραστεί όσα είναι έτοιμο να επεξεργαστεί.</p>
+                </details>
+
+                </div>
+                </details>
+                <details class="faq-cat">
+                    <summary class="faq-cat-sum">Πρακτικές πληροφορίες<span class="cat-chev" aria-hidden="true">+</span></summary>
+                    <div class="faq-cat-body">
+                <details>
+                    <summary>Πώς κλείνω ραντεβού;</summary>
+                    <p>Το ραντεβού μπορεί να προγραμματιστεί τηλεφωνικά ή μέσω της φόρμας επικοινωνίας. Κατά την πρώτη επικοινωνία συζητάμε σύντομα το αίτημά σας και βρίσκουμε την ημέρα και ώρα που εξυπηρετεί καλύτερα.</p>
+                </details>
+                <details>
+                    <summary>Πόσο διαρκεί κάθε συνεδρία;</summary>
+                    <p>Η ατομική συνεδρία διαρκεί συνήθως 50 λεπτά. Η διάρκεια μπορεί να διαφοροποιείται ανάλογα με το είδος της συνάντησης, όπως συμβουλευτική γονέων, συνεδρία ζεύγους ή οικογενειακή συνάντηση.</p>
+                </details>
+                <details>
+                    <summary>Κάθε πότε γίνονται οι συνεδρίες;</summary>
+                    <p>Συνήθως οι συνεδρίες πραγματοποιούνται μία φορά την εβδομάδα, ώστε να υπάρχει συνέχεια και σταθερότητα στη θεραπευτική διαδικασία. Η συχνότητα προσαρμόζεται ανάλογα με το αίτημα και τις ανάγκες κάθε ανθρώπου.</p>
+                </details>
+                <details>
+                    <summary>Παρέχονται online συνεδρίες;</summary>
+                    <p>Ναι, παρέχονται και online συνεδρίες, όταν αυτό εξυπηρετεί τις ανάγκες του προσώπου ή όταν η φυσική παρουσία στον χώρο είναι δύσκολη. Οι online συνεδρίες πραγματοποιούνται σε σταθερό και προστατευμένο πλαίσιο, με σεβασμό στην εμπιστευτικότητα.</p>
+                </details>
+                <details>
+                    <summary>Πόσο διαρκεί συνολικά η ψυχοθεραπεία;</summary>
+                    <p>Η διάρκεια της θεραπευτικής διαδικασίας εξαρτάται από το αίτημα, τους στόχους, τον ρυθμό και τις ανάγκες κάθε ανθρώπου. Σε κάποιες περιπτώσεις η υποστήριξη μπορεί να είναι βραχυπρόθεσμη, ενώ σε άλλες χρειάζεται περισσότερος χρόνος για βαθύτερη επεξεργασία.</p>
+                </details>
+
+                </div>
+                </details>
+                <details class="faq-cat">
+                    <summary class="faq-cat-sum">Θεραπευτικό πλαίσιο<span class="cat-chev" aria-hidden="true">+</span></summary>
+                    <div class="faq-cat-body">
+                <details>
+                    <summary>Υπάρχει απόρρητο;</summary>
+                    <p>Η θεραπευτική διαδικασία διέπεται από αυστηρή εμπιστευτικότητα και σεβασμό στο προσωπικό απόρρητο. Όσα συζητούνται κατά τη διάρκεια των συνεδριών προστατεύονται σύμφωνα με τον Κώδικα Δεοντολογίας των Ψυχολόγων και τη σχετική νομοθεσία περί προστασίας προσωπικών δεδομένων.</p>
+                </details>
+                <details>
+                    <summary>Τι μπορώ να περιμένω από τη θεραπευτική διαδικασία;</summary>
+                    <p>Η θεραπευτική διαδικασία προσφέρει έναν σταθερό χώρο διερεύνησης, κατανόησης και επεξεργασίας. Μέσα από τη σχέση με τον θεραπευτή, το άτομο μπορεί να αναγνωρίσει μοτίβα, συναισθήματα, δυσκολίες και τρόπους σύνδεσης με τον εαυτό και τους άλλους.</p>
+                </details>
+                <details>
+                    <summary>Θα μου δοθούν συμβουλές για το τι πρέπει να κάνω;</summary>
+                    <p>Η ψυχοθεραπεία εστιάζει στην κατανόηση, στη διερεύνηση και στην ενίσχυση της προσωπικής επίγνωσης. Στόχος είναι να δημιουργηθεί ένας χώρος όπου το άτομο μπορεί να κατανοήσει βαθύτερα τον εαυτό του, τις ανάγκες του και τις επιλογές του, ώστε να κινηθεί με μεγαλύτερη καθαρότητα και προσωπική ευθύνη.</p>
+                </details>
+                <details>
+                    <summary>Πώς καταλαβαίνω αν η θεραπεία με βοηθά;</summary>
+                    <p>Η θεραπευτική αλλαγή συχνά εμφανίζεται ως σταδιακή μετατόπιση στον τρόπο που το άτομο κατανοεί τον εαυτό του, σχετίζεται με τους άλλους, αναγνωρίζει τις ανάγκες του και διαχειρίζεται τις δυσκολίες του.</p>
+                </details>
+                <details>
+                    <summary>Μπορώ να σταματήσω τη θεραπεία όποτε θέλω;</summary>
+                    <p>Η θεραπευτική διαδικασία βασίζεται στη συνεργασία και στον σεβασμό της προσωπικής επιλογής. Όταν ένας άνθρωπος σκέφτεται να ολοκληρώσει ή να διακόψει τη θεραπεία, είναι σημαντικό αυτό να συζητηθεί μέσα στη συνεδρία, ώστε να υπάρξει ένας ουσιαστικός και φροντιστικός αποχαιρετισμός.</p>
+                </details>
+
+                </div>
+                </details>
+                <details class="faq-cat">
+                    <summary class="faq-cat-sum">Παιδιά, έφηβοι και γονείς<span class="cat-chev" aria-hidden="true">+</span></summary>
+                    <div class="faq-cat-body">
+                <details>
+                    <summary>Μπορώ να απευθυνθώ για το παιδί ή τον έφηβό μου;</summary>
+                    <p>Ναι, οι γονείς μπορούν να απευθυνθούν για ζητήματα που αφορούν το παιδί ή τον έφηβο, όπως άγχος, δυσκολίες στη συμπεριφορά, συναισθηματική επιβάρυνση, σχολικές δυσκολίες, οικογενειακές αλλαγές ή δυσκολίες στις σχέσεις. Η συνεργασία με τους γονείς αποτελεί σημαντικό μέρος της διαδικασίας.</p>
+                </details>
+                <details>
+                    <summary>Υπάρχει δυνατότητα συμβουλευτικής γονέων;</summary>
+                    <p>Ναι, η συμβουλευτική γονέων μπορεί να βοηθήσει στην κατανόηση των δυσκολιών του παιδιού ή του εφήβου, αλλά και στη διαμόρφωση πιο λειτουργικών τρόπων επικοινωνίας, οριοθέτησης και συναισθηματικής στήριξης μέσα στην οικογένεια.</p>
+                </details>
+                <details>
+                    <summary>Μπορεί ένας έφηβος να κάνει συνεδρίες χωρίς να γνωρίζουν οι γονείς όσα λέει;</summary>
+                    <p>Στην εργασία με εφήβους, η εμπιστευτικότητα είναι ιδιαίτερα σημαντική. Οι γονείς ενημερώνονται για τη γενική πορεία και για ζητήματα που αφορούν την ασφάλεια ή τη φροντίδα του παιδιού, ενώ ο προσωπικός χώρος του εφήβου προστατεύεται με σεβασμό και επαγγελματική ευθύνη.</p>
+                </details>
+            </div>
+                </details>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2 class="section-title rv">Επικοινωνία</h2>
+                <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/></g></svg></div>
+                <p class="section-subtitle rv">Αν έχετε κάποια απορία ή επιθυμείτε να προγραμματίσετε ένα πρώτο ραντεβού, μπορείτε να επικοινωνήσετε μαζί μου τηλεφωνικά, μέσω email ή συμπληρώνοντας τη φόρμα επικοινωνίας.</p>
+
+                <div class="contact-cards">
+                    <div class="contact-card rv">
+                        <h3 class="cc-title"><svg class="gic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg> Στοιχεία Επικοινωνίας</h3>
+                        <div class="cline"><svg class="gic" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg><div><strong>Τηλέφωνο</strong><br>210 440 4243</div></div>
+                        <div class="cline"><svg class="gic" viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><div><strong>Διεύθυνση</strong><br>Λεωφόρος Ηρακλείου 191, Νέα Ιωνία<br><span class="cnote">Πρόσβαση: ΗΣΑΠ στάση Νέα Ιωνία ή στάση Πευκάκια</span></div></div>
+                        <div class="cline"><svg class="gic" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg><div><strong>Email</strong><br><a href="mailto:c.tzoanou@outlook.com">c.tzoanou@outlook.com</a></div></div>
+                        <div class="cline"><svg class="gic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><div><strong>Ώρες λειτουργίας</strong><br>Κατόπιν ραντεβού<br><span class="cnote">Online συνεδρίες διαθέσιμες</span></div></div>
+                        <div class="cc-actions">
+                            <a class="btn-tz sm" href="tel:+302104404243"><svg class="gic w" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg> Κλήση</a>
+                            <a class="btn-tz sm ghost" href="mailto:c.tzoanou@outlook.com"><svg class="gic" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> Email</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-card map-card rv d1">
+                        <h3 class="cc-title"><svg class="gic" viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Βρείτε μας</h3>
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3142.9298379361665!2d23.755100000000003!3d38.037100000000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a198de7e667aa7%3A0xc3f8e5621434c44!2zzpsuIM6Xz4HOsc66zrvOtc6vzr_PhSAxOTEsIM6dzq3OsSDOmc-Jzr3Or86xIDE0MiAzMQ!5e0!3m2!1sel!2sgr!4v1700000000000!5m2!1sel!2sgr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="contact-card rv">
+                        <h3 class="cc-title"><svg class="gic" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> Φόρμα Επικοινωνίας</h3>
+                        <form id="contactForm" novalidate>
+                            <div class="frow2">
+                                <input type="text" id="cf-name" placeholder="Ονοματεπώνυμο *" required>
+                                <input type="email" id="cf-email" placeholder="Email *" required>
+                            </div>
+                            <input type="tel" id="cf-phone" placeholder="Τηλέφωνο (προαιρετικό)">
+                            <textarea id="cf-msg" placeholder="Το μήνυμά σας *" required></textarea>
+                            <button type="submit" class="btn-tz wide">Αποστολή μηνύματος</button>
+                            <p class="form-note"><svg class="gic" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Τα προσωπικά σας δεδομένα παραμένουν ασφαλή και δεν κοινοποιούνται.</p>
+                        </form>
+                    </div>
+
+                    <div class="contact-card rv d1">
+                        <h3 class="cc-title"><svg class="gic" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="3"/><circle cx="8" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/><path d="M3 12h18"/></svg> Πρόσβαση</h3>
+                        <div class="cline"><svg class="gic" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg><div><strong>ΗΣΑΠ Νέα Ιωνία</strong><br><span class="cnote">10 λεπτά με τα πόδια</span></div></div>
+                        <div class="cline"><svg class="gic" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg><div><strong>ΗΣΑΠ Πευκάκια</strong><br><span class="cnote">12 λεπτά με τα πόδια</span></div></div>
+                        <div class="cline"><svg class="gic" viewBox="0 0 24 24"><path d="M5 17h14l-1.5-5a3 3 0 0 0-2.9-2.2H9.4A3 3 0 0 0 6.5 12L5 17z"/><circle cx="8" cy="17" r="1.8"/><circle cx="16" cy="17" r="1.8"/></svg><div><strong>Με αυτοκίνητο</strong><br><span class="cnote">Εύκολη πρόσβαση και δυνατότητα στάθμευσης στην περιοχή</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="footer-top">
+                    <img src="https://github.com/agelmet/TZOANNOU/blob/main/Gemini_Generated_Image_ifh7ddifh7ddifh7.png?raw=true" alt="Χαρά Τζοάνου" class="footer-logo" width="3200" height="1340">
+                    <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/homeaftertext.png" alt="Υπογραφή" class="footer-signature">
+                </div>
+                <div class="footer-grid">
+                    <div>
+                        <h3>Χαρά Τζοάνου</h3>
+                        <p>Ψυχολόγος</p>
+                    </div>
+                    <div class="footer-contact">
+                        <p><svg class="gic" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg> 210 440 4243</p>
+                        <p><svg class="gic" viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Λεωφόρος Ηρακλείου 191, Νέα Ιωνία</p>
+                        <p><svg class="gic" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l1.5-4M15 21l-1.5-4"/></svg> ΗΣΑΠ: Νέα Ιωνία ή Πευκάκια</p>
+                        <p><svg class="gic" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> c.tzoanou@outlook.com</p>
+                    </div>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+                        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8.5A.5.5 0 0 1 14 8z"/></svg></a>
+                        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.1M12 17v-4a2 2 0 0 1 4 0v4"/></svg></a>
+                    </div>
+                </div>
+                <p class="footer-bottom">© 2026 Χαρά Τζοάνου. Με την επιφύλαξη παντός δικαιώματος.</p>
+                <p class="footer-credit">Designed by <a href="https://advonmedia.com" target="_blank" rel="noopener">Advon Media</a></p>
+            </div>
+        </footer>
+
+    </div> <!-- END SITE WRAPPER -->
 
     <div class="book-bar" id="bookBar">
         <p class="bb-text">Αν αισθάνεστε ότι ήρθε η στιγμή να φροντίσετε περισσότερο τον εαυτό σας, θα χαρώ να σας γνωρίσω.</p>
