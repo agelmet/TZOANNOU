@@ -1069,13 +1069,15 @@
         .gal-sym-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            max-width: 900px;
+            gap: 20px;
+            max-width: 1060px;
             margin: 40px auto 0;
         }
+        .gal-sym-grid picture { display: block; }
         .gal-sym-grid .image-placeholder,
         .gal-sym-grid img {
             width: 100%;
+            height: auto;          /* let aspect-ratio win over the width/height attributes */
             aspect-ratio: 4/3;
             object-fit: cover;
             border-radius: 14px;
