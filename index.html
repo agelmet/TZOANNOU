@@ -160,6 +160,7 @@
         }
         .nav-links li {
             margin-left: 25px;
+            white-space: nowrap;   /* the larger mark leaves less room — never wrap a label */
         }
         .nav-links a {
             font-size: 0.9rem;
@@ -170,6 +171,16 @@
             color: var(--primary-green);
         }
 
+        @media (max-width:1280px){
+            .nav-links li{margin-left:17px}
+            .nav-links a{font-size:.84rem}
+            .main-logo{height:64px !important}
+        }
+        @media (max-width:1120px){
+            .nav-links li{margin-left:13px}
+            .nav-links a{font-size:.79rem}
+            .main-logo{height:56px !important}
+        }
         /* Section Spacing & Banners */
         section {
             padding: 60px 0;
