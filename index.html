@@ -1066,19 +1066,30 @@
             color: rgba(255, 255, 255, 0.3);
         }
         
+        /* justified gallery — every photo keeps its own shape and nothing is cropped.
+           Inside a row each tile grows in proportion to its aspect ratio, so all the
+           tiles in that row end up exactly the same height and the row fills the width. */
         .gal-sym-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            flex-direction: column;
             gap: 18px;
-            max-width: 1080px;
+            max-width: 1100px;
             margin: 40px auto 0;
         }
-        .gal-sym-grid picture { display: block; }
+        .gal-row { display: flex; gap: 18px; align-items: stretch; }
+        .gal-row > .gal-item {
+            flex: var(--r) 1 0;
+            aspect-ratio: var(--r);
+            min-width: 0;
+        }
+        .gal-sym-grid picture { display: block; width: 100%; height: 100%; }
         /* each tile is a button so the photo can be opened full size */
         .gal-item{
             position:relative; display:block; width:100%; padding:0; border:0; background:none;
-            border-radius:12px; overflow:hidden; cursor:zoom-in; -webkit-tap-highlight-color:transparent;
+            border-radius:14px; overflow:hidden; cursor:zoom-in; -webkit-tap-highlight-color:transparent;
+            transition:transform .45s var(--ease-lift), box-shadow .45s var(--ease-lift);
         }
+        .gal-item:hover{transform:translateY(-4px)}
         .gal-item .gal-zoom{
             position:absolute; right:12px; bottom:12px; width:38px; height:38px; border-radius:50%;
             display:grid; place-items:center; color:#fff; background:rgba(40,55,42,.55);
@@ -1129,8 +1140,8 @@
         .gal-sym-grid .image-placeholder,
         .gal-sym-grid img {
             width: 100%;
-            height: auto;          /* let aspect-ratio win over the width/height attributes */
-            aspect-ratio: 4/3;
+            height: 100%;          /* the tile already carries the photo's own ratio */
+            aspect-ratio: auto;
             object-fit: cover;
             border-radius: 14px;
             background: rgba(255, 255, 255, 0.1) !important;
@@ -1143,15 +1154,11 @@
             font-size: 0.9rem;
             transition: transform 0.45s var(--ease-lift), box-shadow 0.45s var(--ease-lift);
         }
-        .gal-sym-grid .image-placeholder:hover,
-        .gal-sym-grid img:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--sh-lg);
-        }
-        @media (max-width: 768px) {
-            .gal-sym-grid {
-                grid-template-columns: 1fr;
-            }
+        .gal-sym-grid .image-placeholder:hover { transform: translateY(-4px); box-shadow: var(--sh-lg); }
+        .gal-item:hover img { box-shadow: var(--sh-lg); }
+        @media (max-width: 900px) {
+            .gal-row { flex-direction: column; }
+            .gal-row > .gal-item { flex: 0 0 auto; width: 100%; }
         }
 
         /* reduced motion */
@@ -1397,90 +1404,98 @@
                 <p class="section-subtitle rv">Ο θεραπευτικός χώρος έχει διαμορφωθεί με στόχο να προσφέρει ασφάλεια και διακριτικότητα. Προσφέρονται δια ζώσης, αλλά και online συνεδρίες ανάλογα με τις ανάγκες και τις δυνατότητες κάθε ανθρώπου.</p>
 
                 <div class="gal-sym-grid rv">
-                    <button type="button" class="gal-item" data-full="tz-xoros-1-full.webp" data-cap="Ο χώρος συνεδριών με θέα στο πράσινο" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
-                        <picture>
-                            <source media="(max-width:768px)" srcset="tz-xoros-1-sm.webp">
-                            <img src="tz-xoros-1.webp" alt="Ο χώρος συνεδριών με θέα στο πράσινο" loading="lazy" decoding="async">
-                        </picture>
-                        <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
-                    </button>
-                    <button type="button" class="gal-item" data-full="tz-xoros-2-full.webp" data-cap="Η γωνιά ανάγνωσης με τον καναπέ" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
-                        <picture>
-                            <source media="(max-width:768px)" srcset="tz-xoros-2-sm.webp">
-                            <img src="tz-xoros-2.webp" alt="Η γωνιά ανάγνωσης με τον καναπέ" loading="lazy" decoding="async">
-                        </picture>
-                        <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
-                    </button>
-                    <button type="button" class="gal-item" data-full="tz-xoros-3-full.webp" data-cap="Ο χώρος υποδοχής" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
-                        <picture>
-                            <source media="(max-width:768px)" srcset="tz-xoros-3-sm.webp">
-                            <img src="tz-xoros-3.webp" alt="Ο χώρος υποδοχής" loading="lazy" decoding="async">
-                        </picture>
-                        <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
-                    </button>
-                    <button type="button" class="gal-item" data-full="tz-xoros-4-full.webp" data-cap="Το γραφείο με φυσικό φως" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
-                        <picture>
-                            <source media="(max-width:768px)" srcset="tz-xoros-4-sm.webp">
-                            <img src="tz-xoros-4.webp" alt="Το γραφείο με φυσικό φως" loading="lazy" decoding="async">
-                        </picture>
-                        <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
-                    </button>
-                    <button type="button" class="gal-item" data-full="tz-xoros-5-full.webp" data-cap="Το γραφείο συνεδριών" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
-                        <picture>
-                            <source media="(max-width:768px)" srcset="tz-xoros-5-sm.webp">
-                            <img src="tz-xoros-5.webp" alt="Το γραφείο συνεδριών" loading="lazy" decoding="async">
-                        </picture>
-                        <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
-                    </button>
-                    <button type="button" class="gal-item" data-full="tz-xoros-6-full.webp" data-cap="Ο καθιστικός χώρος" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
-                        <picture>
-                            <source media="(max-width:768px)" srcset="tz-xoros-6-sm.webp">
-                            <img src="tz-xoros-6.webp" alt="Ο καθιστικός χώρος" loading="lazy" decoding="async">
-                        </picture>
-                        <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
-                    </button>
-                    <button type="button" class="gal-item" data-full="tz-xoros-7-full.webp" data-cap="Η Χαρά Τζοάνου στο γραφείο της" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
-                        <picture>
-                            <source media="(max-width:768px)" srcset="tz-xoros-7-sm.webp">
-                            <img src="tz-xoros-7.webp" alt="Η Χαρά Τζοάνου στο γραφείο της" loading="lazy" decoding="async">
-                        </picture>
-                        <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
-                    </button>
-                    <button type="button" class="gal-item" data-full="tz-xoros-8-full.webp" data-cap="Στιγμιότυπο από την καθημερινότητα του γραφείου" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
-                        <picture>
-                            <source media="(max-width:768px)" srcset="tz-xoros-8-sm.webp">
-                            <img src="tz-xoros-8.webp" alt="Στιγμιότυπο από την καθημερινότητα του γραφείου" loading="lazy" decoding="async">
-                        </picture>
-                        <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
-                    </button>
-                    <button type="button" class="gal-item" data-full="tz-xoros-9-full.webp" data-cap="Ο χώρος του γραφείου με φυσικό φως" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
-                        <picture>
-                            <source media="(max-width:768px)" srcset="tz-xoros-9-sm.webp">
-                            <img src="tz-xoros-9.webp" alt="Ο χώρος του γραφείου με φυσικό φως" loading="lazy" decoding="async">
-                        </picture>
-                        <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
-                    </button>
-                    <button type="button" class="gal-item" data-full="tz-xoros-10-full.webp" data-cap="Πανοραμική άποψη του χώρου συνεδριών" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
-                        <picture>
-                            <source media="(max-width:768px)" srcset="tz-xoros-10-sm.webp">
-                            <img src="tz-xoros-10.webp" alt="Πανοραμική άποψη του χώρου συνεδριών" loading="lazy" decoding="async">
-                        </picture>
-                        <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
-                    </button>
-                    <button type="button" class="gal-item" data-full="tz-xoros-11-full.webp" data-cap="Ο χώρος όπου γίνονται οι συνεδρίες" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
-                        <picture>
-                            <source media="(max-width:768px)" srcset="tz-xoros-11-sm.webp">
-                            <img src="tz-xoros-11.webp" alt="Ο χώρος όπου γίνονται οι συνεδρίες" loading="lazy" decoding="async">
-                        </picture>
-                        <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
-                    </button>
-                    <button type="button" class="gal-item" data-full="tz-xoros-12-full.webp" data-cap="Ο φωτεινός χώρος αναμονής" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
-                        <picture>
-                            <source media="(max-width:768px)" srcset="tz-xoros-12-sm.webp">
-                            <img src="tz-xoros-12.webp" alt="Ο φωτεινός χώρος αναμονής" loading="lazy" decoding="async">
-                        </picture>
-                        <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
-                    </button>
+                    <div class="gal-row">
+                        <button type="button" class="gal-item" style="--r:1.5019" data-full="tz-xoros-1-full.webp" data-cap="Ο χώρος συνεδριών με θέα στο πράσινο" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
+                            <picture>
+                                <source media="(max-width:900px)" srcset="tz-xoros-1-sm.webp">
+                                <img src="tz-xoros-1.webp" alt="Ο χώρος συνεδριών με θέα στο πράσινο" loading="lazy" decoding="async">
+                            </picture>
+                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
+                        </button>
+                        <button type="button" class="gal-item" style="--r:1.5019" data-full="tz-xoros-2-full.webp" data-cap="Η γωνιά ανάγνωσης με τον καναπέ" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
+                            <picture>
+                                <source media="(max-width:900px)" srcset="tz-xoros-2-sm.webp">
+                                <img src="tz-xoros-2.webp" alt="Η γωνιά ανάγνωσης με τον καναπέ" loading="lazy" decoding="async">
+                            </picture>
+                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
+                        </button>
+                        <button type="button" class="gal-item" style="--r:1.5019" data-full="tz-xoros-3-full.webp" data-cap="Ο χώρος υποδοχής" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
+                            <picture>
+                                <source media="(max-width:900px)" srcset="tz-xoros-3-sm.webp">
+                                <img src="tz-xoros-3.webp" alt="Ο χώρος υποδοχής" loading="lazy" decoding="async">
+                            </picture>
+                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
+                        </button>
+                    </div>
+                    <div class="gal-row">
+                        <button type="button" class="gal-item" style="--r:1.5019" data-full="tz-xoros-4-full.webp" data-cap="Το γραφείο με φυσικό φως" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
+                            <picture>
+                                <source media="(max-width:900px)" srcset="tz-xoros-4-sm.webp">
+                                <img src="tz-xoros-4.webp" alt="Το γραφείο με φυσικό φως" loading="lazy" decoding="async">
+                            </picture>
+                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
+                        </button>
+                        <button type="button" class="gal-item" style="--r:1.1685" data-full="tz-xoros-7-full.webp" data-cap="Η Χαρά Τζοάνου στο γραφείο της" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
+                            <picture>
+                                <source media="(max-width:900px)" srcset="tz-xoros-7-sm.webp">
+                                <img src="tz-xoros-7.webp" alt="Η Χαρά Τζοάνου στο γραφείο της" loading="lazy" decoding="async">
+                            </picture>
+                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
+                        </button>
+                        <button type="button" class="gal-item" style="--r:1.5019" data-full="tz-xoros-5-full.webp" data-cap="Το γραφείο συνεδριών" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
+                            <picture>
+                                <source media="(max-width:900px)" srcset="tz-xoros-5-sm.webp">
+                                <img src="tz-xoros-5.webp" alt="Το γραφείο συνεδριών" loading="lazy" decoding="async">
+                            </picture>
+                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
+                        </button>
+                    </div>
+                    <div class="gal-row">
+                        <button type="button" class="gal-item" style="--r:0.6656" data-full="tz-xoros-8-full.webp" data-cap="Στιγμιότυπο από την καθημερινότητα του γραφείου" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
+                            <picture>
+                                <source media="(max-width:900px)" srcset="tz-xoros-8-sm.webp">
+                                <img src="tz-xoros-8.webp" alt="Στιγμιότυπο από την καθημερινότητα του γραφείου" loading="lazy" decoding="async">
+                            </picture>
+                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
+                        </button>
+                        <button type="button" class="gal-item" style="--r:2.2556" data-full="tz-xoros-10-full.webp" data-cap="Πανοραμική άποψη του χώρου συνεδριών" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
+                            <picture>
+                                <source media="(max-width:900px)" srcset="tz-xoros-10-sm.webp">
+                                <img src="tz-xoros-10.webp" alt="Πανοραμική άποψη του χώρου συνεδριών" loading="lazy" decoding="async">
+                            </picture>
+                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
+                        </button>
+                        <button type="button" class="gal-item" style="--r:0.6656" data-full="tz-xoros-11-full.webp" data-cap="Ο χώρος όπου γίνονται οι συνεδρίες" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
+                            <picture>
+                                <source media="(max-width:900px)" srcset="tz-xoros-11-sm.webp">
+                                <img src="tz-xoros-11.webp" alt="Ο χώρος όπου γίνονται οι συνεδρίες" loading="lazy" decoding="async">
+                            </picture>
+                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
+                        </button>
+                    </div>
+                    <div class="gal-row">
+                        <button type="button" class="gal-item" style="--r:1.5019" data-full="tz-xoros-6-full.webp" data-cap="Ο καθιστικός χώρος" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
+                            <picture>
+                                <source media="(max-width:900px)" srcset="tz-xoros-6-sm.webp">
+                                <img src="tz-xoros-6.webp" alt="Ο καθιστικός χώρος" loading="lazy" decoding="async">
+                            </picture>
+                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
+                        </button>
+                        <button type="button" class="gal-item" style="--r:1.5019" data-full="tz-xoros-9-full.webp" data-cap="Ο χώρος του γραφείου με φυσικό φως" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
+                            <picture>
+                                <source media="(max-width:900px)" srcset="tz-xoros-9-sm.webp">
+                                <img src="tz-xoros-9.webp" alt="Ο χώρος του γραφείου με φυσικό φως" loading="lazy" decoding="async">
+                            </picture>
+                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
+                        </button>
+                        <button type="button" class="gal-item" style="--r:1.5019" data-full="tz-xoros-12-full.webp" data-cap="Ο φωτεινός χώρος αναμονής" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
+                            <picture>
+                                <source media="(max-width:900px)" srcset="tz-xoros-12-sm.webp">
+                                <img src="tz-xoros-12.webp" alt="Ο φωτεινός χώρος αναμονής" loading="lazy" decoding="async">
+                            </picture>
+                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
