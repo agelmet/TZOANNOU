@@ -1223,15 +1223,22 @@
         @media (max-width:900px){
             .hero-content{display:block}
             .hero-content::after{content:"";display:block;clear:both}
-            .hero-image.m-float{float:right;width:46%;max-width:270px;margin:4px 0 12px 18px;order:0}
+            .hero-image.m-float{float:right;width:42%;max-width:170px;margin:4px 0 10px 16px;order:0}
             .hero-image.m-float::after{transform:translate(9px,9px)}
             .hero-content .bot-divider{justify-content:flex-start}
             .hero .hero-welcome{font-size:clamp(1.5rem,1rem + 2.4vw,2rem)}
-            .hero-p{font-size:.93rem;line-height:1.65}
+            /* one rhythm for every paragraph on the phone — the About column used to inherit the 40px grid gap */
+            .about-text{display:block}
+            .about-grid{row-gap:26px}
+            .hero .hero-p,.about-text .about-p{font-size:.93rem;line-height:1.68;margin-bottom:18px}
+            .hero .hero-p:last-of-type,.about-text .about-p:last-of-type{margin-bottom:0}
+            /* her portrait was nearly full width — keep it a photo, not a poster */
+            .about-image{max-width:300px}
         }
         @media (max-width:480px){
-            .hero-image.m-float{width:48%;margin-left:14px}
-            .hero-p{font-size:.9rem;line-height:1.6}
+            .hero-image.m-float{width:44%;max-width:158px;margin-left:14px}
+            .hero .hero-p,.about-text .about-p{font-size:.9rem;line-height:1.62}
+            .about-image{max-width:272px}
         }
         /* 4: the video is the first tile of the «Ο Χώρος» gallery — video column and the 2×2 photo block
               are the same height at every width (27.48 / 72.52 split, 18px gap), photos keep their own ratios */
@@ -1244,9 +1251,11 @@
         .video-frame iframe{width:100%;height:100%;border:0;display:block}
         .video-frame::after{content:"";position:absolute;inset:0;border:1px solid rgba(255,255,255,.25);border-radius:14px;pointer-events:none;z-index:2}
         @media (max-width:900px){
+            /* on the phone every photo of the space is full width, like the rows below — no small 2×2 block */
             .gal-feature{grid-template-columns:1fr;gap:18px;margin-bottom:18px}
             .gal-feat-video{display:flex;justify-content:center}
             .video-frame{width:min(100%,300px);height:auto;aspect-ratio:9/16;border-radius:20px}
+            .gal-feat-grid{grid-template-columns:1fr}
         }
         /* 9: the real doctoranytime logo in the footer, on a white chip so the brand colours read on the green */
         .footer-social .fs-dat{width:auto;height:38px;border-radius:999px;padding:0 14px;background:#fff;border-color:transparent}
