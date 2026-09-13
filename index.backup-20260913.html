@@ -313,7 +313,7 @@
             top: 2px;
             width: 20px;
             height: 20px;
-            background-image: url('tz-leaf.webp');
+            background-image: url('https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -620,13 +620,12 @@
         .service-card,.acard,.contact-card,.review-card,.article-card{border-radius:16px;box-shadow:var(--sh-md),var(--sh-glow)}
 
         /* hero */
-        .hero-container{display:grid;grid-template-columns:1fr 1.08fr;gap:56px;align-items:start;position:relative;z-index:2}
-        .hero-image{margin-top:var(--hero-img-top,0)} /* set by script: photo top = first line of text */
+        .hero-container{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;position:relative;z-index:2}
         .hero-welcome{font-family:var(--font-heading);font-size:1.5rem;color:var(--dark-green);margin-bottom:18px}
         .hero-p{color:var(--text-dark);margin-bottom:16px;font-size:.98rem;line-height:1.75}
         .signature-img{max-width:300px;margin-top:16px}
-        .arch-frame{position:relative;border-radius:220px 220px 18px 18px;overflow:hidden;aspect-ratio:900/1353;background:#e8e4d8;box-shadow:0 10px 30px -18px rgba(60,70,60,.4)} /* = the photo's own ratio: nothing is cropped */
-        .arch-frame.tall{aspect-ratio:900/1353;border-radius:18px}
+        .arch-frame{position:relative;border-radius:220px 220px 18px 18px;overflow:hidden;aspect-ratio:4/5;background:#e8e4d8;box-shadow:0 10px 30px -18px rgba(60,70,60,.4)}
+        .arch-frame.tall{aspect-ratio:3/4;border-radius:18px}
         .arch-frame img{width:100%;height:100%;object-fit:cover;display:block}
         .arch-frame .ph-label{display:none;position:absolute;inset:0;align-items:center;justify-content:center;color:var(--text-light);font-size:.9rem}
         .arch-frame.is-empty .ph-label{display:flex}
@@ -975,6 +974,7 @@
 
         /* scroll parallax inside photo frames */
         @supports (animation-timeline: view()){
+            .arch-frame img {animation:framePan linear both;animation-timeline:view()}
         }
         @keyframes framePan{from{transform:scale(1.07) translateY(2.2%)}to{transform:scale(1.07) translateY(-2.2%)}}
 
@@ -1117,7 +1117,7 @@
             transform:scale(.97); transition:transform .28s cubic-bezier(.22,1,.36,1);
         }
         .gal-lb.is-visible img{transform:none}
-        .gal-lb figcaption{display:none}
+        .gal-lb figcaption{color:rgba(255,255,255,.82);font-size:.88rem;text-align:center;max-width:60ch}
         .gal-lb .lb-btn{
             position:absolute; width:48px; height:48px; border-radius:50%; border:1px solid rgba(255,255,255,.25);
             background:rgba(255,255,255,.08); color:#fff; cursor:pointer; display:grid; place-items:center;
@@ -1179,78 +1179,6 @@
             .green-banner h2.rv{letter-spacing:.02em !important}
             .service-card::before,.review-card::before,.article-card::before{display:none !important}
         }
-
-        /* ============ CLIENT CHANGES 13 Sept 2026 ============ */
-        /* 10: menu CTA */
-        .nav-links .nav-cta a{background:#fff;color:var(--dark-green);border-radius:999px;padding:8px 16px;font-weight:700;box-shadow:var(--sh-sm)}
-        .nav-links .nav-cta a::after{display:none}
-        .nav-links .nav-cta a:hover{background:#f1f4ef;color:var(--dark-green)}
-        .nav-links li{margin-left:13px}
-        .nav-links a{font-size:.82rem}
-        @media (max-width:1380px){.nav-links li{margin-left:12px}.nav-links a{font-size:.8rem}.nav-links .nav-cta a{padding:7px 11px}}
-        @media (max-width:1180px){.nav-links{display:none}}  /* menu + CTA no longer fit — burger takes over */
-        /* 7: burger + slide-in menu (phones / tablets) */
-        .nav-burger{display:none;width:46px;height:46px;border-radius:12px;background:transparent;border:0;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0}
-        .nav-burger span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:transform .3s ease,opacity .3s ease}
-        .nav-burger:hover{background:rgba(255,255,255,.12)}
-        @media (max-width:1180px){
-            nav{position:sticky}
-            nav .container{justify-content:space-between}
-            .nav-burger{display:flex}
-        }
-        .mob-menu{position:fixed;inset:0;z-index:4000;background:rgba(40,52,40,.35);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease}
-        .mob-menu.is-open{opacity:1;visibility:visible}
-        .mob-panel{position:absolute;top:0;right:0;bottom:0;width:min(84vw,340px);background:var(--bg-beige);box-shadow:-20px 0 60px -30px rgba(0,0,0,.45);padding:88px 28px 32px;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .45s var(--ease-out)}
-        .mob-menu.is-open .mob-panel{transform:none}
-        .mob-close{position:absolute;top:16px;right:16px;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--primary-green);background:#fff;color:var(--dark-green);display:flex;align-items:center;justify-content:center;cursor:pointer}
-        .mob-close svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
-        .mob-links{list-style:none;margin:0;padding:0}
-        .mob-links li{border-bottom:1px solid var(--hairline)}
-        .mob-links a{display:block;padding:14px 4px;font-family:var(--font-heading);font-size:1.25rem;color:var(--dark-green);text-decoration:none}
-        .mob-links a.is-active{color:var(--primary-green)}
-        .mob-cta{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:.5em;background:var(--dark-green);color:#fff;border-radius:999px;padding:14px 20px;font-weight:700;text-decoration:none;box-shadow:var(--sh-md)}
-        .mob-cta .gic{stroke:#fff}
-        body.menu-open{overflow:hidden}
-        /* 3: on phones the photo sits beside the text (floated right), the text runs on below it */
-        @media (max-width:900px){
-            .hero-content{display:block}
-            .hero-content::after{content:"";display:block;clear:both}
-            .hero-image.m-float{float:right;width:46%;max-width:270px;margin:4px 0 12px 18px;order:0}
-            .hero-image.m-float::after{transform:translate(9px,9px)}
-            .hero-content .bot-divider{justify-content:flex-start}
-            .hero .hero-welcome{font-size:clamp(1.5rem,1rem + 2.4vw,2rem)}
-            .hero-p{font-size:.93rem;line-height:1.65}
-        }
-        @media (max-width:480px){
-            .hero-image.m-float{width:48%;margin-left:14px}
-            .hero-p{font-size:.9rem;line-height:1.6}
-        }
-        /* 4: video section */
-        .video-sec{padding-top:0}
-        .video-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
-        .video-text .section-title{text-align:left}
-        .bot-divider-left{justify-content:flex-start;margin-left:0}
-        .video-cta{margin-top:10px}
-        .video-wrap{display:flex;justify-content:center}
-        .video-frame{width:min(100%,360px);aspect-ratio:9/16;border-radius:26px;overflow:hidden;background:#e8e4d8;box-shadow:var(--sh-lg),var(--sh-glow);position:relative}
-        .video-frame iframe{width:100%;height:100%;border:0;display:block}
-        .video-frame::after{content:"";position:absolute;inset:10px;border:1px solid rgba(255,255,255,.4);border-radius:18px;pointer-events:none}
-        @media (max-width:900px){
-            .video-grid{grid-template-columns:1fr;gap:34px}
-            .video-text{text-align:center}
-            .video-text .section-title{text-align:center}
-            .bot-divider-left{justify-content:center}
-            .video-frame{width:min(100%,320px)}
-        }
-        /* 9: doctoranytime in the footer */
-        .footer-social .fs-dat{width:auto;border-radius:999px;padding:0 16px 0 12px;gap:8px;font-size:.82rem;font-weight:600;color:#fff;text-decoration:none;letter-spacing:.02em}
-        .footer-social .fs-dat svg{width:18px;height:18px}
-        /* 11: article category filters */
-        .art-filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:-10px 0 34px}
-        .art-filters button{border:1px solid var(--hairline);background:var(--card-bg);color:var(--soft);border-radius:999px;padding:8px 16px;font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .3s,color .3s,transform .3s}
-        .art-filters button:hover{transform:translateY(-1px)}
-        .art-filters button.is-on{background:var(--dark-green);color:#fff;border-color:var(--dark-green)}
-        .article-card.is-hidden{display:none}
     </style>
 </head>
 <body>
@@ -1260,7 +1188,7 @@
 
     <div id="preloader" aria-hidden="true">
         <div class="pre-inner">
-            <img src="tz-logo-pre.webp" alt="" class="pre-logo">
+            <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/Gemini_Generated_Image_ifh7ddifh7ddifh7-2.png" alt="" class="pre-logo">
             <span class="pre-line"></span>
         </div>
     </div>
@@ -1269,7 +1197,7 @@
     <nav>
         <div class="container">
             <div class="logo">
-                <img src="tz-logo.webp" alt="Ψ Χαρά Τζοάνου, Ψυχολόγος" class="main-logo" width="1200" height="503">
+                <img src="https://github.com/agelmet/TZOANNOU/blob/main/Gemini_Generated_Image_ifh7ddifh7ddifh7.png?raw=true" alt="Ψ Χαρά Τζοάνου, Ψυχολόγος" class="main-logo" width="3200" height="1340">
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Αρχική</a></li>
@@ -1280,34 +1208,15 @@
                 <li><a href="#reviews">Αξιολογήσεις</a></li>
                 <li><a href="#faq">Συχνές ερωτήσεις</a></li>
                 <li><a href="#contact">Επικοινωνία</a></li>
-                <li class="nav-cta"><a href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara" target="_blank" rel="noopener">Κλείστε ραντεβού</a></li>
             </ul>
-            <button type="button" class="nav-burger" id="navBurger" aria-label="Άνοιγμα μενού" aria-expanded="false" aria-controls="mobMenu"><span></span><span></span><span></span></button>
         </div>
     </nav>
-    <!-- 7: mobile menu (right-hand burger) -->
-    <div class="mob-menu" id="mobMenu" aria-hidden="true">
-        <div class="mob-panel" role="dialog" aria-modal="true" aria-label="Μενού">
-            <button type="button" class="mob-close" id="mobClose" aria-label="Κλείσιμο μενού"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-            <ul class="mob-links">
-                <li><a href="#home">Αρχική</a></li>
-                <li><a href="#about">Σχετικά με εμένα</a></li>
-                <li><a href="#services">Υπηρεσίες</a></li>
-                <li><a href="#space">Ο χώρος</a></li>
-                <li><a href="#articles">Αρθρογραφία</a></li>
-                <li><a href="#reviews">Αξιολογήσεις</a></li>
-                <li><a href="#faq">Συχνές ερωτήσεις</a></li>
-                <li><a href="#contact">Επικοινωνία</a></li>
-            </ul>
-            <a class="mob-cta" href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara" target="_blank" rel="noopener"><svg class="gic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg> Κλείστε ραντεβού</a>
-        </div>
-    </div>
 
     <!-- WRAPPER: Ensures sticky nav works perfectly while hiding visual bleed horizontally -->
     <main class="site-wrapper">
         <section id="home" class="hero">
-            <img src="tz-leaf.webp" class="leaf-decor leaf-sway" style="top: 10px; left: -20px;" alt="">
-            <img src="tz-leaf.webp" class="leaf-decor leaf-float-rev" style="bottom: 10px; right: -20px; transform: scaleX(-1);" alt="">
+            <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: 10px; left: -20px;" alt="">
+            <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-float-rev" style="bottom: 10px; right: -20px; transform: scaleX(-1);" alt="">
 
             <div class="container hero-container">
                 <div class="hero-content rv">
@@ -1317,7 +1226,7 @@
                     <p class="hero-p">Η θεραπευτική μου προσέγγιση βασίζεται στον σεβασμό προς τη μοναδική ιστορία κάθε ανθρώπου. Πιστεύω ότι οι εμπειρίες, οι σχέσεις και τα βιώματα διαμορφώνουν τον τρόπο με τον οποίο αντιλαμβανόμαστε τον εαυτό μας, τους άλλους και τον κόσμο γύρω μας. Μέσα από αυτή τη ματιά, επιδιώκω να δημιουργώ έναν χώρο όπου κάθε άνθρωπος μπορεί να αισθανθεί ασφάλεια, αποδοχή και ελευθερία να εκφράσει όσα τον απασχολούν.</p>
                     <p class="hero-p">Η θεραπευτική μου πρακτική υποστηρίζεται από συνεχή κλινική εποπτεία, προσωπική θεραπεία και διαρκή επιστημονική επιμόρφωση, στοιχεία που θεωρώ αναπόσπαστα για την υπεύθυνη άσκηση του επαγγέλματος και την παροχή ποιοτικών υπηρεσιών ψυχικής υγείας.</p>
                     <p class="hero-p">Στόχος μου είναι να συνοδεύσω κάθε άνθρωπο σε μια διαδικασία αυτογνωσίας και προσωπικής ανάπτυξης, βοηθώντας τον να κατανοήσει βαθύτερα τον εαυτό του, να αναγνωρίσει τα μοτίβα που επηρεάζουν τη ζωή και τις σχέσεις του και να αναπτύξει νέους τρόπους αντιμετώπισης των δυσκολιών και των προκλήσεων που συναντά στην καθημερινότητα του.</p>
-                    <img src="tz-signature.webp" class="signature-img" alt="Υπογραφή">
+                    <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/homeaftertext.png" class="signature-img" alt="Υπογραφή">
                 </div>
                 <div class="hero-image rv d1">
                     <div class="arch-frame">
@@ -1332,7 +1241,7 @@
         </section>
 
         <section id="about" class="about">
-            <img src="tz-leaf.webp" class="leaf-decor leaf-sway" style="top: 40%; right: -30px; transform: scaleX(-1);" alt="">
+            <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: 40%; right: -30px; transform: scaleX(-1);" alt="">
 
             <div class="container">
                 <h2 class="section-title rv">Σχετικά με εμένα</h2>
@@ -1386,28 +1295,10 @@
             </div>
         </section>
 
-        <!-- 4: video -->
-        <section id="video" class="video-sec">
-            <div class="container video-grid">
-                <div class="video-text rv">
-                    <h2 class="section-title">Λίγα λόγια από εμένα</h2>
-                    <div class="bot-divider bot-divider-left" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
-                    <p class="about-p">Ένα σύντομο βίντεο για να με γνωρίσετε πριν από την πρώτη μας συνάντηση.</p>
-                    <p class="about-p">Αν έχετε οποιαδήποτε απορία, μπορείτε να επικοινωνήσετε μαζί μου ή να κλείσετε απευθείας το ραντεβού σας.</p>
-                    <a class="btn-tz video-cta" href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara" target="_blank" rel="noopener">Κλείστε ραντεβού</a>
-                </div>
-                <div class="video-wrap rv d1">
-                    <div class="video-frame">
-                        <iframe src="https://player.mux.com/BmBrqFQ00537lez01yEkpozjudlHK22oR733B2gbvOdgM?metadata-video-title=TZOANNOU&amp;video-title=TZOANNOU" title="Βίντεο — Χαρά Τζοάνου" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="services" style="padding-top: 0;">
             <div class="green-banner">
-                <img src="tz-leaf.webp" class="leaf-decor leaf-sway" style="top: 10px; left: 10%;" alt="">
-                <img src="tz-leaf.webp" class="leaf-decor leaf-float" style="top: 10px; right: 10%; transform: scaleX(-1);" alt="">
+                <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: 10px; left: 10%;" alt="">
+                <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-float" style="top: 10px; right: 10%; transform: scaleX(-1);" alt="">
                 <h2>Υπηρεσίες</h2>
                 <p class="banner-sub">Οι υπηρεσίες προσαρμόζονται στις ανάγκες κάθε ανθρώπου, με στόχο τη δημιουργία ενός ασφαλούς θεραπευτικού χώρου και μιας ουσιαστικής θεραπευτικής συνεργασίας.</p>
             </div>
@@ -1618,17 +1509,11 @@
 
         <section id="articles" style="padding-top: 0;">
             <div class="green-banner">
-                <img src="tz-leaf.webp" class="leaf-decor leaf-sway" style="top: -20px; left: 5%;" alt="">
+                <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: -20px; left: 5%;" alt="">
                 <h2>Αρθρογραφία</h2>
             </div>
 
             <div class="container">
-                <div class="art-filters rv" role="tablist" aria-label="Κατηγορίες άρθρων">
-                    <button type="button" class="is-on" data-cat="">Όλα</button>
-                    <button type="button" data-cat="ΑΓΧΟΣ">Άγχος</button>
-                    <button type="button" data-cat="ΓΟΝΕΪΚΟΤΗΤΑ">Γονεϊκότητα</button>
-                    <button type="button" data-cat="ΣΧΕΣΕΙΣ">Σχέσεις</button>
-                </div>
                 <div class="articles-grid">
                     <div class="article-card">
                         <div class="article-img">[Εικόνα Άρθρου]</div>
@@ -1673,7 +1558,7 @@
         </section>
 
         <section id="faq">
-            <img src="tz-leaf.webp" class="leaf-decor leaf-sway" style="top: 10%; right: -20px; transform: scaleX(-1);" alt="">
+            <img src="https://raw.githubusercontent.com/agelmet/TZOANNOU/refs/heads/main/leafs%20to%20be%20added%20throughout%20the%20website.png" class="leaf-decor leaf-sway" style="top: 10%; right: -20px; transform: scaleX(-1);" alt="">
 
             <div class="container faq-container">
                 <h2 class="section-title rv">Συχνές Ερωτήσεις</h2>
@@ -1799,7 +1684,7 @@
             <div class="container">
                 <h2 class="section-title rv">Επικοινωνία</h2>
                 <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/></g></svg></div>
-                <p class="section-subtitle rv">Αν έχετε κάποια απορία ή επιθυμείτε να προγραμματίσετε ένα ραντεβού, μπορείτε να επικοινωνήσετε μαζί μου τηλεφωνικά, μέσω email ή συμπληρώνοντας τη φόρμα επικοινωνίας.</p>
+                <p class="section-subtitle rv">Αν έχετε κάποια απορία ή επιθυμείτε να προγραμματίσετε ένα πρώτο ραντεβού, μπορείτε να επικοινωνήσετε μαζί μου τηλεφωνικά, μέσω email ή συμπληρώνοντας τη φόρμα επικοινωνίας.</p>
 
                 <div class="contact-cards">
                     <div class="contact-card rv">
@@ -1840,7 +1725,7 @@
         <footer>
             <div class="container">
                 <div class="footer-top">
-                    <img src="tz-logo.webp" alt="Χαρά Τζοάνου" class="footer-logo" width="1200" height="503">
+                    <img src="https://github.com/agelmet/TZOANNOU/blob/main/Gemini_Generated_Image_ifh7ddifh7ddifh7.png?raw=true" alt="Χαρά Τζοάνου" class="footer-logo" width="3200" height="1340">
                 </div>
                 <div class="footer-grid">
                     <div class="footer-contact" style="padding-left:16px">
@@ -1853,7 +1738,6 @@
                         <a href="https://www.instagram.com/chara_tzoanou_psychologist/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg></a>
                         <a href="https://www.facebook.com/profile.php?id=61575012181559" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8.5A.5.5 0 0 1 14 8z"/></svg></a>
                         <a href="https://www.linkedin.com/in/chara-tzoanou-34b724266/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.1M12 17v-4a2 2 0 0 1 4 0v4"/></svg></a>
-                        <a href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara" target="_blank" rel="noopener" class="fs-dat" aria-label="Προφίλ στο doctoranytime" title="doctoranytime"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="m9.5 15.5 1.8 1.8 3.4-3.6"/></svg><span>doctoranytime</span></a>
                     </div>
                 </div>
                 <p class="footer-bottom">© 2026 Χαρά Τζοάνου. Με την επιφύλαξη παντός δικαιώματος.</p>
@@ -1872,7 +1756,7 @@
 
     <div class="book-bar" id="bookBar">
         <div class="bb-actions">
-            <a href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara" target="_blank" rel="noopener" class="bb-btn solid"><svg class="gic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg> Κλείστε Ραντεβού <span aria-hidden="true">→</span></a>
+            <a href="https://doctoranytime.gr/" target="_blank" rel="noopener" class="bb-btn solid"><svg class="gic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg> Κλείστε το πρώτο σας ραντεβού <span aria-hidden="true">→</span></a>
         </div>
     </div>
 
@@ -1966,7 +1850,7 @@
       var t = tiles[idx];
       img.src = t.dataset.full;
       img.alt = t.dataset.cap || '';
-      cap.textContent = '';   /* client: no descriptions under the photos */
+      cap.textContent = t.dataset.cap || '';
       count.textContent = (idx + 1) + ' / ' + tiles.length;
     }
     function open(i){
@@ -2041,45 +1925,6 @@
     });
     c.addEventListener('pointerleave', function(){ c.style.transition=''; c.style.transform=''; });
   });
-})();
-</script>
-
-<script>
-(function(){
-  /* 7: mobile menu */
-  var burger=document.getElementById('navBurger'), menu=document.getElementById('mobMenu'), close=document.getElementById('mobClose');
-  function openM(){ menu.classList.add('is-open'); menu.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); document.body.classList.add('menu-open'); close.focus(); }
-  function closeM(){ menu.classList.remove('is-open'); menu.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); document.body.classList.remove('menu-open'); }
-  if(burger && menu){
-    burger.addEventListener('click', openM); close.addEventListener('click', closeM);
-    menu.addEventListener('click', function(e){ if(e.target===menu) closeM(); });
-    menu.querySelectorAll('.mob-links a').forEach(function(a){ a.addEventListener('click', closeM); });
-    document.addEventListener('keydown', function(e){ if(e.key==='Escape' && menu.classList.contains('is-open')) closeM(); });
-    window.matchMedia('(min-width:1181px)').addEventListener('change', function(m){ if(m.matches) closeM(); });
-  }
-  /* 1 + 3: hero photo — desktop: top edge on the first line of text; phones: floated beside the text */
-  var hero=document.querySelector('.hero-container'), content=hero&&hero.querySelector('.hero-content'), image=hero&&hero.querySelector('.hero-image'), welcome=content&&content.querySelector('.hero-welcome');
-  var mq=window.matchMedia('(max-width:900px)');
-  function placeHero(){
-    if(!hero||!content||!image) return;
-    if(mq.matches){
-      if(image.parentNode!==content){ content.insertBefore(image, welcome? welcome.nextSibling : content.firstChild); image.classList.add('m-float'); }
-      hero.style.removeProperty('--hero-img-top');
-    } else {
-      if(image.parentNode!==hero){ image.classList.remove('m-float'); hero.appendChild(image); }
-      if(welcome){ var top=welcome.getBoundingClientRect().top - content.getBoundingClientRect().top; hero.style.setProperty('--hero-img-top', Math.max(0, Math.round(top))+'px'); }
-    }
-  }
-  placeHero(); mq.addEventListener('change', placeHero); window.addEventListener('resize', placeHero);
-  if(document.fonts && document.fonts.ready) document.fonts.ready.then(placeHero);
-  window.addEventListener('load', placeHero);
-  /* 11: article categories */
-  var fl=document.querySelector('.art-filters');
-  if(fl){ fl.querySelectorAll('button').forEach(function(b){ b.addEventListener('click', function(){
-    fl.querySelectorAll('button').forEach(function(x){ x.classList.toggle('is-on', x===b); });
-    var cat=b.dataset.cat||'';
-    document.querySelectorAll('.article-card').forEach(function(c){ var k=(c.querySelector('.article-category')||{}).textContent||''; c.classList.toggle('is-hidden', !!cat && k.trim()!==cat); });
-  }); }); }
 })();
 </script>
 </body>
