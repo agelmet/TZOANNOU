@@ -625,6 +625,9 @@
         /* hero */
         .hero-container{display:grid;grid-template-columns:1fr 1.08fr;gap:56px;align-items:start;position:relative;z-index:2}
         .hero-image{margin-top:var(--hero-img-top,0)} /* set by script: photo top = first line of text */
+        /* the hero text is left-aligned, so the branch starts where the text starts
+           (-8px cancels the blank margin inside the drawing); centred again on phones */
+        .hero-content .bot-divider{justify-content:flex-start;margin-left:-8px}
         .hero-welcome{font-family:var(--font-heading);font-size:1.5rem;color:var(--dark-green);margin-bottom:18px}
         .hero-p{color:var(--text-dark);margin-bottom:16px;font-size:.98rem;line-height:1.75}
         .signature-img{max-width:300px;margin-top:16px}
