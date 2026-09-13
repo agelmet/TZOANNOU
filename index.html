@@ -1215,7 +1215,9 @@
         .mob-panel nav.mob-nav{position:static;background:none;padding:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;transition:none}
         .article-link[aria-disabled]{opacity:.6;cursor:default}
         .leaf-decor{height:auto}
-        .footer-logo{box-sizing:content-box}
+        /* the white chip moves to the link, so the logo box keeps the file's exact ratio */
+        .footer-top a{display:inline-block;background:#fff;border-radius:16px;padding:10px 18px;box-shadow:var(--sh-sm);line-height:0}
+        .footer-logo{background:none;padding:0;border-radius:0;box-shadow:none;box-sizing:content-box}
         html.js .rv.in{opacity:1;transform:none}
         /* 3: on phones the photo sits beside the text (floated right), the text runs on below it */
         @media (max-width:900px){
@@ -1231,23 +1233,25 @@
             .hero-image.m-float{width:48%;margin-left:14px}
             .hero-p{font-size:.9rem;line-height:1.6}
         }
-        /* 4: the video of the space, beside the intro text of «Ο Χώρος» */
-        .space-intro{margin-bottom:56px}
-        .space-intro .space-sub{margin:0 auto 34px}
-        .space-video{display:flex;justify-content:center}
-        .video-frame{width:min(100%,300px);aspect-ratio:9/16;border-radius:26px;overflow:hidden;background:#e8e4d8;box-shadow:var(--sh-lg),var(--sh-glow);position:relative}
+        /* 4: the video is the first tile of the «Ο Χώρος» gallery — video column and the 2×2 photo block
+              are the same height at every width (27.48 / 72.52 split, 18px gap), photos keep their own ratios */
+        .gal-feature{display:grid;grid-template-columns:297.3fr 784.7fr;gap:18px;align-items:stretch;max-width:1100px;margin:40px auto 18px}
+        .gal-feat-video{min-width:0}
+        .gal-feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;min-width:0}
+        .gal-feat-grid > .gal-item{aspect-ratio:var(--r);width:100%}
+        .gal-sym-grid{margin-top:0}
+        .video-frame{width:100%;height:100%;border-radius:14px;overflow:hidden;background:#e8e4d8;box-shadow:var(--sh-md);position:relative}
         .video-frame iframe{width:100%;height:100%;border:0;display:block}
-        .video-frame::after{content:"";position:absolute;inset:10px;border:1px solid rgba(255,255,255,.4);border-radius:18px;pointer-events:none;z-index:2}
-        #space .space-intro .space-sub{color:rgba(255,255,255,.9)}
+        .video-frame::after{content:"";position:absolute;inset:0;border:1px solid rgba(255,255,255,.25);border-radius:14px;pointer-events:none;z-index:2}
         @media (max-width:900px){
-            .space-intro{margin-bottom:40px}
-            .space-intro .space-sub{margin:0 auto 26px}
-            .space-video{justify-content:center}
-            .video-frame{width:min(100%,280px)}
+            .gal-feature{grid-template-columns:1fr;gap:18px;margin-bottom:18px}
+            .gal-feat-video{display:flex;justify-content:center}
+            .video-frame{width:min(100%,300px);height:auto;aspect-ratio:9/16;border-radius:20px}
         }
-        /* 9: doctoranytime in the footer */
-        .footer-social .fs-dat{width:auto;border-radius:999px;padding:0 16px 0 12px;gap:8px;font-size:.82rem;font-weight:600;color:#fff;text-decoration:none;letter-spacing:.02em}
-        .footer-social .fs-dat svg{width:18px;height:18px}
+        /* 9: the real doctoranytime logo in the footer, on a white chip so the brand colours read on the green */
+        .footer-social .fs-dat{width:auto;height:38px;border-radius:999px;padding:0 14px;background:#fff;border-color:transparent}
+        .footer-social .fs-dat:hover{background:#fff;transform:translateY(-2px)}
+        .footer-social .fs-dat img{height:19px;width:auto;display:block}
         /* 11: articles — live list from Contentful, category chips only when she uses categories */
         .art-filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:-10px 0 34px}
         .art-filters[hidden]{display:none}
@@ -1271,6 +1275,8 @@
         .art-more{display:block;margin:34px auto 0;border:1px solid var(--hairline);background:var(--card-bg);color:var(--dark-green);border-radius:999px;padding:11px 26px;font-weight:700;font-size:.9rem;cursor:pointer;transition:background .3s,transform .3s}
         .art-more:hover{transform:translateY(-1px);background:#fff}
         .art-more[hidden]{display:none}
+        .art-empty{text-align:center;color:var(--soft);font-size:1rem;margin:6px 0 0}
+        .art-empty[hidden]{display:none}
         @keyframes artIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
         .articles-grid > .article-card{animation:artIn .5s var(--ease-out) both}
         @media (prefers-reduced-motion:reduce){.articles-grid > .article-card{animation:none}}
@@ -1328,7 +1334,7 @@
                 <li><a href="#reviews">Αξιολογήσεις</a></li>
                 <li><a href="#faq">Συχνές ερωτήσεις</a></li>
                 <li><a href="#contact">Επικοινωνία</a></li>
-                <li class="nav-cta"><a href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara" target="_blank" rel="noopener">Κλείστε ραντεβού</a></li>
+                <li class="nav-cta"><a href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara?autobook=1" target="_blank" rel="noopener">Κλείστε ραντεβού</a></li>
             </ul>
             <button type="button" class="nav-burger" id="navBurger" aria-label="Άνοιγμα μενού" aria-expanded="false" aria-controls="mobMenu"><span></span><span></span><span></span></button>
         </div>
@@ -1347,7 +1353,7 @@
                 <li><a href="#faq">Συχνές ερωτήσεις</a></li>
                 <li><a href="#contact">Επικοινωνία</a></li>
             </ul></nav>
-            <a class="mob-cta" href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara" target="_blank" rel="noopener"><svg class="gic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg> Κλείστε ραντεβού</a>
+            <a class="mob-cta" href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara?autobook=1" target="_blank" rel="noopener"><svg class="gic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg> Κλείστε ραντεβού</a>
         </div>
     </div>
 
@@ -1540,17 +1546,15 @@
             <div class="container">
                 <h2 class="section-title rv">Ο Χώρος</h2>
                 <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
-                <div class="space-intro">
-                    <p class="section-subtitle rv space-sub">Ο θεραπευτικός χώρος έχει διαμορφωθεί με στόχο να προσφέρει ασφάλεια και διακριτικότητα. Προσφέρονται δια ζώσης, αλλά και online συνεδρίες ανάλογα με τις ανάγκες και τις δυνατότητες κάθε ανθρώπου.</p>
-                    <div class="space-video rv d1">
+                <p class="section-subtitle rv">Ο θεραπευτικός χώρος έχει διαμορφωθεί με στόχο να προσφέρει ασφάλεια και διακριτικότητα. Προσφέρονται δια ζώσης, αλλά και online συνεδρίες ανάλογα με τις ανάγκες και τις δυνατότητες κάθε ανθρώπου.</p>
+
+                <div class="gal-feature rv">
+                    <div class="gal-feat-video">
                         <div class="video-frame">
                             <iframe src="https://player.mux.com/BmBrqFQ00537lez01yEkpozjudlHK22oR733B2gbvOdgM?metadata-video-title=TZOANNOU&amp;video-title=TZOANNOU" title="Ο χώρος σε βίντεο" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen></iframe>
                         </div>
                     </div>
-                </div>
-
-                <div class="gal-sym-grid rv">
-                    <div class="gal-row">
+                    <div class="gal-feat-grid">
                         <button type="button" class="gal-item" style="--r:1.5019" data-full="tz-xoros-1-full.webp" data-cap="Ο χώρος συνεδριών με θέα στο πράσινο" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
                             <picture>
                                 <source media="(max-width:900px)" srcset="tz-xoros-1-sm.webp">
@@ -1572,8 +1576,6 @@
                             </picture>
                             <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
                         </button>
-                    </div>
-                    <div class="gal-row">
                         <button type="button" class="gal-item" style="--r:1.5019" data-full="tz-xoros-4-full.webp" data-cap="Το γραφείο με φυσικό φως" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
                             <picture>
                                 <source media="(max-width:900px)" srcset="tz-xoros-4-sm.webp">
@@ -1581,6 +1583,11 @@
                             </picture>
                             <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
                         </button>
+                    </div>
+                </div>
+
+                <div class="gal-sym-grid rv">
+                    <div class="gal-row">
                         <button type="button" class="gal-item" style="--r:1.1685" data-full="tz-xoros-7-full.webp" data-cap="Η Χαρά Τζοάνου στο γραφείο της" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
                             <picture>
                                 <source media="(max-width:900px)" srcset="tz-xoros-7-sm.webp">
@@ -1592,6 +1599,13 @@
                             <picture>
                                 <source media="(max-width:900px)" srcset="tz-xoros-5-sm.webp">
                                 <img src="tz-xoros-5.webp" alt="Το γραφείο συνεδριών" loading="lazy" decoding="async">
+                            </picture>
+                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
+                        </button>
+                        <button type="button" class="gal-item" style="--r:1.5019" data-full="tz-xoros-6-full.webp" data-cap="Ο καθιστικός χώρος" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
+                            <picture>
+                                <source media="(max-width:900px)" srcset="tz-xoros-6-sm.webp">
+                                <img src="tz-xoros-6.webp" alt="Ο καθιστικός χώρος" loading="lazy" decoding="async">
                             </picture>
                             <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
                         </button>
@@ -1620,13 +1634,6 @@
                         </button>
                     </div>
                     <div class="gal-row">
-                        <button type="button" class="gal-item" style="--r:1.5019" data-full="tz-xoros-6-full.webp" data-cap="Ο καθιστικός χώρος" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
-                            <picture>
-                                <source media="(max-width:900px)" srcset="tz-xoros-6-sm.webp">
-                                <img src="tz-xoros-6.webp" alt="Ο καθιστικός χώρος" loading="lazy" decoding="async">
-                            </picture>
-                            <span class="gal-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></svg></span>
-                        </button>
                         <button type="button" class="gal-item" style="--r:1.5019" data-full="tz-xoros-9-full.webp" data-cap="Ο χώρος του γραφείου με φυσικό φως" aria-label="Άνοιγμα φωτογραφίας σε πλήρες μέγεθος">
                             <picture>
                                 <source media="(max-width:900px)" srcset="tz-xoros-9-sm.webp">
@@ -1661,31 +1668,8 @@
 
             <div class="container">
                 <div class="art-filters rv" id="artFilters" role="tablist" aria-label="Κατηγορίες άρθρων" hidden></div>
+                <p class="art-empty rv" id="artEmpty">Τα πρώτα άρθρα έρχονται σύντομα.</p>
                 <div class="articles-grid" id="artGrid">
-                    <div class="article-card">
-                        <div class="article-img">[Εικόνα Άρθρου]</div>
-                        <div class="article-content">
-                            <span class="article-category">ΑΓΧΟΣ</span>
-                            <h3 class="article-title">Τίτλος άρθρου (Προσεχώς)</h3>
-                            <span class="article-link" aria-disabled="true">Προσεχώς</span>
-                        </div>
-                    </div>
-                    <div class="article-card">
-                        <div class="article-img">[Εικόνα Άρθρου]</div>
-                        <div class="article-content">
-                            <span class="article-category">ΓΟΝΕΪΚΟΤΗΤΑ</span>
-                            <h3 class="article-title">Τίτλος άρθρου (Προσεχώς)</h3>
-                            <span class="article-link" aria-disabled="true">Προσεχώς</span>
-                        </div>
-                    </div>
-                    <div class="article-card">
-                        <div class="article-img">[Εικόνα Άρθρου]</div>
-                        <div class="article-content">
-                            <span class="article-category">ΣΧΕΣΕΙΣ</span>
-                            <h3 class="article-title">Τίτλος άρθρου (Προσεχώς)</h3>
-                            <span class="article-link" aria-disabled="true">Προσεχώς</span>
-                        </div>
-                    </div>
                 </div>
                 <button type="button" class="art-more" id="artMore" hidden>Περισσότερα άρθρα</button>
             </div>
@@ -1886,7 +1870,7 @@
                         <a href="https://www.instagram.com/chara_tzoanou_psychologist/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg></a>
                         <a href="https://www.facebook.com/profile.php?id=61575012181559" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8.5A.5.5 0 0 1 14 8z"/></svg></a>
                         <a href="https://www.linkedin.com/in/chara-tzoanou-34b724266/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.1M12 17v-4a2 2 0 0 1 4 0v4"/></svg></a>
-                        <a href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara" target="_blank" rel="noopener" class="fs-dat" aria-label="Προφίλ στο doctoranytime" title="doctoranytime"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="m9.5 15.5 1.8 1.8 3.4-3.6"/></svg><span>doctoranytime</span></a>
+                        <a href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara" target="_blank" rel="noopener" class="fs-dat" aria-label="Το προφίλ μου στο doctoranytime" title="doctoranytime"><img src="dat-logo.webp" alt="doctoranytime" width="300" height="95" loading="lazy" decoding="async"></a>
                     </div>
                 </div>
                 <p class="footer-bottom">© 2026 Χαρά Τζοάνου. Με την επιφύλαξη παντός δικαιώματος.</p>
@@ -1918,7 +1902,7 @@
 
     <div class="book-bar" id="bookBar">
         <div class="bb-actions">
-            <a href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara" target="_blank" rel="noopener" class="bb-btn solid"><svg class="gic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg> Κλείστε Ραντεβού <span aria-hidden="true">→</span></a>
+            <a href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara?autobook=1" target="_blank" rel="noopener" class="bb-btn solid"><svg class="gic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg> Κλείστε Ραντεβού <span aria-hidden="true">→</span></a>
         </div>
     </div>
 
@@ -2119,14 +2103,14 @@
   placeHero(); mq.addEventListener('change', placeHero); window.addEventListener('resize', placeHero);
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(placeHero);
   window.addEventListener('load', placeHero);
-  /* 11: ΑΡΘΡΑ — ζωντανά από τον χώρο Contentful της Χαράς. Καμία εξωτερική βιβλιοθήκη:
-     μικρός renderer για το rich text, φόρτωση μόνο όταν πλησιάζει η ενότητα, και αν κάτι
-     πάει στραβά μένουν τα «Προσεχώς» που υπάρχουν ήδη στη σελίδα. */
+  /* 11: ΑΡΘΡΑ — ζωντανά από τον χώρο Contentful της Χαράς. Καμία εξωτερική βιβλιοθήκη: μικρός renderer
+     για το rich text. Ό,τι δημοσιεύει εμφανίζεται εδώ· οι κατηγορίες βγαίνουν μόνες τους από το πεδίο
+     κατηγορίας, όποιο όνομα κι αν του δώσει. */
   var CF_SPACE='nenlxssbsgim', CF_ENV='master', CF_TYPE='article',
       CF_TOKEN='EDemYLNcr6NXwfl3pY63iwYA93XzaCEf7e_LN5BPU1I';   /* Content Delivery API: read-only, φτιαγμένο για τον browser */
   var artSec=document.getElementById('articles'), artGrid=document.getElementById('artGrid'),
       artFilters=document.getElementById('artFilters'), artMore=document.getElementById('artMore'),
-      reader=document.getElementById('artReader');
+      artEmpty=document.getElementById('artEmpty'), reader=document.getElementById('artReader');
   var ART=[], artCat='', artShown=6, ART_STEP=6, artLoaded=false, artLast=null;
   var ESC={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return ESC[c];}); }
@@ -2162,6 +2146,28 @@
       default: return kids;
     }
   }
+  /* Η κατηγορία μπορεί να λέγεται όπως θέλει: δοκιμάζουμε τα συνηθισμένα ονόματα και,
+     αν δεν υπάρχει κανένα, παίρνουμε το πρώτο σύντομο πεδίο κειμένου εκτός από τίτλο/κείμενο.
+     Δέχεται και λίστα (Short text, list) — τότε το άρθρο ανήκει σε πολλές κατηγορίες. */
+  var CAT_KEYS=['category','categories','cat','kategoria','katigoria','kathgoria','κατηγορια','κατηγορία','tag','tags','topic','topics','thema','theme','section','rubric'];
+  var CAT_SKIP=['title','body','slug','image','cover','photo','summary','excerpt','description','date','author','seo','content','text'];
+  function artCats(f){
+    var v=null, k;
+    for(var i=0;i<CAT_KEYS.length;i++){ k=CAT_KEYS[i];
+      for(var real in f){ if(real.toLowerCase()===k){ v=f[real]; break; } }
+      if(v!=null&&v!=='') break; v=null; }
+    if(v==null||v===''){
+      for(var key in f){
+        if(CAT_SKIP.indexOf(key.toLowerCase())>=0) continue;
+        var x=f[key];
+        if(typeof x==='string' && x.trim() && x.trim().length<=40){ v=x; break; }
+        if(Object.prototype.toString.call(x)==='[object Array]' && x.length && typeof x[0]==='string'){ v=x; break; }
+      }
+    }
+    if(v==null||v==='') return [];
+    if(Object.prototype.toString.call(v)!=='[object Array]') v=String(v).split(/[,/|·]/);
+    return v.map(function(x){ return String(x).trim(); }).filter(Boolean).slice(0,4);
+  }
   function rtPlain(n){ if(!n) return ''; if(n.nodeType==='text') return n.value||''; return (n.content||[]).map(rtPlain).join(' '); }
   function rtFirstImg(n,as){
     if(!n||typeof n!=='object') return '';
@@ -2172,10 +2178,11 @@
   }
   function artRender(){
     if(!artGrid) return;
-    var list=ART.filter(function(a){ return !artCat || a.cat===artCat; });
+    var list=ART.filter(function(a){ return !artCat || a.cats.indexOf(artCat)>=0; });
     var show=list.slice(0,artShown);
     artGrid.innerHTML='';
     show.forEach(function(a){ artGrid.appendChild(artCard(a)); });
+    if(artEmpty) artEmpty.hidden = ART.length>0;
     if(artMore){ artMore.hidden = list.length<=show.length;
       artMore.textContent='Περισσότερα άρθρα ('+(list.length-show.length)+')'; }
   }
@@ -2197,7 +2204,7 @@
   }
   function artBuildFilters(){
     if(!artFilters) return;
-    var cats=[]; ART.forEach(function(a){ if(a.cat && cats.indexOf(a.cat)<0) cats.push(a.cat); });
+    var cats=[]; ART.forEach(function(a){ a.cats.forEach(function(c){ if(cats.indexOf(c)<0) cats.push(c); }); });
     if(cats.length<2){ artFilters.hidden=true; return; }
     artFilters.hidden=false;
     artFilters.innerHTML='<button type="button" class="is-on" data-cat="">Όλα</button>'+
@@ -2239,17 +2246,15 @@
         (((d.includes||{}).Asset)||[]).forEach(function(a){ if(a.fields&&a.fields.file) as[a.sys.id]={url:a.fields.file.url,title:a.fields.title||''}; });
         ART=(d.items||[]).map(function(e){
           var f=e.fields||{}, body=f.body, text=rtPlain(body).replace(/\s+/g,' ').trim();
-          var words=text? text.split(' ').length : 0;
-          return { id:e.sys.id, title:String(f.title||'').trim(),
-                   cat:String(f.category||f.katigoria||f.kathgoria||'').trim(),
+          var words=text? text.split(' ').length : 0, cats=artCats(f);
+          return { id:e.sys.id, title:String(f.title||'').trim(), cats:cats, cat:cats[0]||'',
                    date:fmtGr(e.sys.createdAt), text:text, mins:Math.max(1,Math.round(words/200)),
                    excerpt: text.length>170 ? text.slice(0,168).replace(/[\s,.·—-]+\S*$/,'')+'…' : text,
                    cover:rtFirstImg(body,as), html:rtNode(body,as) };
-        }).filter(function(a){ return a.title && a.text.length>30; });   /* δοκιμαστικά/άδεια άρθρα δεν εμφανίζονται */
-        if(!ART.length) return;
+        }).filter(function(a){ return !!a.title; });   /* ό,τι είναι δημοσιευμένο και έχει τίτλο, φαίνεται */
         artBuildFilters(); artRender(); artFromHash();
       })
-      .catch(function(){ /* μένουν τα «Προσεχώς» */ });
+      .catch(function(err){ if(window.console) console.warn('Άρθρα — δεν φορτώθηκαν:', err); });
   }
   if(artMore) artMore.addEventListener('click', function(){ artShown+=ART_STEP; artRender(); });
   if(reader){
@@ -2258,10 +2263,11 @@
     document.addEventListener('keydown', function(e){ if(e.key==='Escape') artClose(); });
   }
   if(artSec && artGrid){
+    /* φορτώνει μόνο του λίγο μετά το άνοιγμα της σελίδας — και νωρίτερα αν φανεί η ενότητα */
+    if('requestIdleCallback' in window) requestIdleCallback(artLoad,{timeout:1500}); else setTimeout(artLoad,500);
     if('IntersectionObserver' in window){
       new IntersectionObserver(function(es,ob){ es.forEach(function(e){ if(e.isIntersecting){ ob.disconnect(); artLoad(); } }); }, {rootMargin:'700px 0px'}).observe(artSec);
-    } else artLoad();
-    if((location.hash||'').indexOf('#arthro-')===0) artLoad();
+    }
   }
 })();
 </script>
