@@ -715,18 +715,6 @@
         #contactForm input:focus,#contactForm textarea:focus{outline:2px solid var(--primary-green);outline-offset:1px}
         .frow2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
         .form-note{display:flex;align-items:center;justify-content:center;gap:8px;font-size:.8rem;color:var(--text-light);margin-top:14px}
-        .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-        .form-err{display:none;margin-top:14px;font-size:.88rem;color:#a2402f;text-align:center}
-        .form-err.show{display:block}
-        .form-err a{color:inherit;text-decoration:underline}
-        #cfBtn[aria-busy="true"]{opacity:.7;pointer-events:none}
-        .form-sent{display:none;text-align:center;padding:26px 6px 8px}
-        .form-sent .fs-tick{width:56px;height:56px;fill:none;stroke:var(--primary-green);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;margin-bottom:14px}
-        .form-sent h4{font-family:var(--font-heading);font-size:1.45rem;color:var(--primary-green);margin:0 0 8px}
-        .form-sent p{color:var(--text-light);margin:0;max-width:36ch;margin-inline:auto}
-        .form-card.sent #contactForm{display:none}
-        .form-card.sent .form-sent{display:block;animation:fsIn .5s ease both}
-        @keyframes fsIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
         /* footer */
         footer{padding-bottom:120px !important}
@@ -1908,24 +1896,16 @@
 
                     <div class="contact-card form-card rv">
                         <h3 class="cc-title"><svg class="gic" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> Φόρμα Επικοινωνίας</h3>
-                        <form id="contactForm" action="https://formspree.io/f/mppzgryz" method="POST" novalidate>
-                            <input type="hidden" name="_subject" value="Νέο μήνυμα από την ιστοσελίδα">
-                            <p class="hp" aria-hidden="true"><label>Μην συμπληρώσετε αυτό το πεδίο<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+                        <form id="contactForm" novalidate>
                             <div class="frow2">
-                                <input type="text" id="cf-name" name="Ονοματεπώνυμο" placeholder="Ονοματεπώνυμο *" aria-label="Ονοματεπώνυμο" required autocomplete="name">
-                                <input type="email" id="cf-email" name="email" placeholder="Email *" aria-label="Email" required autocomplete="email">
-                                <input type="tel" id="cf-phone" name="Τηλέφωνο" placeholder="Τηλέφωνο (προαιρετικό)" aria-label="Τηλέφωνο" autocomplete="tel">
+                                <input type="text" id="cf-name" placeholder="Ονοματεπώνυμο *" required>
+                                <input type="email" id="cf-email" placeholder="Email *" required>
+                                <input type="tel" id="cf-phone" placeholder="Τηλέφωνο (προαιρετικό)">
                             </div>
-                            <textarea id="cf-msg" name="Μήνυμα" placeholder="Το μήνυμά σας *" aria-label="Το μήνυμά σας" required></textarea>
-                            <button type="submit" class="btn-tz wide" id="cfBtn">Αποστολή μηνύματος</button>
-                            <p class="form-err" id="cfErr" role="alert">Κάτι πήγε στραβά. Δοκιμάστε ξανά ή στείλτε email στο <a href="mailto:c.tzoanou@outlook.com">c.tzoanou@outlook.com</a>.</p>
+                            <textarea id="cf-msg" placeholder="Το μήνυμά σας *" required></textarea>
+                            <button type="submit" class="btn-tz wide">Αποστολή μηνύματος</button>
                             <p class="form-note"><svg class="gic" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Τα προσωπικά σας δεδομένα παραμένουν ασφαλή και δεν κοινοποιούνται.</p>
                         </form>
-                        <div class="form-sent" id="cfSent" role="status">
-                            <svg class="fs-tick" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12.5 2.5 2.5L16 9.5"/></svg>
-                            <h4>Το μήνυμά σας στάλθηκε</h4>
-                            <p>Σας ευχαριστώ πολύ. Θα επικοινωνήσω μαζί σας το συντομότερο δυνατό.</p>
-                        </div>
                     </div></div>
             </div>
         </section>
@@ -2019,28 +1999,16 @@
     card.querySelector('.svc-btn').addEventListener('click', toggle);
     var more = card.querySelector('.svc-more'); if(more) more.addEventListener('click', toggle);
   });
-  // Contact form -> Formspree (AJAX, η σελίδα δεν φεύγει ποτέ)
+  // Contact form -> mailto
   var f = document.getElementById('contactForm');
-  if(f){
-    var fCard = f.closest('.form-card'), fBtn = document.getElementById('cfBtn'), fErr = document.getElementById('cfErr');
-    f.addEventListener('submit', function(e){
-      e.preventDefault();
-      if(fErr) fErr.classList.remove('show');
-      if(!f.checkValidity()){ f.reportValidity(); return; }
-      if(fBtn){ fBtn.setAttribute('aria-busy','true'); fBtn.textContent='Αποστολή…'; }
-      fetch(f.action, { method:'POST', body:new FormData(f), headers:{'Accept':'application/json'} })
-        .then(function(r){
-          if(r.ok){
-            f.reset();
-            if(fCard){ fCard.classList.add('sent'); fCard.scrollIntoView({behavior:'smooth', block:'center'}); }
-          } else { throw new Error(r.status); }
-        })
-        .catch(function(){
-          if(fErr) fErr.classList.add('show');
-          if(fBtn){ fBtn.removeAttribute('aria-busy'); fBtn.textContent='Αποστολή μηνύματος'; }
-        });
-    });
-  }
+  if(f){ f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var n=document.getElementById('cf-name').value.trim(), em=document.getElementById('cf-email').value.trim(),
+        ph=document.getElementById('cf-phone').value.trim(), m=document.getElementById('cf-msg').value.trim();
+    if(!n||!em||!m){ alert('Παρακαλώ συμπληρώστε τα υποχρεωτικά πεδία.'); return; }
+    var body = encodeURIComponent('Ονοματεπώνυμο: '+n+'\nEmail: '+em+(ph?'\nΤηλέφωνο: '+ph:'')+'\n\n'+m);
+    window.location.href = 'mailto:c.tzoanou@outlook.com?subject='+encodeURIComponent('Μήνυμα από την ιστοσελίδα — '+n)+'&body='+body;
+  }); }
 })();
 </script>
 <script>
