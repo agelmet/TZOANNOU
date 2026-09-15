@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Χαρά Τζοάνου - Ψυχολόγος</title>
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Χαρά Τζοάνου — Ψυχολόγος">
+    <meta property="og:title" content="Χαρά Τζοάνου — Ψυχολόγος MSc, Ψυχοθεραπεύτρια · Νέα Ιωνία">
+    <meta property="og:description" content="Ψυχολόγος MSc – Ψυχοθεραπεύτρια, Λεωφ. Ηρακλείου 191, Νέα Ιωνία. Άρθρα, πληροφορίες και ραντεβού.">
+    <meta property="og:image" content="https://agelmet.github.io/TZOANNOU/tz-hero.webp">
+    <meta property="og:locale" content="el_GR">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.contentful.com">
@@ -679,7 +686,7 @@
         .quote-cite{font-family:var(--font-heading);font-style:italic;color:var(--text-light);margin-bottom:22px}
 
         /* reviews */
-        .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+        .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-bottom:44px}
         .review-card{background:#fdfcf9;padding:34px 30px;text-align:center}
         .rev-stars{color:#c9a24b;letter-spacing:3px;margin-bottom:14px}
         .review-card p{font-style:italic;color:var(--text-dark);font-size:.95rem;margin-bottom:16px}
@@ -1356,6 +1363,21 @@
         .ar-back{margin-top:30px;background:transparent;border:none;color:var(--dark-green);font-weight:700;font-size:.92rem;cursor:pointer;padding:0}
         .ar-back:hover{text-decoration:underline}
         body.reader-open{overflow:hidden}
+        /* ΣΕΨ membership badge (15 Sept 2026) */
+        .footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:0}
+        .sep-badge{margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.28);display:flex;flex-direction:column;align-items:center;width:100%;max-width:320px}
+        .sep-mark{display:flex;align-items:center;gap:12px;color:#fff}
+        .sep-psi{font-family:var(--font-heading);font-size:66px;line-height:.9;font-weight:400;padding-right:12px;border-right:1.5px solid rgba(255,255,255,.85)}
+        .sep-words{font-family:var(--font-body,inherit);font-size:.9rem;line-height:1.28;letter-spacing:.34em;font-weight:500;text-align:left}
+        footer .sep-note{font-size:.78rem;line-height:1.45;color:#dfe6df;margin:10px 0 0;text-align:center}
+        @media (max-width:992px){.footer-right{align-items:center}.sep-badge{margin-left:auto;margin-right:auto}}
+        /* article share bar */
+        .ar-share{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:30px 0 0;padding-top:22px;border-top:1px solid var(--hairline)}
+        .ar-share-l{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--primary-green);margin-right:4px}
+        .ar-share a,.ar-share button{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;border:1.5px solid var(--primary-green);background:#fff;color:var(--dark-green);font:600 .86rem/1 inherit;cursor:pointer;text-decoration:none;transition:background .25s,color .25s,transform .25s}
+        .ar-share a:hover,.ar-share button:hover{background:var(--dark-green);color:#fff;transform:translateY(-2px)}
+        .ar-share svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+        .ar-share .is-copied{background:var(--dark-green);color:#fff}
     </style>
 </head>
 <body id="top">
@@ -1731,16 +1753,11 @@
                 <h2 class="section-title rv">Αξιολογήσεις</h2>
                 <div class="bot-divider" aria-hidden="true"><svg viewBox="0 0 300 24"><path d="M10 12 C 60 6, 100 18, 138 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M162 12 C 200 6, 240 18, 290 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(150 12)"><path d="M-8 6 C -4 -2, 4 -6, 10 -8" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="-4" cy="1" rx="3.2" ry="1.6" transform="rotate(-35 -4 1)" fill="currentColor"/><ellipse cx="0" cy="-2.5" rx="3.2" ry="1.6" transform="rotate(-30 0 -2.5)" fill="currentColor"/><ellipse cx="4.5" cy="-5" rx="3" ry="1.5" transform="rotate(-25 4.5 -5)" fill="currentColor"/><ellipse cx="8.5" cy="-7" rx="2.6" ry="1.3" transform="rotate(-20 8.5 -7)" fill="currentColor"/></g></svg></div>
                 <p class="section-subtitle rv">Η εμπειρία των ανθρώπων που εμπιστεύτηκαν τη θεραπευτική διαδικασία.</p>
-                <!-- ΟΙ ΚΑΡΤΕΣ ΤΩΝ ΑΞΙΟΛΟΓΗΣΕΩΝ ΠΕΡΙΜΕΝΟΥΝ ΤΑ ΠΡΑΓΜΑΤΙΚΑ ΚΕΙΜΕΝΑ.
-                     Μένουν σε σχόλιο ώστε να μην βγει ποτέ στον αέρα κείμενο-δείγμα.
-                     Μόλις η κ. Τζοάνου στείλει τις κριτικές: αντικαταστήστε τα [..], βγάλτε
-                     τα σχόλια και αφήστε από κάτω το κουμπί.
                 <div class="reviews-grid">
-                    <div class="review-card rv"><div class="rev-stars">★★★★★</div><p>«[Αξιολόγηση 1]»</p><span class="rev-name">[Όνομα]</span></div>
-                    <div class="review-card rv d1"><div class="rev-stars">★★★★★</div><p>«[Αξιολόγηση 2]»</p><span class="rev-name">[Όνομα]</span></div>
-                    <div class="review-card rv d2"><div class="rev-stars">★★★★★</div><p>«[Αξιολόγηση 3]»</p><span class="rev-name">[Όνομα]</span></div>
+                    <div class="review-card rv"><div class="rev-stars">★★★★★</div><p>«[Αξιολόγηση 1 — επικολλήστε εδώ πραγματική κριτική]»</p><span class="rev-name">[ΟΝΟΜΑ]</span></div>
+                    <div class="review-card rv d1"><div class="rev-stars">★★★★★</div><p>«[Αξιολόγηση 2 — επικολλήστε εδώ πραγματική κριτική]»</p><span class="rev-name">[ΟΝΟΜΑ]</span></div>
+                    <div class="review-card rv d2"><div class="rev-stars">★★★★★</div><p>«[Αξιολόγηση 3 — επικολλήστε εδώ πραγματική κριτική]»</p><span class="rev-name">[ΟΝΟΜΑ]</span></div>
                 </div>
-                -->
 
                 <div class="rev-proof rv">
                     <div class="rev-score">
@@ -1942,11 +1959,17 @@
                         <p><svg class="gic" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l1.5-4M15 21l-1.5-4"/></svg> ΗΣΑΠ: Νέα Ιωνία ή Πευκάκια</p>
                         <p><svg class="gic" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> c.tzoanou@outlook.com</p>
                     </div>
+                    <div class="footer-right">
                     <div class="footer-social">
                         <a href="https://www.instagram.com/chara_tzoanou_psychologist/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg></a>
                         <a href="https://www.facebook.com/profile.php?id=61575012181559" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8.5A.5.5 0 0 1 14 8z"/></svg></a>
                         <a href="https://www.linkedin.com/in/chara-tzoanou-34b724266/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.1M12 17v-4a2 2 0 0 1 4 0v4"/></svg></a>
                         <a href="https://www.doctoranytime.gr/d/Psychologos/tzoanou-xara" target="_blank" rel="noopener" class="fs-dat" aria-label="Το προφίλ μου στο doctoranytime" title="doctoranytime"><img src="dat-logo.webp" alt="doctoranytime" width="300" height="95" loading="lazy" decoding="async"></a>
+                    </div>
+                    <div class="sep-badge">
+                        <div class="sep-mark" aria-label="Σύλλογος Ελλήνων Ψυχολόγων"><span class="sep-psi" aria-hidden="true">Ψ</span><span class="sep-words" aria-hidden="true">ΣΥΛΛΟΓΟΣ<br>ΕΛΛΗΝΩΝ<br>ΨΥΧΟΛΟΓΩΝ</span></div>
+                        <p class="sep-note">Τακτικό Μέλος του Συλλόγου Ελλήνων Ψυχολόγων (Α.Μ. 3656)</p>
+                    </div>
                     </div>
                 </div>
                 <p class="footer-bottom">© 2026 Χαρά Τζοάνου. Με την επιφύλαξη παντός δικαιώματος.</p>
@@ -1971,6 +1994,13 @@
                 <h2 class="ar-title" id="artReaderTitle"></h2>
                 <div class="ar-meta" id="artReaderMeta"></div>
                 <div class="ar-body" id="artReaderBody"></div>
+                <div class="ar-share" id="artShare">
+                    <span class="ar-share-l">Κοινοποίηση</span>
+                    <a id="shFb" href="#" target="_blank" rel="noopener" aria-label="Κοινοποίηση στο Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8.5A.5.5 0 0 1 14 8z"/></svg>Facebook</a>
+                    <a id="shIn" href="#" target="_blank" rel="noopener" aria-label="Κοινοποίηση στο LinkedIn"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.1M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>LinkedIn</a>
+                    <button type="button" id="shCopy"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span>Αντιγραφή συνδέσμου</span></button>
+                    <button type="button" id="shNative" hidden><svg viewBox="0 0 24 24"><path d="M12 3v12M7 8l5-5 5 5M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>Instagram &amp; άλλες εφαρμογές</button>
+                </div>
                 <button type="button" class="ar-back" data-close>← Επιστροφή στα άρθρα</button>
             </div>
         </div>
@@ -2315,6 +2345,20 @@
     var sc=reader.querySelector('.ar-scroll'); if(sc) sc.scrollTop=0;
     var cl=document.getElementById('artClose'); if(cl) cl.focus();
     try{ history.replaceState(null,'','#arthro-'+a.id); }catch(e){}
+    artShareSet(a);
+  }
+  function artShareSet(a){
+    var url=location.origin+location.pathname+'#arthro-'+a.id, t=a.title+' — Χαρά Τζοάνου, Ψυχολόγος';
+    var fb=document.getElementById('shFb'), li=document.getElementById('shIn'), cp=document.getElementById('shCopy'), nt=document.getElementById('shNative');
+    if(fb) fb.href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
+    if(li) li.href='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(url);
+    if(cp){ cp.classList.remove('is-copied'); cp.lastElementChild.textContent='Αντιγραφή συνδέσμου';
+      cp.onclick=function(){
+        var done=function(){ cp.classList.add('is-copied'); cp.lastElementChild.textContent='Αντιγράφηκε ✓'; };
+        if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(done,function(){}); }
+        else { var ta=document.createElement('textarea'); ta.value=url; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); done();}catch(e){} ta.remove(); }
+      }; }
+    if(nt){ nt.hidden=!navigator.share; nt.onclick=function(){ navigator.share({title:t,url:url}).catch(function(){}); }; }
   }
   function artClose(){
     if(!reader||!reader.classList.contains('is-open')) return;
