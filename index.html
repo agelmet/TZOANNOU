@@ -1384,7 +1384,7 @@
         .rev-track{display:flex;gap:28px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:12px 4px 22px;outline:none}
         .rev-track::-webkit-scrollbar{display:none}
         .rev-track>.review-card{flex:0 0 calc((100% - 56px)/3);scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;padding:34px 30px 26px}
-        .review-card .rev-text{flex:1 1 auto;margin:0 0 12px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:9;overflow:hidden}
+        .review-card .rev-text{flex:1 1 auto;margin:0 0 12px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:11;overflow:hidden}
         .review-card.is-open .rev-text{-webkit-line-clamp:unset;display:block}
         .rev-more{background:none;border:none;color:var(--dark-green);font:600 .84rem/1.4 var(--font-body);border-bottom:1px solid rgba(79,97,79,.4);cursor:pointer;padding:0;margin:0 0 16px}
         .rev-more[hidden]{display:none}
@@ -1392,7 +1392,7 @@
         .rev-src{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 12px;border-radius:999px;background:#fff;border:1px solid var(--hairline);font-size:.74rem;font-weight:600;color:var(--soft);letter-spacing:.03em;transition:transform .25s}
         .rev-src:hover{transform:translateY(-1px)}
         .rev-src .g-logo{width:16px;height:16px}
-        .rev-src img{height:16px;width:auto;display:block}
+        .rev-src img{height:18px;width:auto;display:block}
         .rev-nav{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:6px}
         .rev-arrow{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--primary-green);background:#fff;color:var(--dark-green);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .25s,color .25s,transform .25s}
         .rev-arrow:hover{background:var(--dark-green);color:#fff;transform:translateY(-2px)}
@@ -2444,6 +2444,7 @@
   var car=document.getElementById('revCar'), tr=document.getElementById('revTrack');
   if(!car||!tr) return;
   var cards=[].slice.call(tr.children), dots=document.getElementById('revDots');
+  cards.forEach(function(c){ c.classList.add('in'); });   /* cards scrolled sideways must never stay invisible */
   var red=matchMedia('(prefers-reduced-motion: reduce)').matches, timer=null, paused=false;
   function per(){ var c=cards[0]; return Math.max(1, Math.round(tr.clientWidth/(c.getBoundingClientRect().width+parseFloat(getComputedStyle(tr).columnGap||0)))); }
   function pages(){ return Math.max(1, cards.length-per()+1); }
